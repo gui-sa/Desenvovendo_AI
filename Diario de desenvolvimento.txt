@@ -1,0 +1,267 @@
+﻿
+####LEGENDA
+
+
+#### =  mais um dia
+*Notaveis conquistas
+indexação =  parte do topico anterior
+? Duvidas
+-1) Objetivos futuros.
+!!!! = CONCLUSOES
+Sempre pular varias linhas de um dia para outro.
+
+
+
+
+
+
+
+##### Diario de desenvolvolvimento dia 28/01/2020
+
+ *https://www.youtube.com/watch?v=lmOF2zyeLUs
+
+Este vídeo a pessoa fez um classificador de imagens usando DOCKER. Aparentemente é necessário pegar o clone do codigo para poder testar...
+? O que é o DOCKER ?
+? Como o codigo funcionava ?
+
+ *https://www.youtube.com/watch?v=qaIX5ZLiR1g&t=1s
+
+Este vídeo é um tutorial do TENSORFLOW oficial, ensinando em portugues à utilizar o tensorflow.js 
+Este video é o terceiro da serie
+
+ *https://www.youtube.com/watch?v=epSgXU3AyiI&list=PLQY2H8rRoyvz8oumEhsqSG4bl7JH7_YSG&index=2&t=0s
+
+Este video é o primeiro da serie, porém, conhecimento em programação WEB é necessária
+
+ *https://www.youtube.com/watch?v=7a1O_4JQWxo
+
+Porquê de usar o tensorflow e keras
+
+ *https://www.tensorflow.org/tutorials/images/classification
+
+Entrei no site do tensorflow e coloquei em tutoriais. tentarei usar o keras em cima do tensor flow
+
+
+
+
+
+
+
+
+
+
+##### Diario de desenvolvolvimento dia 29/01/2020
+
+  *Definindo objetivo*
+
+Objetivo: Seguindo o tutorial do tensorflow usando Keras o treinamento ocorreu e demonstrou grande eficácia.
+	Entretanto, não consegui acessar a rede neural que foi treinada. Portanto tenho por objetivo :
+->Entender o código e utilizar o msm para classificar personagens. O banco de dados deverá ser montado por mim msm e ter uma pasta no desktop
+->UPDATE DO CODIGO:
+   -->Salvar/lembrar a rede neural treinada
+   -->Transformá-la em objeto para que eu consiga facimente usá-la em outros codigos.
+
+
+
+
+
+
+
+
+##### Diario de desenvolvolvimento dia 30/01/2020
+
+*Compredido a funcao da funcao path.join da biblioteca OS
+*Compreendido a parte de preprocessamento exceto o class_mode
+*Compreendido a importancia de banco de validação
+*Compreendido a parte da criaçao do modelo!! O modelo é um OBJETO, no caso, nossa rede. A compilação do modelo determina a configuração de aprendizado. O fit  é a funcao q TREINA a nossa rede.
+*model.save, salva nossa rede.
+
+
+
+
+
+
+
+
+##### Diario de desenvolvolvimento dia 31/01/2020
+
+*Para carregar uma rede salva:
+	from tensorflow.keras.models import load_model
+		model = load_model('nome_salvo')
+
+*Para usar o feedforward de uma rede:  https://www.youtube.com/watch?v=A4K6D_gx2Iw
+	Preparamos a foto.png no mesmo enquadre das fotos utilizadas em treinamento obtendo foto_preparada.png
+	prediction = model.prediction('foto_preparada.png')
+	print(prediction)
+
+
+
+
+
+
+#### Diario de desenvolvimento do dia 05/02/2020
+
+*Checando o que é YOLO:
+
+https://youtu.be/4eIBisqx9_g     
+Explica toda a historia e apresenta o que deu certo e o que deu errado. Ele comenta de um metodo chamado R-CNN que é: pegamos uma imagem e escolhemos um numero fixo de caixas que serao espalhadas randomicamente pela imagem. Estas caixas passarão pela rede convulucional. O método R-CNN foi melhorado por varias outras ideias, entre elas o o YOLO!!
+O YOLO -  ´You Only Look Once´, entre os metodos, é o que mais se destaca pela performance e accurate rate.
+	YOLO PROPOSAL:
+
+		*Divide a imagem em uma grade onde cada grade;
+		*?? De alguma forma as grades se interceptam, e as melhores formam as linhas mais grossas que depois, se tornam um box mostrando o que tem dentro;
+		*Toda a imagem é alimenta uma unica rede convolucional;
+
+
+	ELe implementa usando um software chamada darknet e darkflow
+	Existem varias versoes de YOLO
+
+
+
+
+
+#### Diario de desenvolvimento do dia 06/02/2020
+
+Terminando de assistir o video do dia 05/02/2020. Ele utilizou o tensorflow, darknet, darkflow e cython para colocar o YOLO real-time com um video de uma mulher andando.
+
+-1) Tentando usar o YOLO para rodar um video qualquer...
+-2) Consigo treinar o YOLO para classificar qualquer objeto? Como faço? Se não, como o YOLO foi implementado?
+-3) O que é cada ferramenta listada?
+
+*https://pysource.com/2019/06/27/yolo-object-detection-using-opencv-with-python/
+yolo - DEEPLEARNING LIBRARY WHICH NEEEDS A DARKNET FRAMEWORK (WORKS ONLY ON LINUX), ALTHOUGH, IT APPEAR LIKE YOU CAN USE OPENCV FRAMEWORK for CPU or DARKFLOW on WINDOWS for GPU/CPU
+
+*https://towardsdatascience.com/tutorial-build-an-object-detection-system-using-yolo-9a930513643a
+
+*https://blog.insightdatascience.com/how-to-train-your-own-yolov3-detector-from-scratch-224d10e55de2
+Para treinar uma rede YOLO, voce deve pegar uma imagem e criar labels (ou seja, um quadro em volta do objeto).Uma imagem pode conter o label que quiser.Nesse site, é apresentado um aplicativo que auxilia nas legendas
+
+*https://hackernoon.com/understanding-yolo-f5a74bbc7967
+
+*https://dzone.com/articles/understanding-object-detection-using-yolo
+YOLOv2 é mais rapido.
+YOLOv3 é mais preciso.
+
+
+
+
+
+
+####  Diario de desenvolvimento do dia 12/02/2020:
+
+*Revisão do diario;
+*Legendamento da função load e predict.model;
+
+*https://www.youtube.com/watch?v=h56M5iUVgGs 
+Esse vídeo ensiana a usar o yolo sobre o framework do opencv. Lendo os comentários da internet, ao utilizar o opencv, a caracteristica ¨real-time¨ é perdida.
+
+*https://dzone.com/articles/understanding-object-detection-using-yolo
+
+*https://pjreddie.com/media/files/papers/YOLOv3.pdf
+paper do yolo.v3
+
+*https://arxiv.org/pdf/1506.02640.pdf
+paper do YOLO
+
+*https://pjreddie.com/darknet/yolo/
+Local o o YOLO reside
+
+*Leitura do paper YOLO.v2
+YOLO outperforms DMB e R-CNN neural networks. R-CNN é a primeira rede que busca separar a imagem em retangulos e depois passar por redes convolucionais. Esse paper ainda explica sobre o uso de fast R-CNN, que o diz confundir algmas classificações por não prever o contexto (ja que o YOLO vê toda a imagem).
+GoogLeNet
+Técnicas de pré-treino para o aumento de velocidade de treinamento com full resolution?
+
+
+
+####  Diario de desenvolvimento do dia 26/02/2020:
+
+
+*https://www.youtube.com/watch?v=h56M5iUVgGs 
+Assisti todo o tutorial do YOLO com o framework do opencv. O que posso concluir? 
+	-Se na CPU o resultado ja é bem ruim, imagina em um microcontrolador. Isso me assusta bastante.
+	-O tiny YOLO é uma versao ainda mais rápida, porém, bem menos precisa.
+	
+
+*https://pjreddie.com/darknet/yolo/
+Testei o tutorial do YOLO -> Nao funcionou . (OUT OF DATE)
+
+
+*https://www.youtube.com/watch?v=2TikTv6PWDw&list=PLX-LrBk6h3wRAF22jBUxDgOvyhIgLN4Cg
+Uma playlist que promete ensinar a criar um R-CNN object detector com uma mascara
+			--- FASTER R-CNN
+
+*https://www.youtube.com/watch?v=PyjBd7IDYZs&list=PLX-LrBk6h3wSGvuTnxB2Kj358XfctL4BM
+Uma playlist que promete ensinar e criar uma rede de arquitetura YOLO para object detector
+
+*DRAW I/O FERRAMENTA DE PLANEJAMENTO
+
+				!!!!(moment):
+					-Todas as bibliotecas utilizam-se de algum framework e uma arquetetura de rede neural para seu funcionamento.
+					-Por mais que o YOLO seja a arquitetura mais top existente, ela ainda nao é suficiente para dual-core 128 MHz ESP 32 processor -  e nem tem como embarcar, inclusive.
+					-Nao consegui classificar nada ainda, desde de o dia 28/01/2020  com alguma acurácia > 70%
+						
+					--AUTO CONHECIMENTO DE PROJETO:
+						-REAL TIME
+						-ACURACIA BOA
+						-CLASSIFICAÇÃO BINARIA (É, OU NAO?)
+						-ALTAMENTE ADAPTATIVO PARA EFICIENCIA (CONSEGUIR REALIZAR TROCAS DE PARAMETROS E DIMINUIÇOES DE DETECTORS PARA QUE POSSA SEMPRE QUE POSSIVEL AUMENTAR O FPS)
+						-IDENTIFICAR AS COORDENADAS (X,Y) DOS PIXELS ONDE O OBJETO FOI RECONHECIDO
+						-MATEMÁTICA DISCRETA (FEEDFORWARD) COM OUTPUTS SIMPLIFICADOS  --> EMBARCAR
+						
+						ESTES TOPICOS PROPORCIONARÃO O ESSENCIAL PARA QUE EU CONSIGA EMBARCAR VISAO EM PEQUENOS PROJETOS!!!!!
+						
+					--PARA O PROJETO DA FISCALIZAÇÃO DE ISOLADORES É NECESSÁRIO ADICIONAR AO PLANO:
+						-OBTER TAMBEM O WIDTH E O HEIGHT PARA TRAÇAR A ALTURA E LARGURA;
+						
+						ESTA CARACTERISTICA IRA PERMITIR, IDENTIFICAR QUAL O BLOCO DA IMAGEM ESCALADA EM REAL-TIME, ONDE ESTA O ISOLADOR E QUAL O TAMANHO DO CROP DEVE SER EFETUADO
+						REESCALANDO O CROP PARA A IMAGEM DE ALTA RESOLUCÃO PODEREMOS JOGAR TODA A IMAGEM EM UM MASK R-CNN E OBTER O O SHAPE RECORTADO (TORNAR O FUNDO DA IMAGEM PRETO)
+						OBTENDO SOMENTE O SHAPE DO ISOLADOR -> Processo com rede neural utilizando zoom dinamico e full imagem resolution para dizer se precisa de limpeza ou nao.
+
+	1) Leitura do paper do YOLO e do R-CNN para entender como as coordenadas X,Y,W,H,P sao obtidas e como eles treinam a rede;
+	2) Utilizando o Keras, criar minha propria arquitetura;
+	3) Testar detector -> copos ou nada e utilizando a biblioteca time.h obter a eficiencia -->>>>
+
+
+*How to train YOLO with custom objects:  https://youtu.be/XRVzuV9RexY
+
+?? How dows a repo works?  .. . learning github~!!!
+	0) Learning github as pro.
+
+git init // initialize  Local git repo (o repositorio esta onde voce abrir o terminal.)
+git add <file> // adiciona um do repositorio para area de atencao
+git status //checa o status, qual a diferencia entre o que esta para enviar e o arquivo real do local
+git config --global user.name <'nome'>  // configura o nome do repositorio
+git config --global user.email <'nome'>  // configura o email do re'positorio
+git rm --cached <file> //  para tirar algum arquivo da area de atencao
+git commit -m 'comments' // 
+git push // manda para online repo
+git pull // atualiza o local repo pelo online repo
+git clone // baixa todo o repositorio em uma pasta
+git branch <nome>
+git checkout <nome> //muda de branch
+git merge <nome> -m 'coment'
+
+1)init
+2)add
+3)commit
+4)push
+
+para carregar
+
+1)init
+2)pull
+
+
+
+
+
+
+#### 02/03/2020
+
+-Criando o repositorio privado;
+
+1) INSTALAR AS DEPENDENCIAS E RETOMAR A PESQUISA
+
+
+
+
