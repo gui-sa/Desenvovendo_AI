@@ -13,33 +13,33 @@ import matplotlib.pyplot as plt
 
 # ============================================Configurando o caminho para a pasta de imagens ========================
 
-dir_train = os.path.join('/home','salomao','Desktop','Desenvolvimento de algoritmos de Inteligencia artificial','Visao computacional para fiscalizar o status de limpeza de isoladores de rede de alta tensao','limpeza_potes_de_sorvete','Treinamento')#Criando o caminho para a pasta à qual contem os dados. 
-dir_val = os.path.join('/home','salomao','Desktop','Desenvolvimento de algoritmos de Inteligencia artificial','Visao computacional para fiscalizar o status de limpeza de isoladores de rede de alta tensao','limpeza_potes_de_sorvete','Validacao')
+dir_train = os.path.join('/home','salomao','Desktop','Detector_images','Treinamento')#Criando o caminho para a pasta à qual contem os dados. 
+dir_val = os.path.join('/home','salomao','Desktop','Detector_images','Validacao')#Criando o caminho para a pasta de validacao
 
-train_potes_sujos = os.path.join(dir_train,'potes_sujos')#Criando o caminho para a pasta à qual contem os dados.
-train_potes_limpos = os.path.join(dir_train,'potes_limpos')#Criando o caminho para a pasta à qual contem os dados.
+train_pmacho = os.path.join(dir_train,'pardal macho')#Criando o caminho para a pasta à qual contem os dados.
+train_pfemea = os.path.join(dir_train,'pardal femea')#Criando o caminho para a pasta à qual contem os dados.
 
-val_potes_sujos = os.path.join(dir_val,'potes_sujos')#Criando o caminho para a pasta à qual contem os dados.
-val_potes_limpos = os.path.join(dir_val,'potes_limpos')#Criando o caminho para a pasta à qual contem os dados.
+val_pmacho = os.path.join(dir_val,'pardal macho')#Criando o caminho para a pasta à qual contem os dados.
+val_pfemea = os.path.join(dir_val,'pardal femea')#Criando o caminho para a pasta à qual contem os dados.
 
-num_train_potes_sujos = len(os.listdir(train_potes_sujos))#Numero de arquivos dentro do diretorio'dir_potes_sujos'
-num_train_potes_limpos= len(os.listdir(train_potes_limpos))#Numero de arquivos dentro do diretorio'dir_potes_limpos'
+num_train_pmacho = len(os.listdir(train_pmacho))#Numero de arquivos dentro do diretorio'dir_potes_sujos'
+num_train_pfemea= len(os.listdir(train_pfemea))#Numero de arquivos dentro do diretorio'dir_potes_limpos'
 
-num_val_potes_sujos = len(os.listdir(val_potes_sujos))#Numero de arquivos dentro do diretorio'dir_potes_sujos'
-num_val_potes_limpos= len(os.listdir(val_potes_limpos))#Numero de arquivos dentro do diretorio'dir_potes_limpos'
+num_val_pmacho = len(os.listdir(val_pmacho))#Numero de arquivos dentro do diretorio'dir_potes_sujos'
+num_val_pfemea= len(os.listdir(val_pfemea))#Numero de arquivos dentro do diretorio'dir_potes_limpos'
 
-num_tot_val = num_val_potes_sujos + num_val_potes_limpos#O total de arquivos que a pasta possui
-num_tot_train = num_train_potes_sujos + num_train_potes_limpos#O total de arquivos que a pasta possui
+num_tot_val = num_val_pmacho + num_val_pfemea#O total de arquivos que a pasta possui
+num_tot_train = num_train_pmacho + num_train_pfemea#O total de arquivos que a pasta possui
 
 num_tot = num_tot_train + num_tot_val
 
 #============================================Configurando variaveis de treinamento ==================================
 
 batch_size =10#Cada epoca usara 128 imagens 
-epochs = 15#Quantas passadas é relizada
-IMG_HEIGHT = 500#Altura em pixel da imagem
+epochs = 10#Quantas passadas é relizada
+IMG_HEIGHT = 720#Altura em pixel da imagem
 
-IMG_WIDTH = 500#Comprimento em pixel da imagem
+IMG_WIDTH = 720#Comprimento em pixel da imagem
 
 
 #============================================Preprocessamento dos dados =============================================
@@ -104,7 +104,7 @@ history = model.fit_generator(#Esta funçao treina sua rede neural.
 
 #=========================================== Salvando modelo ===============================================
 
-model.save('Potesujosoulimpos')
+model.save('pardal')
 
 
 #============================================================ Plotando  resultado ============================

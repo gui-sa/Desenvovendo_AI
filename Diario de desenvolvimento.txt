@@ -466,6 +466,23 @@ Como baixar fotos em bash
 
 	!!!!) cadeiras não sera um bom exemplo, pois ao analisar o bash, o fundo sempre era branco e as cadeiras eram diferentes demais... 
 
+		Tive outra ideia! : por que nao classificamos pardais?
+				O dataset é grande e a diferença entre pardais machos e femea é MUIIITO SUTIL!!! Alem disso, o fundo não é padronizado.
+
+
+Consegui baixar (mesmo não sendo mais que 100 fotos).
+
+	vamos às adequações:   
+		No path, deve existir duas pasta uma de treinamento e outra de validação...
+
+*http://deeplearningbook.com.br/introducao-as-redes-neurais-convolucionais/
+Site otimo para obter conhecimento matemático e teorico de redes neurais.
+
+
+
+
+
+
 
 
 
