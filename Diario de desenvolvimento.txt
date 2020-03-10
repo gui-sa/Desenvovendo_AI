@@ -16,6 +16,22 @@ Sempre pular varias linhas de um dia para outro.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##### Diario de desenvolvolvimento dia 28/01/2020
 
  *https://www.youtube.com/watch?v=lmOF2zyeLUs
@@ -50,6 +66,21 @@ Entrei no site do tensorflow e coloquei em tutoriais. tentarei usar o keras em c
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##### Diario de desenvolvolvimento dia 29/01/2020
 
   *Definindo objetivo*
@@ -68,6 +99,22 @@ Objetivo: Seguindo o tutorial do tensorflow usando Keras o treinamento ocorreu e
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##### Diario de desenvolvolvimento dia 30/01/2020
 
 *Compredido a funcao da funcao path.join da biblioteca OS
@@ -75,6 +122,22 @@ Objetivo: Seguindo o tutorial do tensorflow usando Keras o treinamento ocorreu e
 *Compreendido a importancia de banco de validação
 *Compreendido a parte da criaçao do modelo!! O modelo é um OBJETO, no caso, nossa rede. A compilação do modelo determina a configuração de aprendizado. O fit  é a funcao q TREINA a nossa rede.
 *model.save, salva nossa rede.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,6 +162,25 @@ Objetivo: Seguindo o tutorial do tensorflow usando Keras o treinamento ocorreu e
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### Diario de desenvolvimento do dia 05/02/2020
 
 *Checando o que é YOLO:
@@ -115,6 +197,22 @@ O YOLO -  ´You Only Look Once´, entre os metodos, é o que mais se destaca pel
 
 	ELe implementa usando um software chamada darknet e darkflow
 	Existem varias versoes de YOLO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -147,6 +245,19 @@ YOLOv3 é mais preciso.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ####  Diario de desenvolvimento do dia 12/02/2020:
 
 *Revisão do diario;
@@ -170,6 +281,26 @@ Local o o YOLO reside
 YOLO outperforms DMB e R-CNN neural networks. R-CNN é a primeira rede que busca separar a imagem em retangulos e depois passar por redes convolucionais. Esse paper ainda explica sobre o uso de fast R-CNN, que o diz confundir algmas classificações por não prever o contexto (ja que o YOLO vê toda a imagem).
 GoogLeNet
 Técnicas de pré-treino para o aumento de velocidade de treinamento com full resolution?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -256,11 +387,95 @@ para carregar
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 #### 02/03/2020
 
 -Criando o repositorio privado;
 
 1) INSTALAR AS DEPENDENCIAS E RETOMAR A PESQUISA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 09/03/2020
+
+Discutir ideias com o Rogério.
+
+	Conclusão da conversa:
+	-Focar no keras: o funcionario  irá enquadrar a camera no isolador utilizando seu bom senso. O zoom é um auxiliar DO FUNCIONARIO
+	-Em cima das imagens coletadas pelo funcionario - minha classificação trabalhará
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 10/03/2020:
+
+Comece meu dia tentando montar um data-set de imagens:
+
+	-Minha camera estava com pouca memoria.
+
+		!!!!) Daria muito trabalho para montar o data-set e como É UM DATASET dificil de classificar, ficaria em duvida se isto é um problema do meu codigo ou do dataset.
+			visto isto decidi classificar duas coisas bem mais distintas que um pote_sujo x pote_limpo : cadeiras de universidade de mesas de universidade!!
+
+	-Continuando nesta ideia, não precisaria tirar fotos manualmente.
+
+Como baixar fotos em bash
+			 bash <(wget -qO- git.io/get-googliser)   //Instalando o googliser 
+	
+	Para usá-lo:
+			googliser -n <numero de imagens> --phrase <pesquisa>  // criará no diretorio uma pasta com o nome da pesquisa e as imagens baixadas em definição maxima.
+					
+
+
+
+	!!!!) cadeiras não sera um bom exemplo, pois ao analisar o bash, o fundo sempre era branco e as cadeiras eram diferentes demais... 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
