@@ -57,7 +57,7 @@ train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size
 val_image_generator = ImageDataGenerator(rescale = 1./255) # reescala os valores em float de 0 - 1
 
 
-val_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
+val_data_gen = val_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
                                                            directory=dir_val, #No diretorio: 
                                                            shuffle=True, #devo randomizar?sim!
                                                            target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...

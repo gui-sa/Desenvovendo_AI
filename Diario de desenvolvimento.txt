@@ -482,6 +482,32 @@ Site otimo para obter conhecimento matemático e teorico de redes neurais.
 
 
 
+#### 12/03/2020:
+
+
+	*https://keras.io/why-use-keras/
+	Explanando o porquê de usar keras.
+
+
+	10)Criar outro codigo com base no keras que aprenda o algoritmo de aprendizado convolucionado.
+		A biblioteca 'os' quase sempre é uma mao na roda pois ajuda voce a usar chamadas de sistema.
+		*https://keras.io/preprocessing/image/      
+			Este site mostra todas as funções de preprocessamnto disponiveis
+		A tentativa 2 foi iniciada.
+		Um esquema foi montado no drive.
+		Aprendido nova bibliotca de nome shutil
+
+
+	20)Um dos features que eu mais curtiria enquanto treino uma rede é TREINAR PROGRESSIVAMENTE. Como fazer isto? Isto é uma boa estratégia?
+
+	30)Data augmentation
+
+	40)GANS
+
+
+	????)Ficou faltando quase todo o codigo, a continuação esta em settar os parametros no arquivo. O arquivo entao é fechado, re-aberto em forma de leitura e todos os parametros sao capturados.
+	
+
 
 
 
