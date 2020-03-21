@@ -515,6 +515,18 @@ Site otimo para obter conhecimento matemático e teorico de redes neurais.
 
 
 
+#### 21/03/2020:
+
+Como estudar visao daqui para frente:
+
+	10)Ler os textos do site http://deeplearningbook.com.br/introducao-as-redes-neurais-convolucionais/
+	20)Montar o algoritmo
+	30)Testar as ferramentas e anotar os resultados (dia 12/03)
+	40)Alterar variaveis de rede neural e anotar resultados
+
+	!!!!)Sempre colocar loadar em horarios de laser ou de noite, dessa forma nao perco tempo
+
+
 
 
 
