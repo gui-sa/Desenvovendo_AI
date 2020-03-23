@@ -535,3 +535,47 @@ Como estudar visao daqui para frente:
 
 
 
+
+
+
+
+
+
+
+
+#### 23/03/2020:
+
+Iniciei meu dia seguindo o diagrama criado no dia 10/03/2020
+Ao alterar tudo, pensei, 'como faço para abrir um arquivo que não esta no diretorio do compilador???' Esta duvida deveria ser obvia, mas, se ela fosse respondida não haveria o porquê de utilizar o shutill.
+Descobri que é so colocar o path no lugar do nome que tudo aparece no local desejado.
+
+Um bug apareceu e eu simplesmente nao conseguia rodar mais meu codigo.
+
+tive que commitar , pushar, e retornar na log para quando meu codigo funcionava
+
+Descobri que parou de funcionar pq queria mover um arquivo que nao existia (pois agora, ele ia para o diretorio diretamente)
+
+Retornei na versao, e retirei o shutill
+
+TROUBLESHOTT: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe7 in position 693: invalid continuation byte
+é por que a funçao input ficou muito longa ou com \n no final.
+
+
+TROUBLE: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe1 in position 693: invalid continuation byte
+Aparentemente é um bug aleatorio ligado ao input
+
+Agora com o arquivo criado, vou coletar as variaveis e armazená-las no arquivo de parametros
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
