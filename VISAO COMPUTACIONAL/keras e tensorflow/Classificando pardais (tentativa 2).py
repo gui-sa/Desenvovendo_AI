@@ -26,8 +26,8 @@ while True:
         ##Coletando parametros de rede e salvando no arquivo de forma ordenada:
         
         batch_size = input('\nQual o tamanho do batch? ' )
-        Width = input('\nQual o comprimento da imagem que entrara na rede neural?  ')
-        Height = input('\nQual a altura da imagem que entrará na rede neural? ')
+        Width = input('\nQual o comprimento da imagem que entrar na rede neural?  ')
+        Height = input('\nQual a altura da imagem que entrar na rede neural? ')
         Epochs = input('\nQuantas epocas? ' )
         
         file_parametros.write(int(batch_size),'\t',int(Width),'\t',int(Height),'\t',int(Epochs))
