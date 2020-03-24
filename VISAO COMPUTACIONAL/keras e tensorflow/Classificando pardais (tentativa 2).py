@@ -2,7 +2,7 @@
 #/home/salomao/Desktop/Detector_images/Pardal_Treinamento
 
 
-import os#biblioteca de aÃ§oes de sistema bÃ¡sica
+import os#biblioteca de acoes de sistema basicas
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -13,17 +13,17 @@ from tensorflow.keras.models import load_model
     
     
     
-##Função que lê os parametros do arquivo e treina a rede, salvando-a ================================================================================
+##Funcao que le os parametros do arquivo e treina a rede, salvando-a ================================================================================
 def treinamento_cnn (path_parametro,path_train, nome, num_dados):
     
     file = open(path_parametro,'r')#Vou ler o arquivo dos parametros e captar os dados que foram salvos
     
-    linhas  = file.read().split('\n')#Todos os dados de um arquivo são strings. Desta forma quando quebramos por \n, obtemos as linhas
+    linhas  = file.read().split('\n')#Todos os dados de um arquivo sao strings. Desta forma quando quebramos por \n, obtemos as linhas
     parametros = linhas[0].split('\t')#Separei os elementos por \t, desta forma, na linha desejada, captarei de forma organizada os dados desejados
     batch_size = parametros[0]
     IMG_WIDTH = parametros[1]
     IMG_HEIGHT = parametros[2]
-    epochs = parametros[3]
+    epoch = parametros[3]
     file.close()#Fechar arquivo de leitura
     
     ## Preprocessamento  das imagens:
@@ -51,18 +51,15 @@ def treinamento_cnn (path_parametro,path_train, nome, num_dados):
     ])
     
     
-    model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
+    model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possivel treinamento
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
 
-    history = model.fit_generator(#Esta funçao treina sua rede neural.
+    history = model.fit_generator(#Esta funcao treina sua rede neural.
     train_data_gen,
     steps_per_epoch=num_dados,
-    epochs=epochs,
-    validation_data=val_data_gen,
-    validation_steps=num_tot_val 
-    )
+    epochs=epoch )
 
 
     model.save(nome)
@@ -76,7 +73,7 @@ def treinamento_cnn (path_parametro,path_train, nome, num_dados):
 
 
 
-#Inicio da função main:==============================================================================================================================
+#Inicio da funcao main:==============================================================================================================================
     
 ask = 'a'#preset de variavel, so para nao ocorrer coincidencias desagradaveis
 while True:
@@ -109,7 +106,7 @@ while True:
         
         file_parametros.close()#Fechando o arquivo.
         
-        passos_epoch = (len(os.listdir(train_path_class_one))+ len(os.listdir(train_path_class_two)))/batch_size#A soma do numero de imagens em cada diretorio dividido pelo numero de batchs
+        passos_epoch = len(os.listdir(train_path_class_one))+ len(os.listdir(train_path_class_two))#A soma do numero de imagens em cada diretorio
         treinamento_cnn( file_parametros_path , train_path , nome_da_rede, passos_epoch )
         
         
