@@ -44,7 +44,7 @@ IMG_WIDTH = 720#Comprimento em pixel da imagem
 
 #============================================Preprocessamento dos dados =============================================
 
-train_image_generator = ImageDataGenerator(rescale = 1./255) # reescala os valores em float de 0 - 1
+train_image_generator = ImageDataGenerator(rescale = 1./255, horizontal_flip=True, rotation_range=45) # reescala os valores em float de 0 - 1
 
 
 train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
@@ -81,9 +81,10 @@ model = Sequential([
     MaxPooling2D(),
     Conv2D(64, 3, padding='same', activation='relu'),
     MaxPooling2D(),
+    Dropout(0.2),#20% dos neuronios nao serao ativadas
     Flatten(),
     Dense(512, activation='relu'),
-    Dense(2, activation='sigmoid')
+    Dense(2)
 ])
 
 
