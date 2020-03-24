@@ -557,14 +557,58 @@ Descobri que parou de funcionar pq queria mover um arquivo que nao existia (pois
 
 Retornei na versao, e retirei o shutill
 
-TROUBLESHOTT: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe7 in position 693: invalid continuation byte
+TROUBLESHOT: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe7 in position 693: invalid continuation byte
 é por que a funçao input ficou muito longa ou com \n no final.
 
 
-TROUBLE: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe1 in position 693: invalid continuation byte
-Aparentemente é um bug aleatorio ligado ao input
+TROUBLESHOT: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe1 in position 693: invalid continuation byte
+Aparentemente é um bug aleatorio ligado ao input -- Quando algo assim acontecer, de uma olhada e procure por simbolos ou acentos.
+
 
 Agora com o arquivo criado, vou coletar as variaveis e armazená-las no arquivo de parametros
+
+Outra dica é usar a funçÃo diff do github.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+####  24/03/2020:
+
+	*https://keras.io/preprocessing/image/
+
+	O dia iniciou e continuei seguindo o diagrama.
+	Consegui salvar os parametros no arquivo, assim como lê-los
+	Com isso em mão, configurei uma função que treina a rede.
+	Outro parametro que aprendi é mudar o class para categorico. Desta forma, o output sera hotencoded, assim como queria.
+	O modelo precisou ser rearranjado para ter duas saidas, pois agora é categorico.
+	
+	Infelizmente o problema do dia anterior voltou... Ao executar a funçao do keras ele insiste em dar um problema devido à caracteres especiais...
+	Para finalizar o horario, testei no primeiro codigo agora como categorico, pois, ja havia lido que a diferença entre categorico e binário no aprendizado é marcante.
+
+	Desta vez o bug veio de maneira diferente, o codigo chega a rodar o keras, mas na hora do treinamento ele da o bug. Vi que ficou variaveis sem declarar... Inclusive, não vi como a função funciona e o que cada termo significa.
+
+
+ 
+
+
+
 
 
 

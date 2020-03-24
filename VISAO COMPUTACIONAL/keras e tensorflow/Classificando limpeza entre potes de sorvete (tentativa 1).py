@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 
 # ============================================Configurando o caminho para a pasta de imagens ========================
 
-dir_train = os.path.join('/home','salomao','Desktop','Detector_images','Treinamento')#Criando o caminho para a pasta à qual contem os dados. 
-dir_val = os.path.join('/home','salomao','Desktop','Detector_images','Validacao')#Criando o caminho para a pasta de validacao
+dir_train = os.path.join('/home','salomao','Desktop','Detector_images','Pardal_Treinamento')#Criando o caminho para a pasta à qual contem os dados. 
+dir_val = os.path.join('/home','salomao','Desktop','Detector_images','Pardal_Validacao')#Criando o caminho para a pasta de validacao
 
 train_pmacho = os.path.join(dir_train,'pardal macho')#Criando o caminho para a pasta à qual contem os dados.
 train_pfemea = os.path.join(dir_train,'pardal femea')#Criando o caminho para a pasta à qual contem os dados.
@@ -51,7 +51,7 @@ train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size
                                                            directory=dir_train, #No diretorio: 
                                                            shuffle=True, #devo randomizar?sim!
                                                            target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...
-                                                           class_mode='binary')
+                                                           class_mode='categorical')
 
 
 val_image_generator = ImageDataGenerator(rescale = 1./255) # reescala os valores em float de 0 - 1
@@ -61,7 +61,7 @@ val_data_gen = val_image_generator.flow_from_directory(batch_size=batch_size,  #
                                                            directory=dir_val, #No diretorio: 
                                                            shuffle=True, #devo randomizar?sim!
                                                            target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...
-                                                           class_mode='binary')
+                                                           class_mode='categorical')
 
 
 #============================================ Visualizar imagens =============================================
@@ -83,7 +83,7 @@ model = Sequential([
     MaxPooling2D(),
     Flatten(),
     Dense(512, activation='relu'),
-    Dense(1, activation='sigmoid')
+    Dense(2, activation='sigmoid')
 ])
 
 

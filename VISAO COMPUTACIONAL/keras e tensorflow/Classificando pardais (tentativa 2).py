@@ -1,7 +1,83 @@
 #Esta tentativa vem com objetivo de fazer minha propria rede neural, isto, seguindo ideias de treinamento contÃ­nuo imagem por imagem proposto pelo dia 12/03/2020
 #/home/salomao/Desktop/Detector_images/Pardal_Treinamento
-import os#biblioteca de aÃ§oes de sistema bÃ¡sica
 
+
+import os#biblioteca de aÃ§oes de sistema bÃ¡sica
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import load_model
+
+
+    
+    
+    
+    
+##Função que lê os parametros do arquivo e treina a rede, salvando-a ================================================================================
+def treinamento_cnn (path_parametro,path_train, nome, num_dados):
+    
+    file = open(path_parametro,'r')#Vou ler o arquivo dos parametros e captar os dados que foram salvos
+    
+    linhas  = file.read().split('\n')#Todos os dados de um arquivo são strings. Desta forma quando quebramos por \n, obtemos as linhas
+    parametros = linhas[0].split('\t')#Separei os elementos por \t, desta forma, na linha desejada, captarei de forma organizada os dados desejados
+    batch_size = parametros[0]
+    IMG_WIDTH = parametros[1]
+    IMG_HEIGHT = parametros[2]
+    epochs = parametros[3]
+    file.close()#Fechar arquivo de leitura
+    
+    ## Preprocessamento  das imagens:
+    
+    train_image_generator = ImageDataGenerator(rescale = 1./255) # reescala os valores em float de 0 - 1
+    train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
+                                                           directory=path_train, #No diretorio: 
+                                                           shuffle=True, #devo randomizar?sim!
+                                                           target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...
+                                                           class_mode='categorical')
+    
+    ##Arquitetura da minha rede CNN:
+    
+    
+    model = Sequential([
+    Conv2D(16, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    MaxPooling2D(),
+    Conv2D(32, 3, padding='same', activation='relu'),
+    MaxPooling2D(),
+    Conv2D(64, 3, padding='same', activation='relu'),
+    MaxPooling2D(),
+    Flatten(),
+    Dense(512, activation='relu'),
+    Dense(2, activation='sigmoid')
+    ])
+    
+    
+    model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+
+    history = model.fit_generator(#Esta funçao treina sua rede neural.
+    train_data_gen,
+    steps_per_epoch=num_dados,
+    epochs=epochs,
+    validation_data=val_data_gen,
+    validation_steps=num_tot_val 
+    )
+
+
+    model.save(nome)
+    
+#====================================================================================================================================================
+
+
+
+
+
+
+
+
+#Inicio da função main:==============================================================================================================================
+    
 ask = 'a'#preset de variavel, so para nao ocorrer coincidencias desagradaveis
 while True:
     ask = input('/nDeseja criar uma nova rede neural?(y = yes / n = no / q = quit):       ')#Enquanto a pessoa nao digita y ou n, ele continua pergutando
@@ -29,15 +105,22 @@ while True:
         Width = input('\nQual o comprimento da imagem que entrar na rede neural?  ')
         Height = input('\nQual a altura da imagem que entrar na rede neural? ')
         Epochs = input('\nQuantas epocas? ' )
+        file_parametros.write( batch_size + '\t' + Width + '\t' + Height + '\t' + Epochs )
         
-        file_parametros.write(int(batch_size),'\t',int(Width),'\t',int(Height),'\t',int(Epochs))
+        file_parametros.close()#Fechando o arquivo.
         
-        file_parametros.close()#FEchando o arquivo.
+        passos_epoch = (len(os.listdir(train_path_class_one))+ len(os.listdir(train_path_class_two)))/batch_size#A soma do numero de imagens em cada diretorio dividido pelo numero de batchs
+        treinamento_cnn( file_parametros_path , train_path , nome_da_rede, passos_epoch )
         
         
     if ask=='q':#Se a pessoa digitar q, ela sai do programa sem executar nada.
         break
         
         
-        
+###==================================================================================================================================================
+    
+
+    
+    
+
     
