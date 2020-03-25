@@ -35,8 +35,8 @@ num_tot = num_tot_train + num_tot_val
 
 #============================================Configurando variaveis de treinamento ==================================
 
-batch_size =5#Cada epoca usara 128 imagens 
-epochs = 2#Quantas passadas é relizada
+batch_size =3#Cada epoca usara 128 imagens 
+epochs = 10#Quantas passadas é relizada
 IMG_HEIGHT = 720#Altura em pixel da imagem
 
 IMG_WIDTH = 720#Comprimento em pixel da imagem
@@ -77,22 +77,27 @@ for img in sample_training_images:
 #==========================================Criando o modelo =========================================================
 
 model = Sequential([
-    Conv2D(16, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    Conv2D(128, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     MaxPooling2D(),
-    Conv2D(32, 3, padding='same', activation='relu'),
+    Conv2D(128, 3, padding='same', activation='relu'),
     MaxPooling2D(),
-    Conv2D(64, 3, padding='same', activation='relu'),
+    Conv2D(128, 3, padding='same', activation='relu'),
     MaxPooling2D(),
-    Dropout(0.2),#20% dos neuronios nao serao ativadas
+    Conv2D(128, 3, padding='same', activation='relu'),
+    MaxPooling2D(),
+    Conv2D(128, 3, padding='same', activation='relu'),
+    MaxPooling2D(),
+    Dropout(0.1),#10% dos neuronios nao serao ativadas
     Flatten(),
     Dense(512, activation='relu'),
-    Dense(2)
+    Dense(1000, activation='relu'),
+    Dense(2, activation ='sigmoid')
 ])
 
 
 model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
               loss='categorical_crossentropy',
-              metrics=['categorical_accuracy'])
+              metrics=['accuracy'])
 
 model.summary()
 
@@ -112,8 +117,8 @@ model.save('pardal')
 
 #============================================================ Plotando  resultado ============================
 
-acc = history.history['categorical_accuracy']
-val_acc = history.history['val_categorical_accuracy']
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
 
 loss = history.history['loss']
 val_loss = history.history['val_loss']
