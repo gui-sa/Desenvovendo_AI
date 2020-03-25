@@ -35,16 +35,18 @@ num_tot = num_tot_train + num_tot_val
 
 #============================================Configurando variaveis de treinamento ==================================
 
-batch_size =10#Cada epoca usara 128 imagens 
-epochs = 10#Quantas passadas é relizada
+batch_size =5#Cada epoca usara 128 imagens 
+epochs = 2#Quantas passadas é relizada
 IMG_HEIGHT = 720#Altura em pixel da imagem
 
 IMG_WIDTH = 720#Comprimento em pixel da imagem
 
+num_tot_train_steps = int(num_tot_train/batch_size)#Geralmente percorre o numero de dados
+
 
 #============================================Preprocessamento dos dados =============================================
 
-train_image_generator = ImageDataGenerator(rescale = 1./255, horizontal_flip=True, rotation_range=45) # reescala os valores em float de 0 - 1
+train_image_generator = ImageDataGenerator(rescale = 1./255, horizontal_flip=True, rotation_range=360) # reescala os valores em float de 0 - 1
 
 
 train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
@@ -89,14 +91,14 @@ model = Sequential([
 
 
 model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
+              loss='categorical_crossentropy',
+              metrics=['categorical_accuracy'])
 
 model.summary()
 
 history = model.fit_generator(#Esta funçao treina sua rede neural.
     train_data_gen,
-    steps_per_epoch=num_tot_train,
+    steps_per_epoch=num_tot_train_steps,
     epochs=epochs,
     validation_data=val_data_gen,
     validation_steps=num_tot_val 
@@ -110,8 +112,8 @@ model.save('pardal')
 
 #============================================================ Plotando  resultado ============================
 
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+acc = history.history['categorical_accuracy']
+val_acc = history.history['val_categorical_accuracy']
 
 loss = history.history['loss']
 val_loss = history.history['val_loss']

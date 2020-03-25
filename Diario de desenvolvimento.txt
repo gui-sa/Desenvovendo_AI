@@ -613,6 +613,36 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 25/03/2020:
+
+	O dia de hoje teve como objetivo brincar e testar um pouco algumas funcoes a cerca do problema... Quando mudei o erro, tudo bugou.. Apesar de estar funcionando.
+
+	
+
+
+
+
+
+
+
+
         
 
 
