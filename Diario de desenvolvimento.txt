@@ -644,6 +644,10 @@ Outra dica é usar a funçÃo diff do github.
 
 
         
+#### 26/03/2020
+
+	Testei outras arquiteturas. Nenhuma realmente demonstrou alguma alteração significativa.
+	Com isso conclui algumas informações com base nos modelos ja testados e decidi assistir o curso de keras em reconhecimento de imagem primeiro.
 
 
 
