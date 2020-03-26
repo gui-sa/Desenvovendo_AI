@@ -649,6 +649,8 @@ Outra dica é usar a funçÃo diff do github.
 	Testei outras arquiteturas. Nenhuma realmente demonstrou alguma alteração significativa.
 	Com isso conclui algumas informações com base nos modelos ja testados e decidi assistir o curso de keras em reconhecimento de imagem primeiro.
 
+		*https://www.tensorflow.org/install/gpu   
+			Arrumando o problema de nao conseguir usar a gpu.
 
 
 

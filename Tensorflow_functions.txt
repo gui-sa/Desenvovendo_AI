@@ -1,0 +1,3 @@
+
+Sess = tf.compat.v1.Session()#Criando um objeto da classe sessão. Repare qua apartir da versao 2.0.0 operacoes com constante nao entram no mapa
+a = tf.constant()#Cria uma constante.
