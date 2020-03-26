@@ -36,17 +36,17 @@ num_tot = num_tot_train + num_tot_val
 #============================================Configurando variaveis de treinamento ==================================
 
 batch_size =3#Cada epoca usara 128 imagens 
-epochs = 10#Quantas passadas é relizada
-IMG_HEIGHT = 720#Altura em pixel da imagem
+epochs = 30#Quantas passadas é relizada
+IMG_HEIGHT = 500#Altura em pixel da imagem
 
-IMG_WIDTH = 720#Comprimento em pixel da imagem
+IMG_WIDTH = 500#Comprimento em pixel da imagem
 
 num_tot_train_steps = int(num_tot_train/batch_size)#Geralmente percorre o numero de dados
-
+num_tot_val_steps = int(num_tot_val/batch_size)#Geralmente percorre o numero de dados
 
 #============================================Preprocessamento dos dados =============================================
 
-train_image_generator = ImageDataGenerator(rescale = 1./255, horizontal_flip=True, rotation_range=360) # reescala os valores em float de 0 - 1
+train_image_generator = ImageDataGenerator(rescale = 1./255, horizontal_flip=True, rotation_range=360,zoom_range=0.5, height_shift_range=.15, width_shift_range=.15) # reescala os valores em float de 0 - 1  e ativa alguma funçoes para data augmentation
 
 
 train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size,  #Do objeto train_image_generator, criar um fluxo de  matrizes de batch tamanho batch size
@@ -77,25 +77,24 @@ for img in sample_training_images:
 #==========================================Criando o modelo =========================================================
 
 model = Sequential([
-    Conv2D(128, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    Conv2D(32, 3, padding='same', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     MaxPooling2D(),
-    Conv2D(128, 3, padding='same', activation='relu'),
+    Conv2D(64, 3, padding='same'),
     MaxPooling2D(),
-    Conv2D(128, 3, padding='same', activation='relu'),
+    Conv2D(128, 3, padding='same'),
     MaxPooling2D(),
-    Conv2D(128, 3, padding='same', activation='relu'),
-    MaxPooling2D(),
-    Conv2D(128, 3, padding='same', activation='relu'),
+    Conv2D(256, 3, padding='same'),
     MaxPooling2D(),
     Dropout(0.1),#10% dos neuronios nao serao ativadas
     Flatten(),
     Dense(512, activation='relu'),
-    Dense(1000, activation='relu'),
+    Dense(1000, activation='sigmoid'),
+    Dense(1000, activation='sigmoid'),
     Dense(2, activation ='sigmoid')
 ])
 
 
-model.compile(optimizer='adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
+model.compile(optimizer='Adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 
@@ -106,7 +105,7 @@ history = model.fit_generator(#Esta funçao treina sua rede neural.
     steps_per_epoch=num_tot_train_steps,
     epochs=epochs,
     validation_data=val_data_gen,
-    validation_steps=num_tot_val 
+    validation_steps=num_tot_val_steps 
 )
 
 
