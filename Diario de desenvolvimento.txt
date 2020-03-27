@@ -658,4 +658,25 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+#### 27/03/2020:
+
+	Todos os testes que fiz no dia levou a concluir que aumentar excessivamente o numero de parametros de uma rede nem sempre é bom!!!
+		As redes que tinham menos parametros foram as que demonstraram melhor aprendizado e melhor taxa de acerto! Alem de tudo treinavam rapido e eram estáveis.
+
+	Segue links de algumas fontes de leitura:
+
+	*Understanding Neural Networks Through Deep Visualization   :   http://yosinski.com/media/papers/Yosinski__2015__ICML_DL__Understanding_Neural_Networks_Through_Deep_Visualization__.pdf
+	*Practical Bayesian Optimization of MachineLearning Algorithms   :    https://papers.nips.cc/paper/4522-practical-bayesian-optimization-of-machine-learning-algorithms.pdf
+	*Spatial Transformer Networks         :          https://arxiv.org/pdf/1506.02025.pdf
+	*Visualizing and Understanding Convolutional Networks     :       https://arxiv.org/pdf/1311.2901v3.pdf
+	*https://datascience.stackexchange.com/questions/28244/choosing-layer-hyper-parameters-of-a-cnn
+
+	***** Um livro:  Deep Learning - Ian Goodfellow, Yoshua Bengio and Aaron Courvile
+		
+
+
+	10)Objetivo para o dia 28 é olhar todos os teste e sintetiza-los.
+
+
+
 
