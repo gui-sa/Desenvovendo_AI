@@ -38,7 +38,7 @@ num_tot = num_tot_train + num_tot_val
 #============================================Configurando variaveis de treinamento ==================================
 
 batch_size =3#Cada epoca usara 128 imagens 
-epochs = 200#Quantas passadas é relizada
+epochs = 5#Quantas passadas é relizada
 IMG_HEIGHT = 720#Altura em pixel da imagem
 
 IMG_WIDTH = 720#Comprimento em pixel da imagem
