@@ -680,3 +680,63 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+#### 28/03/2020 
+
+	10)Olhar todos os teste e sintetiza-los.
+		Alem de tudo montei uma planilha de visualizacao de dados.
+			¨E se eu fizer uma rede que é especializada em criar redes neurais???!¨						
+			*Hora pode estar com 85% e hora 30%, para fazermos o controle o correto era checar dentro de um intervalo maximo de epocas, e pegar a rede que obteve maior sucesso. Talvez, salvando as que foram os picos.
+			*Trabalhar com muitos parametros tornou a rede extremamente instavel e dificil de aprender, principalmente com pouco dataset e pouco pooling.
+			*Dropout atrapalhou o aprendizado em todos os exemplos
+			*A rede teve taxa de aprendizado maior e expressiva somente quando o pooling foi aumentado.
+			*Data augmentation tornou a rede mais instavel, porém  dificultou substancialmente o ovefitting.
+			*Uma maneira de diminuir a flutuação de dados é diminuir o learning rate da funcao adam.
+			*É importante que exista uma deeplayer. Porém, caso ela seja muito grande o seu aprendizado ficar instavel.
+			*Nao existiu diferenças entre usar classificaçao categoria e binaria (quando a categorica for binaria)
+			*Aumentar o numero de deeplayers não afetou o aprendizado - simplesmente aumento o numero de parametros.
+
+
+	20)Fazer novos testes
+		Decidi assistir o curso. A ideia é retirar o maximo de informaçao do curso antes de fazer novos testes e conclusoes
+
+	30)Assistir o curso de AI
+		Aprendi hoje a:
+			-Remover o eager_execution
+			-Declarar sessions
+			-Declarar constantes
+			-Declarar placeholders e variaveis
+			-Iniciar variaveis globais
+			-Usar diferentes nucleos nos calculos
+			-Usar o tensorboard
+			
+
+
+	Avaliando as arquiteturas às quais testei percebi que eu não sei o que é uma convolução ainda.
+		
+	40)Qual a diferença entre :
+
+			1- conv + pool + conv 
+			2- conv + conv + pool
+
+			??????????????????????
+
+
+
+
+
+
+
+
+
+

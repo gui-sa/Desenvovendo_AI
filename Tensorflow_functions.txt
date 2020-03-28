@@ -1,3 +1,59 @@
+*Para o tensorflow rodar a operação, antes ele cria um mapa. Para rodar o mapa, voce precisa de uma sessao:
+	Sess = tf.compat.v1.Session()#Criando um objeto da classe sessão. Repare qua apartir da versao 2.0.0 operacoes com constante nao entram no mapa
+	
+*Antes de rodar uma sessao, voce precisa inicializar todas as variaveis com o valores desejados:
+		init = tf.compat.v1.global_variables_initializer()#Para inicializar as variaveis
+	Em uma sessao, rode o 'init'
 
-Sess = tf.compat.v1.Session()#Criando um objeto da classe sessão. Repare qua apartir da versao 2.0.0 operacoes com constante nao entram no mapa
-a = tf.constant()#Cria uma constante.
+
+*a = tf.constant()#Cria uma constante.
+*a = tf.zeros()#Cria uma variavel inicializada em zero com o shape designado e nome designado
+*a = tf.ones()#Cria uma variavel inicializada em 1 com o shape designado e nome designado
+*a = tf.random_normal()#Cria uma variavel inicializada em um valor random maior que 0 ate 1 com o shape designado e nome designado
+*a = tf.Variable()#Cria uma variavel inicializada em zero com o shape designado e nome designado
+
+
+*Em um modelo, uma variavel nunca consegue ser recuperada! Ela consegue ser compativel por nome e entao copiada em outra de mesmo nome (load):
+	tf.compat.v1.get_variable()
+
+
+
+
+*Para passar o valor de uma variavel durante o treinamento de um modelo, voce usa um placeholder
+	tf.compat.v1.placeholder()
+	
+	Tive um problema: ao usar o placeholder surgiu um error: tf.placeholder() is not compatible with eager execution. A solução é dar disable no eager execution:
+		tf.compat.v1.disable_eager_execution()#TensorFlow's eager execution is an imperative programming environment that evaluates operations immediately, without building graphs
+
+
+*Para criar variaveis em diferentes escopos:
+	with tf.compat.v1.variable_scope('escopo1'):
+	    var = tf.Variable(tf.compat.v1.random_normal([1],),name = 'var1')#Adicionando outra variavel de mesmo nome so que em escopo diferente
+	    
+
+
+
+*Operaçoes:
+
+	x = tf.multiply(a,b)#Multiplica aritmeticamente dois elementos
+	x = tf.add(a,b)#Soma dois elementos
+
+
+*Multiprocessameto:
+		from tensorflow.python.client import device_lib, print(device_lib.list_local_devices())#Printa todos os processadores possiveis para processamento
+		with tf.device('/CPU:0'):
+			<ACOES>
+	Para configurar uma sessao do device:
+		with tf.compat.v1.Session(config = tf.compat.v1.ConfigProto(log_device_placement=True)) as sess:
+		
+
+*Tensorboard:
+	Criamos um objeto para escrever um arquivo:
+		tensorboard_file =tf.compat.v1.summary.FileWriter( logdir, sess.graph)
+	Dai vai surgir uma pasta no diretorio dito com um arquivo dentro!
+	Abrir aquele diretorio e abrir terminal. No terminal chamar:
+		tensorboard --logdir=<nome_da_pasta_ou_arquivo>
+	Vai surgir um link... Nao fechar o server e colar aquilo no browser... Pronto!!
+
+
+
