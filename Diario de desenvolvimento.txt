@@ -734,9 +734,22 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+#### 31/03/2020:
+
+	Hoje o curso foi assistido e funcoes ensinando a preprocessar, treinando o modelo e analise de modelo do keras foram aprendidas.
+		funcoes:
+			sequential
+			dense
+			astype()
+			np.reshape
+			history.history
+			save
+			load
+	Todas as outras funcoes foram salvas no arquivo tensorflow assim como o detalhe do que cada uma delas fazem.
 
 
+	
 
 
-
-
+		
+			
