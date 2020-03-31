@@ -57,3 +57,64 @@
 
 
 
+============================================================================================== Keras: ============================================================================
+
+
+*model = keras.models.Sequential()#Criando objeto que cria um modelo sequencial
+
+*model.add(keras.layers.Dropout(0.5))#Para colocar uma taxa de dropout na layer anterior
+
+*model.summary()#Plota o summary sequencial do objeto modelo
+
+*Antes de usar o keras na gpu, vc precisa configurar o proto.
+	*a.astype('float32')#Mexendo com a precisao da variavel
+
+
+*target_train = keras.utils.np_utils.to_categorical(target_train,10)#Hotenconding an target
+
+
+*model.add(keras.layers.Dense(10, input_dim = 784, activation = 'softmax'))
+
+
+*model.compile(optmizer = 'sgd', loss = 'categorical_crossentropy', metrics=['accuracy'])#Stochastic Gradient Decent, crossentropy, e acurácia - esse compile é as configuraçoes de treinamento.
+
+score = model.evaluate(input_val, target_val, verbose=0)#Avaliando o modelo para o database de validaçao silenciosamenteo score retornando tera dois floats o primeiro é o erro e o segundo a accuracy
+
+
+*history = model.fit(input_train, target_train, batch_size = batch, epochs = epochs , verbose = 1 , validation_data = (input_val,target_val), callbacks = [<o nome do objeto de uma funcao ai>]) #Treinando o modelo  com esses endereços... Verbose = 0 : silencioso, Verbose = 1 :barra de progresso com epochs em cada linha, Verbose = 2 : Somente os resultados de cada epoca em cada linha no final de cada epoca ele registra um callback e executa o objeto. O history é uma varaivel para armazenar o callback automatico do fit.	
+	O objeto history tem uma funcao history que é um dicionario
+		uma das chaves é 'accuracy' -  qual a acuracia por cada epoca
+		Outra chave é 'val_accuracy'
+		Outra chave é 'loss'
+		Outra chave é 'val_loss'
+
+
+Callback é usado para parar o treinamento da rede caso ele alcance o resultado planejado.
+	*keras.callbacks.Callback()
+
+É possivel recordar todos os valores ja treinados em
+	*keras.callbacks.History()
+	*https://keras.io/callbacks/       para ensinar como usar
+
+Checkpoint: sua rede é salva periodica por uma funcao callback. Ela consegue ser loadada e continuar treinando mais a frente
+	*keras.callbacks.ModelCheckpoint(filepath,monitor = 'val_loss', verbose = 0, save_best_only = False, save_weights_only=False, mode = 'auto', period = 1)
+		usar em: *model.fit(callbacks = [checkpoint])
+
+
+Para salvar os pesos ou modelo:
+	*model.save_weights(filepath,overwrite=True)# A extensao deve ser h5
+	*model.save(filepath,overwrite=True)# A extensao deve ser h5
+	*model = keras.models.load_model('/home/salomao/Desktop/saved.h5')#para loadar uma rede
+
+
+Para usar o modelo loadado ou o treinado so usar
+	*pred = model.predict(x)#tenha em mente que x tem que ter uma dimensao a mais, do batch
+	Em casos de onehotencoded, voce pode usar a funcao a baixo para descobrir qual a coluna é a sobresalente.		
+		np.argmax(pred[0])
+
+
+
+
+
+
+
