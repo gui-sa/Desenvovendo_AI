@@ -78,7 +78,7 @@
 
 *model.compile(optmizer = 'sgd', loss = 'categorical_crossentropy', metrics=['accuracy'])#Stochastic Gradient Decent, crossentropy, e acurácia - esse compile é as configuraçoes de treinamento.
 
-score = model.evaluate(input_val, target_val, verbose=0)#Avaliando o modelo para o database de validaçao silenciosamenteo score retornando tera dois floats o primeiro é o erro e o segundo a accuracy
+*score = model.evaluate(input_val, target_val, verbose=0)#Avaliando o modelo para o database de validaçao silenciosamenteo score retornando tera dois floats o primeiro é o erro e o segundo a accuracy
 
 
 *history = model.fit(input_train, target_train, batch_size = batch, epochs = epochs , verbose = 1 , validation_data = (input_val,target_val), callbacks = [<o nome do objeto de uma funcao ai>]) #Treinando o modelo  com esses endereços... Verbose = 0 : silencioso, Verbose = 1 :barra de progresso com epochs em cada linha, Verbose = 2 : Somente os resultados de cada epoca em cada linha no final de cada epoca ele registra um callback e executa o objeto. O history é uma varaivel para armazenar o callback automatico do fit.	
@@ -95,6 +95,7 @@ Callback é usado para parar o treinamento da rede caso ele alcance o resultado 
 É possivel recordar todos os valores ja treinados em
 	*keras.callbacks.History()
 	*https://keras.io/callbacks/       para ensinar como usar
+	Existe um callback automatico... Se voce colocar a funcao fit do modelo atribuindo a uma variaver, por exemplo, history, a funcao history.history sera um dicionaro de recordaçao do metrics.
 
 Checkpoint: sua rede é salva periodica por uma funcao callback. Ela consegue ser loadada e continuar treinando mais a frente
 	*keras.callbacks.ModelCheckpoint(filepath,monitor = 'val_loss', verbose = 0, save_best_only = False, save_weights_only=False, mode = 'auto', period = 1)
@@ -115,6 +116,66 @@ Para usar o modelo loadado ou o treinado so usar
 
 
 
+========================================================= PARAMETROS DE CONSTRUÇAO =====================================================
+
+*Otimizadores de primeira ordem:
+	Batch Gradient Descent: sensível à minimos locais. Ou seja, Pode ser que nao chegue ao minimo global dependendo da quantidade de database.
+
+	Stochastic Gradient Descent: Os parametros flutuam bastante com o entuito de descobrir o minimo global ou minimos locais promissores. O problema deste tipo de algoritmo é que por causa disso ele demora a convergir ou simplesmente nao converge. Quando ele desenvolver este tipo de flutuação excessiva é recomendado diminuir o learning rate.
+
+	Mini-batch Gradient Descent: é o meio termo entre o SGD e o BGD. Em redes neurais neutras é recomendado sua utilização. Convergencia é rapida.
+
+*Otimizadores de segunda ordem:
+	Sao funcoes mais custosas para o processador porém tem menos dificuldades em lidar com regioes de minimos locais.
+
+	Momentum(y): acelera a queda do gradiente, ignora gradientes irrelevantes, filtrando altas variações
+
+	Nesterof Acelerated Gradient(NAG): Regula o momento fazendo com que a flutuaçao em torno do ideal seja filtrado
+
+	ADAGRAD: learning rate se adapta baseado nos parametros. Parametros ultra variantes tem learning rate menor e os parametros pouco ou invariantes (quando fala-se em variante - flutuante), tem maior learning rate. Nao faz sentido tunar o learning rate. O problema é que o learning rate esta sempre decaindo, e portanto, toma mais tempo.
+
+	RMSPROP(Root Mean Square Propagation): o ADAGRAD quase nunca converge, ou toma demasiado tempo. RMSprop aprende de forma mais flutuante, porem, converge mais proximo do minimo global.
+
+	ADAM(Adaptive Moment Estimation): Adapta o learning rate para cada parametro, nunca para de aprender, nao sofre problemas de variações excesivas.
 
 
 
+*Non convex funtion: 
+	Funcao cheia de minimos locais
+		*Cross-entropy: Sempre positiva, onde a perfeiçao é zero. Consegue ser utilizada para calcular o erro em mais de uma categoria. 
+		
+*Convex funtion:
+	Funcao so tem minimo global
+		*Hinge
+
+
+*Regulando uma rede neural (Regularization of a neural network): Achar o menor modelo possivel evitando os dois problemas a seguir.
+	Overfitting: ocorre quando a rede é exageradamente complexa e portanto sobre-reage a qualquer alteração de parametro de entrada. Ela vai decorar o train_data e errar a validação.
+
+	Underfitting: Quando nem o train_data e a val_data consegue aprender.
+
+
+	Em redes neurais É SEMPRE RECOMENDADO EVITAR PESOS MAIORES... Acredite em VARIOS PESOS MENORES. Vamos consultar a penalidade. LASSO, RIDGE and ELASTICNET
+		L1: Soma absoluta dos valores de coeficiente
+		L2: É a soma dos coeficientes ao quadrado
+	*Somente L1 é o metodo de LASSO
+	*Somente L2 é o metodo do RIDGE REGRESSION
+	*Os dois é o metodo ElasticNet
+
+	*Data augmentation: Serve para evitar overfitting problems
+
+*Funçoes de ativação:
+	É fazer uma transformação e tornar a resolução nao linear. A maioria dos problemas nao sao lineares
+
+		*FUNCAO LINEAR: O gradiente descente é constante e portanto gera uma variação alta de aprendizado. Alem do mais por ser uma funcao linear, nao se consegue aprender padroe nao-lineares, ou naturais.
+		*Sigmoid: nao-linear, pode representar  probabilidades, porem, para valores muitos altos ou pequenos, temos vanishing gradients, e portanto, a rede para de aprender
+		*Tanh: nao linear, temos valores negativos e tambem temos problemas de vanishing gradient.
+		*ReLU: nao linear e somente ajuda em problemas esparsos, onde temos vario
+s dados que nao ajudam valores negativos sao zero. Os valores negativos nao possuem gradiente e portanto os pesos nao sao ajustados -> seu modelo fica fragilizado, varia muito, e chega em um minimo muito rapido - >  'dying RELU problem'
+		*Leaky RELU: nao possui a area zerada e sim um valor muito baixo.
+		*ELU : uma função exponencial que nao tem zero porem toma forma do relu. 
+
+
+
+
+Em um teste realizado, mostrou que a funcao sigmoid teve problemas em convergir. RELU, convergiu bem, porem ELU foi melhor.

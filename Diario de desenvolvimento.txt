@@ -734,10 +734,26 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 31/03/2020:
 
-	Hoje o curso foi assistido e funcoes ensinando a preprocessar, treinando o modelo e analise de modelo do keras foram aprendidas.
-		funcoes:
+	Hoje o curso foi assistido e funcoes ensinando a preprocessar, treinar e analisar o modelo, no keras foram aprendidas.
+		Funcoes marcantes:
 			sequential
 			dense
 			astype()
@@ -745,7 +761,7 @@ Outra dica é usar a funçÃo diff do github.
 			history.history
 			save
 			load
-	Todas as outras funcoes foram salvas no arquivo tensorflow assim como o detalhe do que cada uma delas fazem.
+	Todas as outras funcoes foram salvas no arquivo tensorflow_aprendizado assim como o detalhe do que cada uma delas fazem.
 
 
 	
@@ -753,3 +769,42 @@ Outra dica é usar a funçÃo diff do github.
 
 		
 			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 01/03/2020:
+
+	A seção teorica sobre redes neurais foi assistida:
+		*Descobri que existe maneiras de avaliar uma rede neural, pesquise por : REGULARIZATING OF A NEURAL NETWORK
+		*Comparações entre funcoes de ativação foi realizada.
+		*Sobre loss funtion o melhor é o cross entropy
+		*E o optimizer o adam.
+
+
+
+
+
+
+
+
+
+
+
