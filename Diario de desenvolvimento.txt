@@ -808,3 +808,27 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
+
+
+
+
+#### 02/03/2020:  
+	
+	Comecei dia fazendo um relatorio e enviando para o Rogerio.
+		Usando bibliotecas do scikit-image, aplicamos convolucao com alguns kerneis e visualizamos as imagens.
+		Foi explicado o problema do dying_relu
+		Foi explicado o batch_normalization
+	*https://www.youtube.com/watch?v=dXB-KQYkzNU
+		Neste site, explica-se melhor o que é batch normalization.
+		Batch normalization é uma técnica de individualização de layer, onde a layer aprende de com base em uma media de desvios.
+
+
+
+
+
+
+
+

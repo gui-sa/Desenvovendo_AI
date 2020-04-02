@@ -1,3 +1,6 @@
+============================================================= TENSORFLOW
+
+
 *Para o tensorflow rodar a operação, antes ele cria um mapa. Para rodar o mapa, voce precisa de uma sessao:
 	Sess = tf.compat.v1.Session()#Criando um objeto da classe sessão. Repare qua apartir da versao 2.0.0 operacoes com constante nao entram no mapa
 	
@@ -75,6 +78,9 @@
 
 *model.add(keras.layers.Dense(10, input_dim = 784, activation = 'softmax'))
 
+*model.add(BatchNormalization())#Para normalizar o batch antes de ele entrar na funcao de ativação. Quando usar normalização, nao podemos usar o activation no Dense e sim a funcao add activation
+
+*model.add(Activation('relu'))
 
 *model.compile(optmizer = 'sgd', loss = 'categorical_crossentropy', metrics=['accuracy'])#Stochastic Gradient Decent, crossentropy, e acurácia - esse compile é as configuraçoes de treinamento.
 
@@ -114,7 +120,17 @@ Para usar o modelo loadado ou o treinado so usar
 		np.argmax(pred[0])
 
 
+==================================================================================== scipy ====================================================================
 
+*img_g_edge1 = scipy.signal.convolve2d (img_g,kerne_edge_det1, 'valid') #A diretiva 'valid', fala pra ele diminuir a diemnsao (nao preencher com zeros), os dados da borda é descartado
+
+
+
+==================================================================================== scikit-image================================================
+
+*skimage.data.coffee()#Literalmente uma foto de café kkkkkkk
+
+*img = skimage.color.rgb2gray(img)
 
 ========================================================= PARAMETROS DE CONSTRUÇAO =====================================================
 
@@ -171,7 +187,7 @@ Para usar o modelo loadado ou o treinado so usar
 		*Sigmoid: nao-linear, pode representar  probabilidades, porem, para valores muitos altos ou pequenos, temos vanishing gradients, e portanto, a rede para de aprender
 		*Tanh: nao linear, temos valores negativos e tambem temos problemas de vanishing gradient.
 		*ReLU: nao linear e somente ajuda em problemas esparsos, onde temos vario
-s dados que nao ajudam valores negativos sao zero. Os valores negativos nao possuem gradiente e portanto os pesos nao sao ajustados -> seu modelo fica fragilizado, varia muito, e chega em um minimo muito rapido - >  'dying RELU problem'
+s dados que nao ajudam valores negativos sao zero. Os valores negativos nao possuem gradiente e portanto os pesos nao sao ajustados -> seu modelo fica fragilizado, varia muito, e chega em um minimo muito rapido - >  'dying RELU problem'.... Para arrumar ou diminuir o problema dos dying RELU recomenda-se diminuir o learning rate
 		*Leaky RELU: nao possui a area zerada e sim um valor muito baixo.
 		*ELU : uma função exponencial que nao tem zero porem toma forma do relu. 
 
@@ -179,3 +195,25 @@ s dados que nao ajudam valores negativos sao zero. Os valores negativos nao poss
 
 
 Em um teste realizado, mostrou que a funcao sigmoid teve problemas em convergir. RELU, convergiu bem, porem ELU foi melhor.
+
+
+
+Convolutional NetWorks, parametros:
+	*Filtro/kernel/Feature Detector
+	*Convolved Filter, activation map, Feature map: output do filtro passando pela imagem
+	*Recptive region: regiao onde o filtro opera o dot operation
+	*Depth: numero de filtros
+	*Depth_colum: neuronios que apontam para o mesmo campo receptivo
+	*Stride: O passo que o filtro da conforme caminha pela sua imagem
+	*zero-padding = mantem a informação das bordas
+	*relu_layer = Torna valores negativos em zeros
+	*pooling = reduz a imagem reduzindo a complexidade da figura
+		max_pooling mantem o valor maximo de um filtro em uma regiao. Usado para diminuir a massa de dados.
+	*Dilation : Quais bit vc utiliza para fazer as contas.
+
+
+Batch normalization -- Estabiliza o aprendizado, aumentando-o.
+
+
+
+
