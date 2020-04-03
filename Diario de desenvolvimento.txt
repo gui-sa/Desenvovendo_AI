@@ -790,7 +790,7 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
-#### 01/03/2020:
+#### 01/04/2020:
 
 	A seção teorica sobre redes neurais foi assistida:
 		*Descobri que existe maneiras de avaliar uma rede neural, pesquise por : REGULARIZATING OF A NEURAL NETWORK
@@ -815,7 +815,7 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
-#### 02/03/2020:  
+#### 02/04/2020:  
 	
 	Comecei dia fazendo um relatorio e enviando para o Rogerio.
 		Usando bibliotecas do scikit-image, aplicamos convolucao com alguns kerneis e visualizamos as imagens.
@@ -825,6 +825,23 @@ Outra dica é usar a funçÃo diff do github.
 		Neste site, explica-se melhor o que é batch normalization.
 		Batch normalization é uma técnica de individualização de layer, onde a layer aprende de com base em uma media de desvios.
 
+
+
+
+
+
+
+
+
+
+
+#### 03/04/2020:
+
+	O arquivo com funcoes foi renomeado para Artificial_inteligence_funtions_and_tools.txt
+	A video aula de hoje explicou o funcionamento das funcoes do keras apartir do tensorflow
+		Um codigo esta sendo desenvolvido para criar uma rede neural convolucional no dataset do MNIST
+		Parei no tempo 8:15 quando ele usa uma funcao que foi deprecated e tive que contornar. Para o proximo dia devo dar um jeito de dar um shuffle no data e criar batchs. Alem disso, devo criar um sistema de epochs e registramento de erros e acuracia.
+		O codigo sera salvo como CNN_tf_1.py
 
 
 

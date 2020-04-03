@@ -15,12 +15,38 @@
 *a = tf.random_normal()#Cria uma variavel inicializada em um valor random maior que 0 ate 1 com o shape designado e nome designado
 *a = tf.Variable()#Cria uma variavel inicializada em zero com o shape designado e nome designado
 
+*x_image = tf.reshape(x,[-1,28,28,1])#Conv layer preciso do formato [num_images,img_h,img_w,n_channel] Nossa figura tem 28x28x1 preto/branco
+
+*y_true_class = tf.argmax(y_true)
+
+*target_val = tf.one_hot(target_val,10)#Hotenconding o target data
 
 *Em um modelo, uma variavel nunca consegue ser recuperada! Ela consegue ser compativel por nome e entao copiada em outra de mesmo nome (load):
 	tf.compat.v1.get_variable()
 
 
+*Operaçoes CNN
+	*layer = tf.nn.max_pool(input = layer,
+		           ksize = [1,2,2,1],#A matriz do maxpool percorre apenas 1 imagem, de 2 em 2 pixels em comprimento e altura e em apenas 1 canal
+		           strides = [1,2,2,1],#O stride precisa ser dois, para efetuar o comportamento padrao do maxpool
+		           padding = 'SAME')#Consideramos as bordas na jogada
+	*layer = tf.nn.conv(input = x,#O input deve ter formato [numero_de_imagens,altura_da_imagem,comprimento_da_imagem,numero_de_canais]
+		       filters = weights,#Nao existem filtros prontos!!, Os filtros sao variaveis pesos que serão otimizadas de acordo com a imagem! São filtros personalizados para a imagem! São pesos compartilhados! Por isso a CNN possui pouco carater espacial!
+		       strides = [1,1,1,1],#O stride é como o filtro se locomove por estes diferentes shape do input
+		       padding = 'SAME')#mantendo como resultado o mesmo shape, ou seja, a borda entrara na jogada
+	*crossentropy = tf.nn.softmax_cross_entropy_with_logits(logits = layer_fc2, labels = y_true)#Esta funcao executa o softmax e ja calcula o erro cross entropy das categorias.
 
+
+*y_pred = tf.nn.softmax(layer_fc2)#Ao inves de aplicar Relu aplicamos softmax
+
+*Dado um tensor:
+	layer_shape = layer.get_shape()#Coleta shape 
+	num_features = layer_shape[1:4].num_elements()#Multiplica os elementos entre si
+
+
+*correct_pred = tf.equal(y_pred_class,y_true_class)#Cria um vetor de booleanos dizendo se acertou ou nao
+
+*accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))#Quero a media do vetor de booleanos == acuracia 
 
 *Para passar o valor de uma variavel durante o treinamento de um modelo, voce usa um placeholder
 	tf.compat.v1.placeholder()
@@ -34,7 +60,7 @@
 	    var = tf.Variable(tf.compat.v1.random_normal([1],),name = 'var1')#Adicionando outra variavel de mesmo nome so que em escopo diferente
 	    
 
-
+*Optmizer = tf.compat.v1.train.AdamOptimizer(learning_rate= 1e-4).minimize(cost)# Falando para o otimizador Adam otimizar o custo à um learning rate de 0.0001
 
 *Operaçoes:
 
@@ -66,6 +92,7 @@
 *model = keras.models.Sequential()#Criando objeto que cria um modelo sequencial
 
 *model.add(keras.layers.Dropout(0.5))#Para colocar uma taxa de dropout na layer anterior
+	
 
 *model.summary()#Plota o summary sequencial do objeto modelo
 
@@ -78,9 +105,11 @@
 
 *model.add(keras.layers.Dense(10, input_dim = 784, activation = 'softmax'))
 
-*model.add(BatchNormalization())#Para normalizar o batch antes de ele entrar na funcao de ativação. Quando usar normalização, nao podemos usar o activation no Dense e sim a funcao add activation
+*model.add(keras.layers.BatchNormalization())#Para normalizar o batch antes de ele entrar na funcao de ativação. Quando usar normalização, nao podemos usar o activation no Dense e sim a funcao add activation
 
-*model.add(Activation('relu'))
+*model.add(keras.layers.Activation('relu'))
+
+*model.add(keras.layers.Flatten())#Torna dados em formato 3D ou 2D ou 4D em um vetor ordenado de dados.
 
 *model.compile(optmizer = 'sgd', loss = 'categorical_crossentropy', metrics=['accuracy'])#Stochastic Gradient Decent, crossentropy, e acurácia - esse compile é as configuraçoes de treinamento.
 
@@ -131,6 +160,14 @@ Para usar o modelo loadado ou o treinado so usar
 *skimage.data.coffee()#Literalmente uma foto de café kkkkkkk
 
 *img = skimage.color.rgb2gray(img)
+
+
+=============================================================================== SKLEARN ===========================================================================
+
+
+
+
+
 
 ========================================================= PARAMETROS DE CONSTRUÇAO =====================================================
 
@@ -194,11 +231,11 @@ s dados que nao ajudam valores negativos sao zero. Os valores negativos nao poss
 
 
 
-Em um teste realizado, mostrou que a funcao sigmoid teve problemas em convergir. RELU, convergiu bem, porem ELU foi melhor.
+*Em um teste realizado, mostrou que a funcao sigmoid teve problemas em convergir. RELU, convergiu bem, porem ELU foi melhor.
 
 
 
-Convolutional NetWorks, parametros:
+*Convolutional NetWorks, parametros:
 	*Filtro/kernel/Feature Detector
 	*Convolved Filter, activation map, Feature map: output do filtro passando pela imagem
 	*Recptive region: regiao onde o filtro opera o dot operation
@@ -210,10 +247,12 @@ Convolutional NetWorks, parametros:
 	*pooling = reduz a imagem reduzindo a complexidade da figura
 		max_pooling mantem o valor maximo de um filtro em uma regiao. Usado para diminuir a massa de dados.
 	*Dilation : Quais bit vc utiliza para fazer as contas.
+	Em redes convolucionais o numero de filtros mencionados, são pacotes de pesos que serão treinados e são compartilhados sobre toda a figura!! Não existem filtros personalizados e no final das contas o tamanho do kernel é mais decisivo que a quantidade deles.
 
+*Batch normalization -- Estabiliza o aprendizado, aumentando-o.
 
-Batch normalization -- Estabiliza o aprendizado, aumentando-o.
+*Dropout: Forma eficaz de evitar overfitting. Ele desliga um percentual de neuronios do layer interior. Desliga de tal forma a fazer que os pesos ficam menores possiveis (usa lasso regurazator)
 
-
+*Fully connected layer: normal neural network.
 
 
