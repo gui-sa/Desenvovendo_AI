@@ -848,4 +848,23 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+#### 13/04/2020:
+
+	*Revisei o codigo
+	*Tentei dar shuffle apartir de uma lista de cardapio, porem, nao funcionou.
+	*Descobri uma funcao shuffle na biblioteca sklearn.
+	*Nao foi possivel efeturar a operaçao de treinamento usando o batch do tamanho total dos dados. O pc simplesmete trava.
+	*Usando batchs menores tudo funcionou perfeitamente.
+	*O codigo rodado pelo tensorflow (codigo pessoal) teve eficiencia menor do que a do codigo pelo keras, provavelmente porque nao soube lidar com os batchs
+	*Pulei o restante, pois ja nao estava absorvendo, mas de forma geral ficou faltando salvar os pesos e avaliar suas aparencias.
+	
+
+	O proximo dia tratará o mesmo assunto so que em keras.
+
+
+
+
+
+
+	
 

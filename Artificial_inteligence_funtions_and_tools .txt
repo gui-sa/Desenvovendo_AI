@@ -59,7 +59,8 @@
 	with tf.compat.v1.variable_scope('escopo1'):
 	    var = tf.Variable(tf.compat.v1.random_normal([1],),name = 'var1')#Adicionando outra variavel de mesmo nome so que em escopo diferente
 	    
-
+*crossentropy = tf.nn.softmax_cross_entropy_with_logits(logits = layer_fc2, labels = y_true)#Esta funcao executa o softmax e ja calcula o erro cross entropy das categorias.
+*cost = tf.reduce_mean(crossentropy)#Vou otimizar a media do cross entropy
 *Optmizer = tf.compat.v1.train.AdamOptimizer(learning_rate= 1e-4).minimize(cost)# Falando para o otimizador Adam otimizar o custo à um learning rate de 0.0001
 
 *Operaçoes:
@@ -165,6 +166,14 @@ Para usar o modelo loadado ou o treinado so usar
 =============================================================================== SKLEARN ===========================================================================
 
 
+*Para dar shuffle randomico em um input e target juntos:
+	X = np.array([[1., 0.], [2., 1.], [0., 0.]])
+	y = np.array([0, 1, 2])
+	X,y = sklearn.utils.shuffle(X,y, random_state=0)#Os vetores devem estar no formato numpy.
+
+
+
+
 
 
 
@@ -254,5 +263,7 @@ s dados que nao ajudam valores negativos sao zero. Os valores negativos nao poss
 *Dropout: Forma eficaz de evitar overfitting. Ele desliga um percentual de neuronios do layer interior. Desliga de tal forma a fazer que os pesos ficam menores possiveis (usa lasso regurazator)
 
 *Fully connected layer: normal neural network.
+
+
 
 

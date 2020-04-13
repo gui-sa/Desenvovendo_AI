@@ -4,6 +4,7 @@ import math#Para mexer com funcoes avancadas
 import numpy as np#Para mexer com vetores
 import sklearn as sk
 import matplotlib.pyplot as plt
+import random#Library for randomize things
 
 
 (input_train,target_train) ,(input_val,target_val) = tf.keras.datasets.mnist.load_data()#Loadando minist dataset #O database separa 60000 para treinamento e 10000 para validacao Separamos o database de treinamento entre o input e o target Separamos o database da validacao entre input e target
@@ -138,11 +139,36 @@ init = tf.compat.v1.global_variables_initializer()#Para inicializar as variaveis
 
 with tf.compat.v1.Session() as sess:
     sess.run(init)#variaveis iniciadas!!
-    
-    train_batch_size =64#tamanho do batch
-    epochs = 20
-     
+    target_train = sess.run(target_train)#Transformando TF em numpy
+    target_val = sess.run(target_val)#Transformando TF em numpy
+    train_batch_size =10#tamanho do batch
+    epochs = 20 
+    print('\n\nIniciando treinamento:  \n')
     for i in range(epochs):
-        x_batch,y_true_batch = 
+        input_train_shuffled,target_train_shuffled = sk.utils.shuffle(input_train,target_train,random_state = 0)
+        batch_it = int(len(input_train)/train_batch_size)
+        it_min = 0
+        it_max = train_batch_size
         
-    
+        for it in range(batch_it):
+            sess.run(Optmizer, feed_dict ={x : input_train_shuffled[it_min:it_max], y_true: target_train_shuffled[it_min:it_max]})
+            acc = sess.run(accuracy, feed_dict ={x : input_train_shuffled[it_min:it_max], y_true: target_train_shuffled[it_min:it_max]})
+            it_min += train_batch_size
+            it_max += train_batch_size
+            
+            batch_itv = int(len(input_train)/train_batch_size)
+            itv_min = 0
+            itv_max = train_batch_size
+            acc_itv_sum  = 0                  
+            for itv in range(batch_itv):
+                acc_itv = sess.run(accuracy, feed_dict ={x : input_val[itv_min:itv_max], y_true: target_val[itv_min:itv_max]})
+                acc_itv_sum += acc_itv
+            acc_itv = acc_itv_sum/batch_itv    
+            if it%5 == 0:
+                print('epoch: '+str(i)+'  accuracy_train: '+str(acc) +' accuracy_val: ' + str(acc_itv)+ ' iteration: ' + str(it) + '/'+ str(batch_it)+'\n')
+
+
+#Apesar dos pesares, os pesos nao sao salvos para poder ser avaliados posteriormente
+#A parte da validaçao atrasa bastante o processamente.
+#O codigo funcionou.
+#Caso queira revisar as aulas o curso é: Deep Learning for Computer Vision using Tensorflow and Keras :: Handwritten Digits with tensorflow
