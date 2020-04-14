@@ -9,6 +9,8 @@
 	Em uma sessao, rode o 'init'
 
 
+*n_nomes = np.unique(banco de dados de labels)#Retorna quantas Labels unicas possui nesse dataset
+
 *a = tf.constant()#Cria uma constante.
 *a = tf.zeros()#Cria uma variavel inicializada em zero com o shape designado e nome designado
 *a = tf.ones()#Cria uma variavel inicializada em 1 com o shape designado e nome designado
@@ -117,7 +119,7 @@
 *score = model.evaluate(input_val, target_val, verbose=0)#Avaliando o modelo para o database de validaçao silenciosamenteo score retornando tera dois floats o primeiro é o erro e o segundo a accuracy
 
 
-*history = model.fit(input_train, target_train, batch_size = batch, epochs = epochs , verbose = 1 , validation_data = (input_val,target_val), callbacks = [<o nome do objeto de uma funcao ai>]) #Treinando o modelo  com esses endereços... Verbose = 0 : silencioso, Verbose = 1 :barra de progresso com epochs em cada linha, Verbose = 2 : Somente os resultados de cada epoca em cada linha no final de cada epoca ele registra um callback e executa o objeto. O history é uma varaivel para armazenar o callback automatico do fit.	
+*history = model.fit(input_train, target_train, batch_size = batch, epochs = epochs , verbose = 1 , validation_data = (input_val,target_val), callbacks = [<o nome do objeto de uma funcao ai>]) #Treinando o modelo  com esses endereços... Verbose = 0 : silencioso, Verbose = 1 :barra de progresso com epochs em cada linha, Verbose = 2 : Somente os resultados de cada epoca em cada linha no final de cada epoca ele registra um callback e executa o objeto. O history é uma varaivel para armazenar o callaback automatico do fit.	
 	O objeto history tem uma funcao history que é um dicionario
 		uma das chaves é 'accuracy' -  qual a acuracia por cada epoca
 		Outra chave é 'val_accuracy'
@@ -176,7 +178,21 @@ Para usar o modelo loadado ou o treinado so usar
 
 
 
+=======================================================================================pandas ====================================================================
 
+
+*Para ler formato .csv
+	pandas.read()
+
+
+
+
+
+
+===================================================================================== ================================================================
+*icrawler#Uma biblioteca que permite o download de varias imagens do google
+
+*labellmg #App para fazer a legenda de imagens - usado na classificacao
 
 ========================================================= PARAMETROS DE CONSTRUÇAO =====================================================
 

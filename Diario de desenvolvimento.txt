@@ -835,6 +835,8 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
 #### 03/04/2020:
 
 	O arquivo com funcoes foi renomeado para Artificial_inteligence_funtions_and_tools.txt
@@ -842,6 +844,13 @@ Outra dica é usar a funçÃo diff do github.
 		Um codigo esta sendo desenvolvido para criar uma rede neural convolucional no dataset do MNIST
 		Parei no tempo 8:15 quando ele usa uma funcao que foi deprecated e tive que contornar. Para o proximo dia devo dar um jeito de dar um shuffle no data e criar batchs. Alem disso, devo criar um sistema de epochs e registramento de erros e acuracia.
 		O codigo sera salvo como CNN_tf_1.py
+
+
+
+
+
+
+
 
 
 
@@ -865,6 +874,15 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
+
+#### 14/04/2020:
+
+	Terminei de assistir a parte de redes convolucionais, apesar de nao fazer todos os exemplos propostos pelo professor.
+	Quase terminei a parte de montar o dataset... Sobre montar o dataset, o googliser é uma boa alternativa e ja vem  organizado. Para colocar legendas e fazer box na imagem, ele usou um app que se chama labellmg... O arquivo criado é um xml ao qual foi aberto via 'Sublime'. Nesse arquivo continha todos os dados. 
+	
 
 	
 
