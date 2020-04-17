@@ -906,25 +906,53 @@ Outra dica é usar a funçÃo diff do github.
 
 
 #### 17/04/2020:
+	Objetivos do dia:
+		100)Fazer um detector de objetos usando YOLO para detecção de objetos comuns
+			110)Detector de objetos padroes para imagens
+			120)Detector de objetos padroes para videos
+			130)Detector de objetos padroes para lives
+			140)Detector de pardais para imagens
+			150)Detector de pardais para videos
+			160)Detector de pardais para lives
+					
+		+ADD)Fazer um detector de objetos usando faster R-CNN para detecção de objetos comuns
+			++1-Detector de objetos padroes para imagens
+			++2-Detector de objetos padroes para videos
+			++3-Detector de objetos padroes para lives
+			++4-Detector de pardais para imagens
+			++5-Detector de pardais para videos
+			++6-Detector de pardais para lives
+					
+		+ADD) Mineração prt1 - Como funciona um detector de imagem R_CNN ??
+	
 
-	100)Fazer um detector de objetos usando YOLO para detecção de objetos comuns
-		110)Detector de objetos padroes para imagens
-		120)Detector de objetos padroes para videos
-		130)Detector de objetos padroes para lives
-		140)Detector de pardais para imagens
-		150)Detector de pardais para videos
-		160)Detector de pardais para lives
-				
-	+ADD)Fazer um detector de objetos usando faster R-CNN para detecção de objetos comuns
-		++1-Detector de objetos padroes para imagens
-		++2-Detector de objetos padroes para videos
-		++3-Detector de objetos padroes para lives
-		++4-Detector de pardais para imagens
-		++5-Detector de pardais para videos
-		++6-Detector de pardais para lives
-				
-	+ADD) Mineração prt1 - Como funciona um detector de imagem R_CNN ??
+	????)Tudo aquilo que o curso ensinou ja esta ultrapassado e nao existe mais... PORTANTO... BORA ADAPTAR AS BAGAÇAS!!! (obviamente falhei na ganancia do dia)
 
+
+	Primeiramente um arquivo foi criado explicando algumas funcoes ja testadas do yolo no terminal... porem perceba que:
+		-O YOLO deve ser algum dia, embarcado em outros projetos...
+		-Nem todo mundo sabe sair configurando e mexendo no terminal...
+
+	
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+							PROXIMOS objetivos:
+
+								100)Criar um classificador de imagens para pardais, usando os conhecimentos adquiridos		
+
+								200)BORA EMBARCAR ESSE YOLO DANADO!!
+									210) Descobrir funcoes que permitam-me manobrar a falta do acesso direto ao seu codigo fonte.
+									220) Fazer um detector via webcam
+									230) Fazer um detector via webcam que retorne a origem.
+									240) Treinar rede YOLO com os meus objetos
+									250) Criar minha propria arquitetura YOLO ou faster R_CNN voltada para ultra processamento!!
+								 
+								+ADD) Assistir o curso de Reinforcement Learning.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	
 
 
 
