@@ -158,7 +158,7 @@ Para usar o modelo loadado ou o treinado so usar
 
 
 
-==================================================================================== scikit-image================================================
+==================================================================================== Scikit-image================================================
 
 *skimage.data.coffee()#Literalmente uma foto de café kkkkkkk
 
@@ -178,7 +178,7 @@ Para usar o modelo loadado ou o treinado so usar
 
 
 
-=======================================================================================pandas ====================================================================
+======================================================================================= Pandas ====================================================================
 
 
 *Para ler formato .csv
@@ -186,6 +186,16 @@ Para usar o modelo loadado ou o treinado so usar
 
 
 
+======================================================================================== PICKLE ==========================================================
+
+
+Biblioteca para salvar qualquer variavel.
+*Para gravar:
+	pickle_arq = open('directory','wb')
+	pickle.dump(var,pickle_arq)
+*Para loadar:
+	pickle_arq = open('directory','rb')
+	var = pickle.load(pickle_arq)	
 
 
 
@@ -279,6 +289,47 @@ s dados que nao ajudam valores negativos sao zero. Os valores negativos nao poss
 *Dropout: Forma eficaz de evitar overfitting. Ele desliga um percentual de neuronios do layer interior. Desliga de tal forma a fazer que os pesos ficam menores possiveis (usa lasso regurazator)
 
 *Fully connected layer: normal neural network.
+
+
+
+
+============================================================================================ OBJECT DETECTATION -=============================================================
+
+
+	Primeira skill necessaria:
+		-GROUND TRUTH - o ato de pegar uma imagem e criar um label com as coordenadas x,y,w,h,label
+
+		-ARCHITECTURE- 
+			-CONV NET
+			- Duas redes neurais distintas - 
+				-Uma para classificar o label
+				-Outra chamada bounding regressor
+		Transfer learning
+
+
+=========================================================================  Faster-RCNN
+
+	A imagem passa paralelamente por dois processos:
+		-Anchors: Caixas geradas em diversos tamanhos - No caso, 9 ancoras, que andam pela imagem (stride) seguindo um centro. Surgem muitas possibilidades, e passar todas as figuras demandaria muito tempo... POR ISSO existe o RPN - > RANKS REGION BOX --.
+			RPN- 
+		-NON-MAX_SUPRESSION _ Aparecerao varias caixas no envolto do objeto. Elas irao se unir e formar uma caixa só -  que tem maior probabilidade.
+		-ROI max pooling - Reduz a imagem uma matriz de um tamanho PADRAO.!!!
+		-INtecection over UNION - mede a area da intercecçao dividida pela area total. Medida de precisao
+		-mAP - mean everage precision - 
+		
+
+
+Tensorflow object detection API:
+
+
+	intall:
+		https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md
+
+
+
+
+
+======================================================================== YOLO
 
 
 

@@ -884,5 +884,47 @@ Outra dica é usar a funçÃo diff do github.
 	Quase terminei a parte de montar o dataset... Sobre montar o dataset, o googliser é uma boa alternativa e ja vem  organizado. Para colocar legendas e fazer box na imagem, ele usou um app que se chama labellmg... O arquivo criado é um xml ao qual foi aberto via 'Sublime'. Nesse arquivo continha todos os dados. 
 	
 
+
+
+
+
+
+
+
+
+#### 15/04/2020:
+
+	Começarei o dia baixando o labellmg:  https://github.com/tzutalin/labelImg
+		>>pip3 install labelImg
+		>>labelImg
 	
+
+
+
+#### 16/04/2020:
+	Corridao para terminar o curso
+
+
+#### 17/04/2020:
+
+	100)Fazer um detector de objetos usando YOLO para detecção de objetos comuns
+		110)Detector de objetos padroes para imagens
+		120)Detector de objetos padroes para videos
+		130)Detector de objetos padroes para lives
+		140)Detector de pardais para imagens
+		150)Detector de pardais para videos
+		160)Detector de pardais para lives
+				
+	+ADD)Fazer um detector de objetos usando faster R-CNN para detecção de objetos comuns
+		++1-Detector de objetos padroes para imagens
+		++2-Detector de objetos padroes para videos
+		++3-Detector de objetos padroes para lives
+		++4-Detector de pardais para imagens
+		++5-Detector de pardais para videos
+		++6-Detector de pardais para lives
+				
+	+ADD) Mineração prt1 - Como funciona um detector de imagem R_CNN ??
+
+
+
 
