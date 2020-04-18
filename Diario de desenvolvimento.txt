@@ -952,7 +952,8 @@ Outra dica é usar a funçÃo diff do github.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	
+	Mais aprendizados sobre a biblioteca os:
+		*os.system('command_from_cmd')#Roda o comando como se estivesse no terminal
 
 
 
