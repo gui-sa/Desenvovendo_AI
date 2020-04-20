@@ -1000,3 +1000,8 @@ Outra dica é usar a funçÃo diff do github.
 
 		!!!!) Aparentemente a melhor forma de brincar com isso, no nivel que estou, seria loadar o modelo pelo opencv mesmo e só futuramente, depois de ter minerado 
 
+
+	Construindo um classificador de pratos sujos/ pratos limpos apartir do keras e tensorflow:
+		-Fiz um meio de montar os dados de treinamento e validação !!!
+		
+
