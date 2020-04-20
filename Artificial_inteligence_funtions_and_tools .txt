@@ -199,7 +199,18 @@ Biblioteca para salvar qualquer variavel.
 
 
 
-===================================================================================== ================================================================
+==================================================================================== OPENCV ==============================================================
+*img = cv2.imread(path, flag)#Retorna um numpy array em BGR com a matriz imagem
+	cv2.IMREAD_COLOR: It specifies to load a color image. Any transparency of image will be neglected. It is the default flag. Alternatively, we can pass integer value 1 for this flag.
+	cv2.IMREAD_GRAYSCALE: It specifies to load an image in grayscale mode. Alternatively, we can pass integer value 0 for this flag.
+	cv2.IMREAD_UNCHANGED: It specifies to load an image as such including alpha channel. Alternatively, we can pass integer value -1 for this flag.
+
+*img = cv2.cvtcolor(img,cv2.COLOR_BGR2RGB)#Converte do modelo BGR para RGB
+
+*cv2.imshow('nome da tela',var_img)#Printa na tela a imagem no formato BGR
+
+
+===================================================================================== OUTROS FEATURES ================================================================
 *icrawler#Uma biblioteca que permite o download de varias imagens do google
 
 *labellmg #App para fazer a legenda de imagens - usado na classificacao

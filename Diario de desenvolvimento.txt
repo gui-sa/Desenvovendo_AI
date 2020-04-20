@@ -943,7 +943,9 @@ Outra dica é usar a funçÃo diff do github.
 
 								200)BORA EMBARCAR ESSE YOLO DANADO!!
 									210) Descobrir funcoes que permitam-me manobrar a falta do acesso direto ao seu codigo fonte.
+										!)Não é plausivel, nao vale a pena, usando o executavel [+info dia 20/04/2020]	
 									220) Fazer um detector via webcam
+										!)É possivel usar o opencv para loadar o modelo (de forma rapida)!!! [+info dia 20/04/2020]	
 									230) Fazer um detector via webcam que retorne a origem.
 									240) Treinar rede YOLO com os meus objetos
 									250) Criar minha propria arquitetura YOLO ou faster R_CNN voltada para ultra processamento!!
@@ -956,4 +958,45 @@ Outra dica é usar a funçÃo diff do github.
 		*os.system('command_from_cmd')#Roda o comando como se estivesse no terminal
 
 
+
+
+
+
+
+
+#### 20/04/2020:
+
+	Rodar o executavel do darknet nao é uma boa ideia:
+		->Ele sempre loada o modelo primeiro... O problema é que ele toma muito tempo estudando o modelo e pouco detectando-o propriamente dito.
+		->Procurando um jeito de usar as funcoes propriamente dito...
+
+		*Descobri que opencv possui funcoes que possibilitam a leitura dos modelos yolo:
+			*https://pysource.com/2019/06/27/yolo-object-detection-using-opencv-with-python/
+				nn = cv.dnn.readNetFromDarknet('/home/salomao/Desktop/Yolo/darknet/cfg/yolov2.cfg','/home/salomao/Desktop/Yolo/darknet/yolov2.weights')
+
+		*Descobri que é possivel loadar os modelos usando tensorflow:
+
+			*https://towardsdatascience.com/track-vehicles-and-people-using-yolov3-and-tensorflow-4f3d0e5b1b5f    
+				>>pip install tensornets
+				OBSERVACOES:
+					-Biblioteca nao oficial
+					-Nao é possivel loadar qualquer modelo... Somente o que se encontra salvo no servidor dos desenvolvedores da lib
+					-Nao consegui rodar nenhuma imagem.
+
+			*https://www.kaggle.com/aruchomu/yolo-v3-object-detection-in-tensorflow
+				Este site roda um codigo do rascunho... Ele basicamente le o arquivo cfg e cria o mesmo modelo no tensorflow.
+				Ele basicamente le os arquivos do binario e interpreta os dados corretamente... Incrivel.
+		
+		*Minerando os arquivos da pasta:
+			no path darknet/examples:
+				Tem um arquivo que se chama 'Detector.py'
+					-Ele importa usando um funcao chamada sys.path.append();
+					-Ele importa uma lib chamada 'darknet' e 'pdb'
+					-Dentro ele faz chamada de um objeto no diretorio chamado 'libdarknet.so'
+						-Biblioteca CTYPES permite compatibilidade entre modelos C e python.
+						????)Ironicamente nao consegui abrir o arquivo... Este arquivo é uma biblioteca compartilhada utilizado por um executavel. A parte ironica é que ela é compilada tambem... ou seja, o codigo que devo analisar nao esta dentro dele e sim no outros arquivos --  proximo passo deve ser analisar/aprender o processo de compilação.
+
+
+
+		!!!!) Aparentemente a melhor forma de brincar com isso, no nivel que estou, seria loadar o modelo pelo opencv mesmo e só futuramente, depois de ter minerado 
 
