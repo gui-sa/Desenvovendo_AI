@@ -3,6 +3,10 @@
 #OBVIO, que ainda nao vai possuir interface grafica.
 #De inicio vou usar o data set ja montado : pardais!!
 
+
+#A ideia da tentiva dois é, paralelizar  alguns filtros, em tese, aumentando a percepçao à alguns elementos.
+
+
 import tensorflow as tf
 import keras
 import numpy as np
@@ -121,15 +125,21 @@ epochs = 50#Quantos conjuntos de batchs se repetem
 batch_p_step = 11#Quantos batchs formam uma epoca
 
 #Adam config=======================================================================================================
-keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
+keras.optimizers.Adam(learning_rate=0.0001, beta_1=0.9, beta_2=0.999, amsgrad=False)
 
 # Modelo ===========================================================================================================
 
 model = keras.models.Sequential()#Criando o objeto sequencial
 model.add(keras.layers.Conv2D(16,(3,3),padding='valid',activation= 'relu',input_shape = (500,500,3)))
 model.add(keras.layers.MaxPool2D(pool_size=(2,2)))
+model.add(keras.layers.Conv2D(16,(3,3),padding='valid',activation= 'relu'))
+model.add(keras.layers.MaxPool2D(pool_size=(2,2)))
 model.add(keras.layers.Conv2D(32,(3,3),padding='valid',activation= 'relu'))
-model.add(keras.layers.MaxPool2D(pool_size=(5,5)))
+model.add(keras.layers.MaxPool2D(pool_size=(2,2)))
+model.add(keras.layers.Conv2D(32,(3,3),padding='valid',activation= 'relu'))
+model.add(keras.layers.MaxPool2D(pool_size=(2,2)))
+model.add(keras.layers.Conv2D(32,(3,3),padding='valid',activation= 'relu'))
+model.add(keras.layers.MaxPool2D(pool_size=(2,2)))
 model.add(keras.layers.Flatten())
 model.add(keras.layers.Dense(100, activation='relu'))
 model.add(keras.layers.Dense(1, activation='sigmoid'))
@@ -161,11 +171,6 @@ plt.show()
 
 
 model.save('/home/salomao/Desktop/modelo_conv_pratos.h5')
-
-
-
-
-
 
 
 

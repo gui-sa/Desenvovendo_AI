@@ -1005,3 +1005,24 @@ Outra dica é usar a funçÃo diff do github.
 		-Fiz um meio de montar os dados de treinamento e validação !!!
 		
 
+
+
+#### 21/04/2020:
+
+	Hoje terminei o codigo... Vi que os conhecimentos que obtive do curso nem foram tao uteis assim... principalmente na parte de redes conv
+		Bom, o jeito é pesquisar ainda mais fundo.
+		Achei uns cursos no youtube que podem ajudar....
+			<Seriamente estou pensando em estudar a matematica por tras... ta me suando a unica escapatoria>
+			*https://www.youtube.com/watch?v=fTw3K8D5xDs&t=603s
+			Este video tem objetivo de mostrar como criar uma rede ideal... porem, particularmente... nada novo. somente o fato que ele usou um 1x1xn filter e explicou sua utilidade, que de verdade, nao saquei...  ele tambem explica sobre estrategias de filtros grandes ao inves de filtros em serie.
+
+
+
+		Cara, outra coisa que me incomoda... Na minha cabeça... filtros largos, costumam pegar dados e caracteristicas largas ... ou seja, cores!
+									filtros medios, costumam pegar dados de caracteristicas medias ... ou seja, edges!
+									filtros pequenos, costumam pegar dados de caracteristica imperceptiveis... ou seja, rugosidade!
+			O problema é que isto é um grande achismo da minha parte... mesmo fazendo logica com a ideia de convolucao e criação dinamica de filtros.
+				Para seguir esta ideia preciso paralelizar minha rede convolucional!
+				Para tal achei um link zao da porra:
+				*https://machinelearningmastery.com/keras-functional-api-deep-learning/
+
