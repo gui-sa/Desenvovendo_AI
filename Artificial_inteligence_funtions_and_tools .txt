@@ -152,6 +152,37 @@ Para usar o modelo loadado ou o treinado so usar
 		np.argmax(pred[0])
 
 
+Para criar data augmentation no fit, usamos:
+	*datagen = keras.preprocessing.image.ImageDataGenerator(
+	    rescale = 1./255,
+	    featurewise_center=True,
+	    featurewise_std_normalization=True,
+	    rotation_range=45,
+	    width_shift_range=0.2,
+	    height_shift_range=0.2,
+	    horizontal_flip=True)
+	*datagen.fit(train_data)
+	*history = model.fit(datagen.flow(train_data, label_array_train, batch_size=batch_size),epochs=epochs, verbose=1, validation_data=(val_data,label_array_val))
+
+
+# compute quantities required for featurewise normalization
+# (std, mean, and principal components if ZCA whitening is applied)
+datagen.fit(train_data)
+
+
+
+Posso criar modelos não sequenciais usando funcoes:
+	*layer_in = keras.layers.Input(shape= (500,500,3))#Para criar a entrada do modelo.
+	*conv1_l1  = keras.layers.Conv2D(64, kernel_size=3, activation= 'relu')(layer_in)#Para criar um conv layer que recebe input da layer_in
+	*pool1_l1  = keras.layers.MaxPool2D()(conv1_l1)#Para criar um maxpooling com input da layer conv1_l1
+	*flat_l1 = keras.layers.Flatten()(pool2_l1)#Recebe input do pool2_l1
+	*concatenate1 = keras.layers.concatenate([flat_l1,flat_l2,flat_l3])#Junta todos os dados na ordem especificada de inputs
+	*dense1 = keras.layers.Dense(30,activation='relu')(concatenate1) #Criar uma rede densa que pega a juntaçao de todas anteriores, juntadas na concatenate1
+	*model = keras.models.Model(inputs=layer_in,outputs=layer_out)#Para criar um modelo com entrada no layer_in e saida no layer_out treinamos o modelo normalmente.
+	
+
+
+
 ==================================================================================== scipy ====================================================================
 
 *img_g_edge1 = scipy.signal.convolve2d (img_g,kerne_edge_det1, 'valid') #A diretiva 'valid', fala pra ele diminuir a diemnsao (nao preencher com zeros), os dados da borda é descartado

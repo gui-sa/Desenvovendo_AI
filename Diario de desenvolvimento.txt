@@ -964,6 +964,9 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+
+
+
 #### 20/04/2020:
 
 	Rodar o executavel do darknet nao é uma boa ideia:
@@ -1003,7 +1006,26 @@ Outra dica é usar a funçÃo diff do github.
 
 	Construindo um classificador de pratos sujos/ pratos limpos apartir do keras e tensorflow:
 		-Fiz um meio de montar os dados de treinamento e validação !!!
-		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 
 
@@ -1025,4 +1047,85 @@ Outra dica é usar a funçÃo diff do github.
 				Para seguir esta ideia preciso paralelizar minha rede convolucional!
 				Para tal achei um link zao da porra:
 				*https://machinelearningmastery.com/keras-functional-api-deep-learning/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 22/04/2020:
+	Testando a ideia do dia 21/04/2020 no codigo classificando pratos sujos try 2:
+		Sem dataaugmentation e com epochs= 10 e dense = 15
+			Varios testes foram efetuados e o melhor rate é quando paralelizo filtros crescentes com poucos em filtros pequenos, bastante em filtros medios e grandes 
+			Quando aumentava o dense, a rede entrava em overfitting e a media de acuracia na validacao caia drasticamente.
+		Testei o selu... Real. o aprendizado fica mais rápido e perde menos acuracia... porem o processamento cai DRASTICAMENTE!
+		Implementei o data augmentation... Ficou tarde. Vou testar as possibilidades outro dia.
+
+		
+
+
+
+
+
+
+		Talvez esteja gastando energia aprimorando uma rede boa enquanto o problema seja o dataset.... Pensar um pouco mais nesse topico.
+
+
+
+
+
+
+
+
+
+
+#### 23/04/2020:
+	Comecei registrando o dia 22/04/2020 e anotando as novas funcoes enviando email para o orientador.
+	Vamos testar a ideia do dia 22?Data augmentation ativa!
+
+
+
+
+
+
+
+#### 28/04/2020:
+
+	
+     Com a ideia de data augmentation ativa, a rede de fato nao entrava em overfitting. Porem, não conseguia arrasta-la para o overfitting de forma alguma.
+	Com isso em mente, decidi plotar algumas imagens pre processadas e descobri que de fato:
+		-NUNCA use np.resize em fotos.
+	Depois de arrumar a rede, ela rapidamente subiu para 75%
+		
+
+	Efetuei o treinamento com data augmentation (desta vez direito) e infelizmente conclui que para esta rede (pegar pardais) é pior ter uma paralelidade de tipos de dados. a melhor rede obtida chegou rapidaente a 80% e é composta com filtros pequenos e 10x10 no pool do max pooling. A rede fica leve e com poucos parametros. Não entra em overfitting nem no erro, muito menos na acuracia.
+	Como meu data set é pequeno, decidi abandonar a ideia de aumentar a acuracia da rede por momento.
+	Vou investir em facilidades para obter datasets mais amplos e por isso vou começar a extrair de videos!.
+
+
+
+
+#### 29/04/2020:
+	
+	A ideia de hoje é iniciar a codar o construtor de dataset por video.
+	Porem, vou primeiro arrumar o try1 de keras.
+	
+
+
+
+
+
+
+
+
+
 

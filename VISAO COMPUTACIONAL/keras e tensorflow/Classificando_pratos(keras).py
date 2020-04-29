@@ -25,7 +25,7 @@ label_1_array = []#Criando uma lista vazia
 for i in ls:#Pego o nome de um arquivo da lista ls 
     pat = os.path.join(img_label_1,str(i))#Dou join nele
     img = cv.imread(pat)#leio ele como imagem
-    img = np.resize(img,(500,500,3))#Dou rezise - padronizo as imagens
+    img = cv.resize(img,(500,500))#Dou rezise - padronizo as imagens
     label_1_array.append(img)#Adiciona na lista
 label_1_array = np.array(label_1_array)#Deposis que tudo foi adicionado, passo a lista para um array
 
@@ -44,7 +44,7 @@ label_1_array = []#Criando uma lista vazia
 for i in ls:#Pego o nome de um arquivo da lista ls 
     pat = os.path.join(img_label_2,str(i))#Dou join nele
     img = cv.imread(pat)#leio ele como imagem
-    img = np.resize(img,(500,500,3))#Dou rezise - padronizo as imagens
+    img = cv.resize(img,(500,500))#Dou rezise - padronizo as imagens
     label_1_array.append(img)#Adiciona na lista
 label_1_array = np.array(label_1_array)#Deposis que tudo foi adicionado, passo a lista para um array
 
@@ -73,7 +73,7 @@ label_1_array = []#Criando uma lista vazia
 for i in ls:#Pego o nome de um arquivo da lista ls 
     pat = os.path.join(img_label_1,str(i))#Dou join nele
     img = cv.imread(pat)#leio ele como imagem
-    img = np.resize(img,(500,500,3))#Dou rezise - padronizo as imagens
+    img = cv.resize(img,(500,500))#Dou rezise - padronizo as imagens
     label_1_array.append(img)#Adiciona na lista
 label_1_array = np.array(label_1_array)#Deposis que tudo foi adicionado, passo a lista para um array
 
@@ -92,7 +92,7 @@ label_1_array = []#Criando uma lista vazia
 for i in ls:#Pego o nome de um arquivo da lista ls 
     pat = os.path.join(img_label_2,str(i))#Dou join nele
     img = cv.imread(pat)#leio ele como imagem
-    img = np.resize(img,(500,500,3))#Dou rezise - padronizo as imagens
+    img = cv.resize(img,(500,500))#Dou rezise - padronizo as imagens
     label_1_array.append(img)#Adiciona na lista
 label_1_array = np.array(label_1_array)#Deposis que tudo foi adicionado, passo a lista para um array
 
