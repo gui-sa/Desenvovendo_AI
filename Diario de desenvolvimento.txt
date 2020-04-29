@@ -1125,7 +1125,13 @@ Outra dica é usar a funçÃo diff do github.
 		from Desktop.<dir> import <nome da funcao>
 	Para permitir o caminhar pela funcao, renomeei uma pasta.
 
+*https://towardsdatascience.com/quick-implementation-of-yolo-v2-with-keras-ebf6eb40c684
+	Um local que resume a matemática do yolo!
+	Como suspeitei, ele treina uma rede a localizar, TAMBEM, os objetos!!
+	E o output será o objeto!! isso é muito doido, baby!
+	
 
+	Vamos fazer um teste para aprender a classificar e localizar um objeto?? Depois, fazemos para localizar mais de um objeto! (baby steps)
 
 
 
