@@ -1118,7 +1118,13 @@ Outra dica é usar a funçÃo diff do github.
 	
 	A ideia de hoje é iniciar a codar o construtor de dataset por video.
 	Porem, vou primeiro arrumar o try1 de keras.
+	*https://www.geeksforgeeks.org/extract-images-from-video-in-python/
+		Este video mostra como extrair...
 	
+	OTIMO, consegui criar um arquivo que extrai do jeito que eu queria. Para importar a lib apenas use no coidgo
+		from Desktop.<dir> import <nome da funcao>
+	Para permitir o caminhar pela funcao, renomeei uma pasta.
+
 
 
 

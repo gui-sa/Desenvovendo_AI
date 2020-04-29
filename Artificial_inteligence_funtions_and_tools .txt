@@ -239,6 +239,19 @@ Biblioteca para salvar qualquer variavel.
 *img = cv2.cvtcolor(img,cv2.COLOR_BGR2RGB)#Converte do modelo BGR para RGB
 
 *cv2.imshow('nome da tela',var_img)#Printa na tela a imagem no formato BGR
+	Depois do cv2.imshow obrigatoriamente tem que ter um
+		*cv2.waitkey()
+		*cv2.destroyAllWindows() 
+	ou pelo menos só o destroy 
+
+Para capturar video(lembre-se que frame é a imagem desejada):
+	*cap = cv2.VideoCapture('dir')
+	*while(cap.isOPened()):
+	*	ret,frame = cap.read()
+	*	if ret==False
+	*		break
+	*cap.release()
+	*cv2.destroyAllWindows()
 
 
 ===================================================================================== OUTROS FEATURES ================================================================
