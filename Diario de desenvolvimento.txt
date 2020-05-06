@@ -1128,6 +1128,76 @@ Outra dica é usar a funçÃo diff do github.
 
 
 
+#### 30/04/2020
+
+Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão através do keras (sem ensinar ao msm tempo)...
+*https://towardsdatascience.com/quick-implementation-of-yolo-v2-with-keras-ebf6eb40c684
+	A conclusao é: treine a imagem com algo circulando ela e pronto! topper demais!
+	
+
+
+
+
+
+						50) Criar uma função que pega uma imagem, e printa em suas coordenadas um retangulo...
+						100) Criar um funcao que permite pegar um video, separar os frames e desenhar um retangulo em torno do objeto com o mouse!
+							!!!!) A ideia é loadar um video e a pessoa desenha um retangulo em cada frame... As coordenadas do centro do retangulo, a altura e o comprimento sao armazenadas em um vetor Y (assim como a classe)
+							!!!!)Evidentemente os dados x paralelos aos Y tambem serao criados!
+						200)Criar um função que salva os dados obtidos pelo processo 100) em um arquivo texto. A função 100) obviamente retorna tudo isso em numpy e o usuario salva se quiser.
+						300)Criar uma rede convolucional e testar isso tudo.
+
+
+
+*https://docs.opencv.org/2.4/modules/core/doc/drawing_functions.html
+*https://docs.opencv.org/master/dc/da5/tutorial_py_drawing_functions.html
+	Estes sites são documentações do opencv sobre drawings..
+
+*https://stackoverflow.com/questions/22140880/drawing-rectangle-or-line-using-mouse-events-in-open-cv-using-python
+	Este site ensina a usar callbacks do mouse com o opencv
+
+
+
+	Criei uma lib que faz o 50) 100) e 200) para apenas UMA classe.
+
+	Para terminar o dia, vou gravar alguns videos sobre classificação de relogios e vou criar um dataset, salvando-o
+
+
+
+
+
+#### 05/05/2020:
+
+	!!!!)Testei a ideia de treinar uma rede no estilo do dia 30/04/2020 e sim.... deu errado!
+		!!!!)Se parar pra pensar faz total sentido pois redes convolucionais tornam a imagem em uma matriz esparsa sem localidade de dados algum!
+
+
+	A ideia que recebi foi do Luiz e provavelmente é a mais simples que tive até agora...
+
+
+
+
+
+
+
+			!!!!)Separamos a imagem em algumas partes e classificamos a imagem nestes quadrados. Estes quadrados, baseados na probabilidade, formam os boxes! 
+
+
+#### 06/05/2020:
+
+	Seguindo a conclusao do dia 05/05/2020:
+
+
+							100)Criar uma função que separa uma imagem em campos, cada campo tem sua informação e a imagem salva respectivamente.
+							200)Criar uma função utilizando 100) que pega os frames dos videos para ajudar a treinar a rede de classificação
+							300)Criar uma rede neural classificativa com acuracia de 90%
+							400)Fazer um codigo que loada o modelo 300. Capta uma imagem, divide ela em setores, aplica o predict, com os valores de accuracia, escolhe quais boxes sao relevantes e traça uma estimativa de centro.
+
+
+
+
+
+
+
 
 
 
