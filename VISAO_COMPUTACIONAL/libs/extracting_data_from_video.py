@@ -219,9 +219,6 @@ def spliting_image(img, shape = (500,500), dist=(3,3)):
             lim_inf_y = comp_y*y
             lim_sup_y = comp_y*(y+1)
             frame = cv.resize(img[lim_inf_x:lim_sup_x,lim_inf_y:lim_sup_y],shape)
-            cv.imshow("cropped", frame)
-            cv.waitKey()
-            cv.destroyAllWindows()
             splited.append(frame)
     splited = np.array(splited)
     return splited

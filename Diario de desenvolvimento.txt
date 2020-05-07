@@ -1204,8 +1204,20 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 
 
+#### 07/05/2020:
+
+	Ontem terminei as funçoes de treinamento. Hoje vou criar o dataset e o modelo  [300)].
+	Consegui criar um dataset de respeito que teve uma acuracia muito boa de 90%!!
+	Treinei 3 modelos:
 
 
+		O primeiro modelo era super complexo e possui filtros medios e filtros grandes. acuracia foi de 97%, porem, ele acabou entrando em overfitting, e ficou claro, quando ele falou que uma imagem em branco era um relogio, e um pardal tambem. 
+
+		O segundo modelo era mais simples, so com os filtros medios. Continuou identico
+
+		O terceiro modelo era de filtros medios, porem, reduzi drasticamente o numero de filtros... A rede alcancou 90% de acuracia e funcionou perfeitamente, contornando os setores que possuem relogio e descartando o pardal.
+
+	
 
 
 
