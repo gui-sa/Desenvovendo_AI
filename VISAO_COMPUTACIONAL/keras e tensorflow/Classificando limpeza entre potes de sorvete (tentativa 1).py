@@ -55,7 +55,7 @@ train_data_gen = train_image_generator.flow_from_directory(batch_size=batch_size
                                                            directory=dir_train, #No diretorio: 
                                                            shuffle=True, #devo randomizar?sim!
                                                            target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...
-                                                           class_mode='categorical')
+                                                           class_mode='binary')
 
 
 val_image_generator = ImageDataGenerator(rescale = 1./255) # reescala os valores em float de 0 - 1
@@ -65,7 +65,7 @@ val_data_gen = val_image_generator.flow_from_directory(batch_size=batch_size,  #
                                                            directory=dir_val, #No diretorio: 
                                                            shuffle=True, #devo randomizar?sim!
                                                            target_size=(IMG_HEIGHT, IMG_WIDTH),#Imagens de tamanho...
-                                                           class_mode='categorical')
+                                                           class_mode='binary')
 
 
 #============================================ Visualizar imagens =============================================
@@ -94,12 +94,12 @@ model = Sequential([
     Flatten(),
     
     Dense(100,activation = 'relu'),
-    Dense(2, activation ='sigmoid')
+    Dense(1, activation ='sigmoid')
 ])
 
 
 model.compile(optimizer='Adam',#ESTA FUNCAO CONFIGURA O MODELO (OBJETO) para um possível treinamento
-              loss='categorical_crossentropy',
+              loss='binary_crossentropy',
               metrics=['accuracy'])
 
 model.summary()
@@ -115,8 +115,7 @@ history = model.fit_generator(#Esta funçao treina sua rede neural.
 
 #=========================================== Salvando modelo ===============================================
 
-model.save('pardal')
-
+model.save('pardal.h5')
 
 #============================================================ Plotando  resultado ============================
 

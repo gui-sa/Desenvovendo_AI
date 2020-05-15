@@ -1204,6 +1204,13 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 
 
+
+
+
+
+
+
+
 #### 07/05/2020:
 
 	Ontem terminei as funçoes de treinamento. Hoje vou criar o dataset e o modelo  [300)].
@@ -1219,6 +1226,25 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 	
 
+
+
+
+
+
+
+####  15/05/2020:
+
+
+	Considero importante:
+
+	->Tamanho do max pooling
+	->Tamanho e construção do dataset
+
+
+
+	Aprendizados importantes
+
+		Data augmentatio  tem por objetivo diversificar seu dataset evitando que sua rede decore localidades
 
 
 

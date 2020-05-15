@@ -88,7 +88,7 @@ if ask=='p':
     
     #Avaliando o modelo =======================================================================================================
     
-    plt.plot(history.history['loss'][5:])
+    plt.plot(history.history['loss'])
     plt.title('Model loss')
     plt.ylabel('Loss')
     plt.xlabel('Epoch')

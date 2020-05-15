@@ -242,7 +242,7 @@ Biblioteca para salvar qualquer variavel.
 	Depois do cv2.imshow obrigatoriamente tem que ter um
 		*cv2.waitkey()
 		*cv2.destroyAllWindows() 
-	ou pelo menos só o destroy 
+	ou pelo menos só o wait
 
 Para capturar video(lembre-se que frame é a imagem desejada):
 	*cap = cv2.VideoCapture('dir')
