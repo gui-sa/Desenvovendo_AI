@@ -1,0 +1,74 @@
+Esse tutorial é feito para a instalção da GPU no tensorflow do windows10, porém para sistemas linux o procedimento é similar
+
+1-A instalação foi feita seguindo o modelo de instalação de dos drivers e do CUDA
+desse video: "https://www.youtube.com/watch?v=qrkEYf-YDyI&list=PLtSdpTc1fXSZo3owvDYSzS8GPJSzpXIXP&index=3&t=1s"
+
+2-Já a parte de de instalação das libs seguiram o video a seguir:
+https://www.youtube.com/watch?v=KZFn0dvPZUQ&list=PLtSdpTc1fXSZo3owvDYSzS8GPJSzpXIXP&index=2&t=764s
+
+
+
+
+=========================================1-Instalando requerimentos===============================================================
+Olhe o modelo da placa de video:
+	Entre em :computer management->device manager->display adapters->olhe o modelo da sua placa
+
+
+Siga o link a seguir como critério para ver as versões de cada software para instalação:
+https://www.tensorflow.org/install/gpu (analise os "Software requirements")
+
+OBS: o tensorflow recomenda a partir de uma determinada versao para cadas sofware,
+é recomendado pegar sempre a menor versão para evitar incompatibilidade. Ex: >=7.6 use
+a 7.6.
+
+	->Donwload NVIDIA GPU drivers (esse pode pegar a versao mais nova, DO SEU MODELO DE GPU)
+		.Opcao de instalação ->Express (Recommended)
+	
+	->CUDA Toolkit (selecione seu: SO, arquitetura, versao MINIMA recomendada do TF , exe (local))
+
+		.Opcoa de instalação ->Express (Recommended)
+		.Marcar "I understand, and wish to continue the installation regardiess"
+
+ 	->CUPTI (Não precisa baixar)
+	->cuDNN SDK (bria uma conta, baixar a versao minima que seja compativel com o CUDA)	
+		.Va nesse mesmo link e olhe "Windows setup" para ver os caminhos do sistema
+		.baixa e copia a pasta cuda para o ultimo caminho recomendado no "Windows setup"
+			-SET PATH=C:\tools
+		.Abra o "Edit the system environment variables" (vamos adicioar novas variaveis de endereço)
+			-Edit the system environment variables->Advanced->Environment variables
+		.Em "System variables" de Edit... no Path
+		.Clica "New" e acidiona os caminhos do link nas variaveis
+			-Adiciona os 4 path do link, o primeiro se você ja tiver nas variaveis não precisa
+	
+	->Tensor RT (seleicone a versao MINIMA recomendada que seja GA)
+		.Joga no mesmo diretorio do CUDA
+			-SET PATH=C:\tools
+		.Copia o endereço do TensorRT e adiciona as variaveis do path tbm como no item anterior
+
+
+ATÉ 23:13 SETP 7
+
+=================================2-Associando a GPU com o tensowflow e keras================================
+A PARTIR DE 7:55 
+	->Download anaconda:"https://www.anaconda.com/products/individual"
+		.Caso não deseje baixar o mini conda também é possivel
+	->Abra o cmd
+		.Digite:
+			conda (para ver se foi devidamente instalado)
+			conda create -n <nome_do_ambiente_virtual> python=<versao do python ex:3.7>	(cria um ambiente virtual para armazenar suas libs e distribuicoes, é possivel ter varias libs em versoes diversas se cada uma estiver em um ambiente virtual)
+			activate <nome_do_ambiente_virtual>	(ativa o ambiente virtual para podemos navegar e utilizado
+			pip install --ignore-installed --upgrade tensorflow-gpu		(instala o tensorflow gpu nesse ambiente virtual
+			pip install keras	(intala keras)
+			pip install pandas	(instala pandas
+
+	->agora basta utilizar o tensorflow nesse ambiente virtual,temos duas maneiras de acessarmos esse ambiente virtual
+		.Pelo cmd:
+			activate <nome_do_ambiente_virtual>
+		.Pelo anacondas
+			no canto superior esquedo terá a opção:
+				Applications on "base(root)"
+				Clique na seta do "base(root)"				
+				Troque para-><nome_do_ambiente_virtual>
+		
+		
+	
