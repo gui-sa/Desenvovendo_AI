@@ -1249,3 +1249,28 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 
 
+
+
+
+
+
+
+#### 17/06/2020:
+
+	Revisado o diario e desenvolvendo novas ideias.
+	
+
+#### 18/06/2020:
+	
+
+	Testes foram realizados e conclui que o a funcao splitting imagem labell precisava ser refinada para ser desbinarizada! Talvez isso ajuda a criar pesos em caracteristicas dos objetos que realmente importam...
+
+
+	Por isso, no dataset, foi criada outras funcoes que permitem essa caracteristica.
+
+
+
+	100)A meta para o proximo dia é criar o dataset e treinar uma rede apartir deste dataset.
+	200)Avaliar os resultados.
+	300)Se sobrar algum tempo, criar um funçao que abre um cap e vai circulando os quadrantes na tela em que o objeto esta com base em um threshold.
+

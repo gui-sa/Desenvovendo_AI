@@ -224,3 +224,70 @@ def spliting_image(img, shape = (500,500), dist=(3,3)):
     return splited
         
     
+
+def spliting_image_labelling_mult_choices(img, shape = (500,500), dist=(3,3)):
+    comp_x = np.shape(img)[0]/dist[0]#Pegar o len do eixo x da imagem e dividir na dist x
+    comp_y = np.shape(img)[1]/dist[1]#Pegar o len do eixo y da imagem e dividir na dist y
+    comp_x = int(comp_x)#pixels sao integers
+    comp_y = int(comp_y)#pixels sao integers 
+    splited = []
+    label = []
+    for x in range(dist[0]):
+        for y in range(dist[1]):
+            lim_inf_x = comp_x*x
+            lim_sup_x = comp_x*(x+1)
+            lim_inf_y = comp_y*y
+            lim_sup_y = comp_y*(y+1)
+            frame = cv.resize(img[lim_inf_x:lim_sup_x,lim_inf_y:lim_sup_y],shape)
+            print('digite y (minusculo) para 100%, 0, para 0%, 1 para 10%, 2 para 20%, 3 para 30%, 4 para 40%, 5 para 50%, 6 para 60%, 7 para 70%, 8 para 80%, 9 para 90%\n')
+            cv.imshow("cropped", frame)
+            ei = cv.waitKey()
+            cv.destroyAllWindows()
+            if ei==121:
+                label.append(1)    
+            else:
+                if ei==49:
+                    label.append(0.1)
+                if ei==50:
+                    label.append(0.2)
+                if ei==51:
+                    label.append(0.3)
+                if ei==52:
+                    label.append(0.4)
+                if ei==53:
+                    label.append(0.5)
+                if ei==54:
+                    label.append(0.6)
+                if ei==55:
+                    label.append(0.7)
+                if ei==56:
+                    label.append(0.8)
+                if ei==57:
+                    label.append(0.9)
+                label.append(0)
+            splited.append(frame)
+    return splited,label
+
+def capturing_frames_splits_mult_choices(diretorio,div,shape = (500,500), dist=(3,3)):
+    cap = cv.VideoCapture(diretorio)#Settando diretorio para o flow de video
+    captured_frames = []#Criando lista em branco
+    label_data = []
+    i = 0 #Preset de variavel
+    while(cap.isOpened()):
+        i +=1#i Controla o numero de frame
+        ret, frame = cap.read()#ret avalia se o video terminou ou não, retornando um booleano. frame é a imagem
+        if ret == False:#Quando o video acaba o ret é falso e a janela quebra
+            break
+        if i%div==0:#Vou coletar somente a cada 10 imagens
+            frame_split,img_t = spliting_image_labelling_mult_choices(frame, dist=dist, shape=shape)
+            label_data = label_data + (img_t  )
+            captured_frames = captured_frames + (frame_split)
+
+    print('\nVideo contém '+str(i-1)+' frames.\n')
+    cap.release()#Liberando as memorias utilizadas para processar os videos
+    cv.destroyAllWindows()#Fechando todas as janelas auxiliares
+    
+    captured_frames = np.array(captured_frames)#Retornando um numpy array
+    label_data = np.array(label_data)
+    return (captured_frames,label_data) 
+
