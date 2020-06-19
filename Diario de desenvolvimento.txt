@@ -1274,3 +1274,16 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 	200)Avaliar os resultados.
 	300)Se sobrar algum tempo, criar um funçao que abre um cap e vai circulando os quadrantes na tela em que o objeto esta com base em um threshold.
 
+
+
+
+
+
+#### 19/06/2020:
+
+
+
+	Criei datasets usando a funcao do dia 18/06 - inclusive, arrumei um bug da funcao. e treinei uma rede para testar tudo isso.
+
+	Aparentemente, a rede ainda esta com problemas de confusao.. porem, foi percebido um underfitting
+
