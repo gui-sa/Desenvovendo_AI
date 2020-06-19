@@ -33,8 +33,8 @@ def capturing_frames(diretorio,div, shape = (500,500)):
     
     return captured_frames
 
-#teste = capturing_frames('/home/salomao/Desktop/Teste.mp4',1, shape=  (200,200))
-
+#teste = capturing_frames('/home/salomao/Desktop/Lapizeira4.mp4',25, shape=  (500,500))
+#Save_data('/home/salomao/Desktop/Lapizeira4', teste)
 
 
 #================================================================================================================================
@@ -248,23 +248,25 @@ def spliting_image_labelling_mult_choices(img, shape = (500,500), dist=(3,3)):
             else:
                 if ei==49:
                     label.append(0.1)
-                if ei==50:
+                elif ei==50:
                     label.append(0.2)
-                if ei==51:
+                elif ei==51:
                     label.append(0.3)
-                if ei==52:
+                elif ei==52:
                     label.append(0.4)
-                if ei==53:
+                elif ei==53:
                     label.append(0.5)
-                if ei==54:
+                elif ei==54:
                     label.append(0.6)
-                if ei==55:
+                elif ei==55:
                     label.append(0.7)
-                if ei==56:
+                elif ei==56:
                     label.append(0.8)
-                if ei==57:
+                elif ei==57:
                     label.append(0.9)
-                label.append(0)
+                else:
+                    label.append(0)
+
             splited.append(frame)
     return splited,label
 
@@ -290,4 +292,9 @@ def capturing_frames_splits_mult_choices(diretorio,div,shape = (500,500), dist=(
     captured_frames = np.array(captured_frames)#Retornando um numpy array
     label_data = np.array(label_data)
     return (captured_frames,label_data) 
+
+#x,y = capturing_frames_splits_mult_choices('/home/salomao/Desktop/Lapizeira1.mp4',10,shape = (500,500), dist=(3,3))
+#Save_data('/home/salomao/Desktop/Lapizeira1_x', x)
+#Save_data('/home/salomao/Desktop/Lapizeira1_y', y)
+#
 

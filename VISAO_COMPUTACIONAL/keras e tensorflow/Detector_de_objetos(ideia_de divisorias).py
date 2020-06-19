@@ -25,8 +25,8 @@ if ask=='p':
     #Temos que organizar um dataset x no train_data, um data y no label_array_train
     #Para validação temos o val_data e label_val
     
-    train_data = extracting_data_from_video.Load_data('/home/salomao/Desktop/Relogio_x')
-    label_array_train = extracting_data_from_video.Load_data('/home/salomao/Desktop/Relogio_y')
+    train_data = extracting_data_from_video.Load_data('/home/salomao/Desktop/data_x')
+    label_array_train = extracting_data_from_video.Load_data('/home/salomao/Desktop/data_y')
     
     train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train, random_state=0)#Os vetores devem estar no formato numpy.
     
@@ -35,7 +35,7 @@ if ask=='p':
     
     # Parametros de treinamentos =======================================================================================
     
-    batch_size = 20 #Este parametro define o paralelismo que a sua rede é treinada... Quanto maior, mais rapido
+    batch_size = 5 #Este parametro define o paralelismo que a sua rede é treinada... Quanto maior, mais rapido
     epochs = 5#Quantos conjuntos de batchs se repetem
     batch_p_step = 11#Quantos batchs formam uma epoca
     
@@ -45,7 +45,7 @@ if ask=='p':
     # Modelo ===========================================================================================================
     
     #Input da rede 
-    layer_in = keras.layers.Input(shape= (200,200,3))
+    layer_in = keras.layers.Input(shape= (500,500,3))
     
      
     #Linha de acao disturtiva 2
@@ -123,9 +123,9 @@ else:
         split = extracting_data_from_video.spliting_image(img, shape=(200,200))#Splito ela nas divisorias e mudo elas para o mesmo input
         pred = model.predict(split)#faço a prediçao com base no modelo
         print("--- %s seconds ---" % (time.time() - start_time))#printo o tempo para fazer tudo isso 
-        #cv.imshow("cropped",split[2] )
-        #cv.waitKey()
-        #cv.destroyAllWindows()
+        cv.imshow("cropped",split[2] )
+        cv.waitKey()
+        cv.destroyAllWindows()
 
 
 
