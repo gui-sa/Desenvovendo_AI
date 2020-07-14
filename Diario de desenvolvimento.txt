@@ -1287,3 +1287,43 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 	Aparentemente, a rede ainda esta com problemas de confusao.. porem, foi percebido um underfitting
 
+
+
+
+
+
+
+
+#### 02/07/2020:
+
+	Dia 01/07/2020 foi descutido o porque de eue estar sem energia...
+		Basicamente minha font de energia vem de um sentimento maker, e ja faz tempo que não desenvolvo nada. Na tentativa de desenvolver tudo ao mesmo tempo, não tiro nada do papel e acabo nao me aprofundadndo em nada.
+
+		Porém, não posso simplesmente ignorar meus compromissos e por isso decidi continuar com as 20 hrs/semana da IC e 10 hrs/semana da TERA. A tera esta em um momento em que ensinara C para os bixos de forma online. De honesto mantive distancia, pois não estou com energia para investir nisso.
+		Portanto o que ficou combinado era: 4 hrs/dia da IC ou pensando em algum parametro dela e nos dias da TERA, trabalho 3 hrs. Nos outros dias, definirei um momento para o estudo de coisas makers, porem, uma ideia por vez. Vou começar com o projeto do auto-irrigador (10 hrs/semana)
+		Sobre a minha IC, e o que realmente importa nesse diario percebi que o que mais me incomoda é 'feedback matematico não nos diz a realidade pratica' e montagem de dataset é muito complicado.
+		MESMO, possuindo varias diretrizes em aberto, como 'Como montar uma rede neural para um caso específico', 'como classificar um isolador como sujo ou limpo so pela foto' decidi focar em 'Tornar o metodo de treinamento e teste menos massante' e 'criar um mecanismo de avaliação mais humano e menos matematico com feedback em real-time'.
+
+		Alem disso foi estabelecido uma ordem de pesquisa:
+			1)YOUTUBE
+			2)GOOGLE BLOGS
+			3)ARTIGOS E PAPERS
+			4)HIPOTESE
+			5)TESTE
+			7)CONCLUSAO
+			8)REPETIR, dependendo da conclusão
+			9)PRODUTO FINAL
+			10)TESTE DO PRODUTO FINAL
+	.................
+	Dia 02/07/2020
+
+		INICIANDO SERVIÇOS:
+
+			protocolo de pesquisa numero 1)
+
+				<efficient training for convolutional neural network>
+					*https://www.youtube.com/watch?v=HARGzJ8qFGQ
+						Apresenta varias tecnicas para aumentar a velocidade de treinamento junto com a curacia, claro. (out of context)
+
+
+
