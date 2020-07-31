@@ -106,7 +106,7 @@
 *target_train = keras.utils.np_utils.to_categorical(target_train,10)#Hotenconding an target
 
 
-*model.add(keras.layers.Dense(10, input_dim = 784, activation = 'softmax'))
+*model.add(keras.layers.Dense(10, input_dim = 784, activation = 'softmax', kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
 
 *model.add(keras.layers.BatchNormalization())#Para normalizar o batch antes de ele entrar na funcao de ativação. Quando usar normalização, nao podemos usar o activation no Dense e sim a funcao add activation
 

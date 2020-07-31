@@ -47,5 +47,5 @@ def feedback_splitted_by_video( model , video_cap, limiar):
 
 
 
-model = keras.models.load_model('/home/salomao/Desktop/detector_rel.h5')
+
 
