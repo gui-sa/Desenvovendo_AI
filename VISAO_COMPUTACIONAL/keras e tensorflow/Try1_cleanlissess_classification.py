@@ -18,46 +18,24 @@ from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import feedback_humanizado
 
 video_cap = '/home/salomao/Desktop/Validacao.mp4'   #video usado no feedback humanizado
 
-train_1 = extracting_data_from_video.capturing_frames('/home/salomao/Desktop/Object_background_contant.mp4', 1)#lendo um video com uma divisoria de 10
-temp = extracting_data_from_video.capturing_frames('/home/salomao/Desktop/Objeto2.mp4', 10)#lendo um video com uma divisoria de 10
-train_1 = np.append(train_1,temp,axis=0)#Somando os dois videos
 
-train_0 = extracting_data_from_video.capturing_frames('/home/salomao/Desktop/Ambient_background_contant.mp4', 1)#lendo o video todo
-temp = extracting_data_from_video.capturing_frames('/home/salomao/Desktop/Ambient1.mp4', 20)#lendo o video todo
-train_0 = np.append(train_0,temp,axis=0)#Somando os dois videos
-temp = extracting_data_from_video.capturing_frames('/home/salomao/Desktop/Ambient2.mp4', 20)#lendo o video todo
-train_0 = np.append(train_0,temp,axis=0)#Somando os dois videos
+train_1 = extracting_data_from_video.capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)
+train_0 = extracting_data_from_video.capturing_frames_appended([('/home/salomao/Desktop/Ambient_background_contant.mp4', 1),('/home/salomao/Desktop/Ambient1.mp4', 20),('/home/salomao/Desktop/Ambient2.mp4', 20)],DEBUG=0)
 
+val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validação
+val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validação
+train_1 = train_1[0:int(0.8*len(train_1))]#80% do dataset do train_1 vai para treinamento
+train_0 = train_0[0:int(0.8*len(train_0))]#80% do dataset do train_1 vai para treinamento
 
+train_data,label_array_train  = extracting_data_from_video.shufle_balance(train_1,train_0)#Trecho relacionado ao balanceamento do dataset
+val_data,label_val = extracting_data_from_video.shufle_balance(val_1,val_0)
 
-
-
-
-#Trecho relacionado ao balanceamento do dataset
-if (len(train_1)>len(train_0)):#Se o label 1 for maior que o label 0
-    train_1 = sklearn.utils.shuffle(train_1, random_state=0)#misturo o data de label 1
-    train_data = train_1[0:len(train_0)]#Pego a mesma quantidade do label zero e coloco em uma nova variavel
-    label_1 = np.ones(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
-    label_0 = np.zeros(len(train_0))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
-    label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
-    train_data = np.append(train_data,train_0,axis=0)#Somo os vetores de data 1 e depois zero
-    train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train, random_state=0)#Misturo o data juntamente com o label, sem deslinkar a posicao
-else:#Se o label 0 for maior que o label 1
-    train_0 = sklearn.utils.shuffle(train_0, random_state=0)#misturo o data de label 0
-    train_data = train_0[0:len(train_1)]#Pego a mesma quantidade do label um e coloco em uma nova variavel
-    label_1 = np.ones(len(train_1))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
-    label_0 = np.zeros(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
-    label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
-    train_data = np.append(train_1,train_data,axis=0)#Somo os vetores de data 1 e depois zero
-    train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train, random_state=0)#Misturo o data juntamente com o label, sem deslinkar a posicao   
 
 
 ## Parametros de treinamentos =======================================================================================
     
 batch_size = 5 #Este parametro define o paralelismo que a sua rede é treinada... Quanto maior, mais rapido
-epochs = 5#Quantos conjuntos de batchs se repetem
-
-
+epochs = 3
 
 
 # Modelo ===========================================================================================================
@@ -98,24 +76,9 @@ model.compile(optimizer= 'adam',  loss='binary_crossentropy', metrics= ['accurac
 
     #Daqui pra frente ja é o treinamento
 for i in range(epochs):
-    history = model.fit(train_data, label_array_train, batch_size=batch_size, epochs=1, verbose=1)
-    if (len(train_1)>len(train_0)):
-        train_1 = sklearn.utils.shuffle(train_1, random_state=0)#Os vetores devem estar no formato numpy.
-        train_data = train_1[0:len(train_0)]
-        label_1 = np.ones(len(train_data))
-        label_0 = np.zeros(len(train_0))
-        label_array_train = np.append(label_1,label_0,axis=0)
-        train_data = np.append(train_data,train_0,axis=0)
-        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train, random_state=0)#Os vetores devem estar no formato numpy.
-    else:
-        train_0 = sklearn.utils.shuffle(train_0, random_state=0)#Os vetores devem estar no formato numpy.
-        train_data = train_0[0:len(train_1)]
-        label_1 = np.ones(len(train_1))
-        label_0 = np.zeros(len(train_data))
-        label_array_train = np.append(label_1,label_0,axis=0)
-        train_data = np.append(train_1,train_data,axis=0)
-        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train, random_state=0)#Os vetores devem estar no formato numpy.    
-
+    
+    history = model.fit(train_data, label_array_train, validation_data = (val_data,label_val), batch_size=batch_size, epochs=1, verbose=1)
+    train_data,label_array_train  = extracting_data_from_video.shufle_balance(train_1,train_0)#Trecho relacionado ao balanceamento do dataset
 
 model.save('/home/salomao/Desktop/detector_rel.h5')
 #===============================================================================================================

@@ -9,8 +9,12 @@
 import cv2 as cv
 import numpy as np
 import pickle
+import sklearn#Lib para misturar as paradinhas
+import tensorflow as tf
+import keras
+import random   #num1 = random.randint(0, 9) para randomizar entre 0 e 9
 
-def capturing_frames(diretorio,div, shape = (500,500)):
+def capturing_frames(diretorio,div, shape = (500,500), DEBUG = True):
     cap = cv.VideoCapture(diretorio)#Settando diretorio para o flow de video
     captured_frames = []
     i = 0 #Preset de variavel
@@ -22,8 +26,9 @@ def capturing_frames(diretorio,div, shape = (500,500)):
         if i%div==0:#Vou coletar somente a cada 10 imagens
             frame = cv.resize(frame, shape, interpolation = cv.INTER_AREA)
             captured_frames.append(frame)
-            cv.imshow("preview", frame)
-            cv.waitKey(80)#O tempo em ms para passar para o proximo frame
+            if DEBUG:
+                cv.imshow("preview", frame)
+                cv.waitKey(80)#O tempo em ms para passar para o proximo frame
     
     print('\nVideo contém '+str(i-1)+' frames.\n')
     cap.release()#Liberando as memorias utilizadas para processar os videos
@@ -284,7 +289,6 @@ def capturing_frames_splits_mult_choices(diretorio,div,shape = (500,500), dist=(
             frame_split,img_t = spliting_image_labelling_mult_choices(frame, dist=dist, shape=shape)
             label_data = label_data + (img_t  )
             captured_frames = captured_frames + (frame_split)
-
     print('\nVideo contém '+str(i-1)+' frames.\n')
     cap.release()#Liberando as memorias utilizadas para processar os videos
     cv.destroyAllWindows()#Fechando todas as janelas auxiliares
@@ -298,3 +302,63 @@ def capturing_frames_splits_mult_choices(diretorio,div,shape = (500,500), dist=(
 #Save_data('/home/salomao/Desktop/Lapizeira1_y', y)
 #
 
+
+
+def capturing_frames_appended(array_dir, shape = (500,500), DEBUG = True): #array_dir receberá um array de tuplas onde o primeiro elemento da tupla é o diretorio e o segundo, o div
+    captured_frames = capturing_frames(array_dir[0][0],array_dir[0][1], shape = shape, DEBUG = DEBUG)
+    for ind in array_dir:
+            if ind == array_dir[0]:
+                continue
+            captured_frames = np.append(captured_frames,capturing_frames(ind[0],ind[1], shape = shape, DEBUG = DEBUG),axis=0)
+        
+    return captured_frames
+
+#frame_teste = capturing_frames_appended([('/home/salomao/Desktop/Objeto1.mp4',10),('/home/salomao/Desktop/Objeto2.mp4',1)],DEBUG=0)
+    
+
+
+def shufle_balance(train_1,train_0): #Esta funcao recebe os datasets de label 1 e label 0, mistura eles separadamente e entrega um dataset balanceado
+    if (len(train_1)>len(train_0)):#Se o label 1 for maior que o label 0
+        train_1 = sklearn.utils.shuffle(train_1)#misturo o data de label 1
+        train_data = train_1[0:len(train_0)]#Pego a mesma quantidade do label zero e coloco em uma nova variavel
+        label_1 = np.ones(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
+        label_0 = np.zeros(len(train_0))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
+        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
+        train_data = np.append(train_data,train_0,axis=0)#Somo os vetores de data 1 e depois zero
+        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao
+    else:#Se o label 0 for maior que o label 1
+        train_0 = sklearn.utils.shuffle(train_0)#misturo o data de label 0
+        train_data = train_0[0:len(train_1)]#Pego a mesma quantidade do label um e coloco em uma nova variavel
+        label_1 = np.ones(len(train_1))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
+        label_0 = np.zeros(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
+        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
+        train_data = np.append(train_1,train_data,axis=0)#Somo os vetores de data 1 e depois zero
+        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao   
+    return (train_data,label_array_train)
+
+
+#train_1 = capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto2.mp4', 10)],DEBUG=0)
+#train_0 = capturing_frames_appended([('/home/salomao/Desktop/Ambient_background_contant.mp4', 1),('/home/salomao/Desktop/Ambient1.mp4', 10),('/home/salomao/Desktop/Ambient2.mp4', 10)],DEBUG=0)
+#train,label = shufle_balance(train_1,train_0)
+
+
+
+def data_augment_balance_shufle(train_1,train_0, preferences): #Esta funcao recebe os datasets de label 1 e label 0, mistura eles separadamente e entrega um dataset balanceado; depois disso ele pega e augmenta os dados de acordo com a preferencia! preferencia  é uma lista de tuplas que contem strings e pesos ... se a string bater, ele augmenta daquela forma e cria um proporcional com o total baseado no seu peso 
+    if (len(train_1)>len(train_0)):#Se o label 1 for maior que o label 0
+        train_1 = sklearn.utils.shuffle(train_1)#misturo o data de label 1
+        train_data = train_1[0:len(train_0)]#Pego a mesma quantidade do label zero e coloco em uma nova variavel
+        label_1 = np.ones(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
+        label_0 = np.zeros(len(train_0))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
+        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
+        train_data = np.append(train_data,train_0,axis=0)#Somo os vetores de data 1 e depois zero
+        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao
+    else:#Se o label 0 for maior que o label 1
+        train_0 = sklearn.utils.shuffle(train_0)#misturo o data de label 0
+        train_data = train_0[0:len(train_1)]#Pego a mesma quantidade do label um e coloco em uma nova variavel
+        label_1 = np.ones(len(train_1))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
+        label_0 = np.zeros(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
+        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
+        train_data = np.append(train_1,train_data,axis=0)#Somo os vetores de data 1 e depois zero
+        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao   
+           
+    return (train_data,label_array_train)
