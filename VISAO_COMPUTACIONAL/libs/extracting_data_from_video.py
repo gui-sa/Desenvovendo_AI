@@ -13,6 +13,7 @@ import sklearn#Lib para misturar as paradinhas
 import tensorflow as tf
 import keras
 import random   #num1 = random.randint(0, 9) para randomizar entre 0 e 9
+from scipy import signal
 
 def capturing_frames(diretorio,div, shape = (500,500), DEBUG = True):
     cap = cv.VideoCapture(diretorio)#Settando diretorio para o flow de video
@@ -343,22 +344,50 @@ def shufle_balance(train_1,train_0): #Esta funcao recebe os datasets de label 1 
 
 
 
-def data_augment_balance_shufle(train_1,train_0, preferences): #Esta funcao recebe os datasets de label 1 e label 0, mistura eles separadamente e entrega um dataset balanceado; depois disso ele pega e augmenta os dados de acordo com a preferencia! preferencia  é uma lista de tuplas que contem strings e pesos ... se a string bater, ele augmenta daquela forma e cria um proporcional com o total baseado no seu peso 
-    if (len(train_1)>len(train_0)):#Se o label 1 for maior que o label 0
-        train_1 = sklearn.utils.shuffle(train_1)#misturo o data de label 1
-        train_data = train_1[0:len(train_0)]#Pego a mesma quantidade do label zero e coloco em uma nova variavel
-        label_1 = np.ones(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
-        label_0 = np.zeros(len(train_0))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
-        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
-        train_data = np.append(train_data,train_0,axis=0)#Somo os vetores de data 1 e depois zero
-        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao
-    else:#Se o label 0 for maior que o label 1
-        train_0 = sklearn.utils.shuffle(train_0)#misturo o data de label 0
-        train_data = train_0[0:len(train_1)]#Pego a mesma quantidade do label um e coloco em uma nova variavel
-        label_1 = np.ones(len(train_1))#Crio um vetor dizendo que tem um certa quantidade de label 1, o mesmo tamanho do data 
-        label_0 = np.zeros(len(train_data))#Crio um vetor dizendo que tem um certa quantidade de label 0, o mesmo tamanho do data 
-        label_array_train = np.append(label_1,label_0,axis=0)#Somo os vetores de label 1 e depois zero
-        train_data = np.append(train_1,train_data,axis=0)#Somo os vetores de data 1 e depois zero
-        train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_train)#Misturo o data juntamente com o label, sem deslinkar a posicao   
-           
-    return (train_data,label_array_train)
+#def data_augment_balance_shufle(train_1,train_0, preferences): #Esta funcao recebe os datasets de label 1 e label 0, mistura eles separadamente e entrega um dataset balanceado; depois disso ele pega e augmenta os dados de acordo com a preferencia! preferencia  é uma lista de tuplas que contem strings e pesos ... se a string bater, ele augmenta daquela forma e cria um proporcional com o total baseado no seu peso 
+#    
+#
+#
+#
+#
+#
+#          
+#    return (train_data,label_array_train)
+    
+def ReLU(x):
+    return x * (x > 0)
+
+
+img  = cv.imread("/home/salomao/Desktop/Isoladores.jpg")
+cv.imshow("preview",img)
+cv.waitKey()
+cv.destroyAllWindows()
+B,G,R = cv.split(img)
+
+kernel = np.array([[1,0,-1],
+                    [0,0,0],
+                    [-1,0,1]])
+
+B = signal.convolve2d (B,kernel, 'same')
+B = ReLU(B)
+B = np.uint8(B)
+
+G = signal.convolve2d (G,kernel, 'same')
+G = ReLU(G)
+G = np.uint8(G)
+
+R = signal.convolve2d (R,kernel, 'same')
+R = ReLU(R)
+R = np.uint8(R)
+
+B = np.reshape(B,(3264,2448,-1))
+G = np.reshape(G,(3264,2448,-1))
+R = np.reshape(R,(3264,2448,-1))
+
+img2 = B
+img2 = np.append(img2,G,axis=2)
+img2 = np.append(img2,R,axis=2)
+
+cv.imshow("preview2",img2)
+cv.waitKey()
+cv.destroyAllWindows()
