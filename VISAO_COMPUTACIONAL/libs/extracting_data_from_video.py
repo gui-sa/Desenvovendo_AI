@@ -14,6 +14,7 @@ import tensorflow as tf
 import keras
 import random   #num1 = random.randint(0, 9) para randomizar entre 0 e 9
 from scipy import signal
+from tqdm import tqdm
 
 def capturing_frames(diretorio,div, shape = (500,500), DEBUG = True):
     cap = cv.VideoCapture(diretorio)#Settando diretorio para o flow de video
@@ -344,50 +345,200 @@ def shufle_balance(train_1,train_0): #Esta funcao recebe os datasets de label 1 
 
 
 
-#def data_augment_balance_shufle(train_1,train_0, preferences): #Esta funcao recebe os datasets de label 1 e label 0, mistura eles separadamente e entrega um dataset balanceado; depois disso ele pega e augmenta os dados de acordo com a preferencia! preferencia  é uma lista de tuplas que contem strings e pesos ... se a string bater, ele augmenta daquela forma e cria um proporcional com o total baseado no seu peso 
-#    
-#
-#
-#
-#
-#
-#          
-#    return (train_data,label_array_train)
+
+
+
+
+
     
 def ReLU(x):
     return x * (x > 0)
 
 
-img  = cv.imread("/home/salomao/Desktop/Isoladores.jpg")
-cv.imshow("preview",img)
-cv.waitKey()
-cv.destroyAllWindows()
-B,G,R = cv.split(img)
+def invert_pixel(x):
+    return  abs(x-255)
 
-kernel = np.array([[1,0,-1],
-                    [0,0,0],
-                    [-1,0,1]])
 
-B = signal.convolve2d (B,kernel, 'same')
-B = ReLU(B)
-B = np.uint8(B)
 
-G = signal.convolve2d (G,kernel, 'same')
-G = ReLU(G)
-G = np.uint8(G)
+def data_augment(data, command,size = (500,500), show=True): 
+    stop = "y"#Essa variavel controla o criterio de parada para os prints das imagens
+    for img in tqdm(data):#Ele anda por todas as imagens do train_1
+        if show:  #Se as imagens Estiverem sendo mostradas, ele vai perguntar se deseja continuar
+            stop = input("continue?(continuar sem mostrar: n/fechar programa x:  ")
+            
+        if stop=="n":#Se eu digitar "n", ele desliga o print de imagem.
+            show = False
+        if stop=="x":#Se eu digitar "x", ele fecha o programa.
+            break
+            
+        img = cv.resize(img,size)# Mudo o tamanho da imagem
+        
+        if(show):# Printando a imagem original
+            cv.imshow("preview",img)
+            cv.waitKey()
+            cv.destroyAllWindows()
+            
+    
+        B,G,R = cv.split(img)#Splitamos as matrizes em B,G,R
+        
+        #Se a preferencia for igual a string, executa-se o comando========================
+        if(command == "edge3"):
+            kernel = np.array([[-1,-1,-1],
+                               [-1,8,-1],
+                               [-1,-1,-1]])
+            B = signal.convolve2d (B,kernel, 'same')
+            B = ReLU(B)
+            B = np.uint8(B)
+            
+            G = signal.convolve2d (G,kernel, 'same')
+            G = ReLU(G)
+            G = np.uint8(G)
+            
+            R = signal.convolve2d (R,kernel, 'same')
+            R = ReLU(R)
+            R = np.uint8(R)
+            
+            B = np.reshape(B,(size[0],size[1],-1))
+            G = np.reshape(G,(size[0],size[1],-1))
+            R = np.reshape(R,(size[0],size[1],-1))
+            
+            img2 = B
+            img2 = np.append(img2,G,axis=2)
+            img2 = np.append(img2,R,axis=2)
+            
+        if(command == "edge3_w"):
+            kernel = np.array([[-1,-1,-1],
+                               [-1,8,-1],
+                               [-1,-1,-1]])
+            B = signal.convolve2d (B,kernel, 'same')
+            B = ReLU(B)
+            B = invert_pixel(B)
+            B = np.uint8(B)
+            
+            G = signal.convolve2d (G,kernel, 'same')
+            G = ReLU(G)
+            G = invert_pixel(G)
+            G = np.uint8(G)
+            
+            R = signal.convolve2d (R,kernel, 'same')
+            R = ReLU(R)
+            R = invert_pixel(R)
+            R = np.uint8(R)
+            
+            B = np.reshape(B,(size[0],size[1],-1))
+            G = np.reshape(G,(size[0],size[1],-1))
+            R = np.reshape(R,(size[0],size[1],-1))
+            
+            img2 = B
+            img2 = np.append(img2,G,axis=2)
+            img2 = np.append(img2,R,axis=2)
+            
+        if(command == "constant_color_scaler"):
+            constB = random.random()
+            constG = random.random()
+            constR = random.random()
 
-R = signal.convolve2d (R,kernel, 'same')
-R = ReLU(R)
-R = np.uint8(R)
+            B = B*constB
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                B = invert_pixel(B)
+            B = np.uint8(B) 
+            
+            G = G*constG
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                G = invert_pixel(G)
+            G = np.uint8(G)
+            
+            R = R*constR
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                R = invert_pixel(R)
+            R = np.uint8(R)
+            
 
-B = np.reshape(B,(3264,2448,-1))
-G = np.reshape(G,(3264,2448,-1))
-R = np.reshape(R,(3264,2448,-1))
+            B = np.reshape(B,(size[0],size[1],-1))
+            G = np.reshape(G,(size[0],size[1],-1))
+            R = np.reshape(R,(size[0],size[1],-1))
+            
+            img2 = B
+            img2 = np.append(img2,G,axis=2)
+            img2 = np.append(img2,R,axis=2)
+            
+        if(command == "constant_color_scaler_shufle"):
 
-img2 = B
-img2 = np.append(img2,G,axis=2)
-img2 = np.append(img2,R,axis=2)
+            constB = random.random()
+            constG = random.random()
+            constR = random.random()
+            
 
-cv.imshow("preview2",img2)
-cv.waitKey()
-cv.destroyAllWindows()
+            B = B*constB
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                B = invert_pixel(B)
+            B = np.uint8(B) 
+            
+            G = G*constG
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                G = invert_pixel(G)
+            G = np.uint8(G)
+            
+            R = R*constR
+            invert_chance = random.random()
+            if invert_chance>0.5:
+                R = invert_pixel(R)
+            R = np.uint8(R)
+            
+
+            B = np.reshape(B,(size[0],size[1],-1))
+            G = np.reshape(G,(size[0],size[1],-1))
+            R = np.reshape(R,(size[0],size[1],-1))
+            
+            lista = [B,G,R]
+            lista= sklearn.utils.shuffle(lista)     
+            
+            img2 = lista[0]
+            img2 = np.append(img2,lista[1],axis=2)
+            img2 = np.append(img2,lista[2],axis=2)
+
+            
+        if(command == "sharpen"):
+            kernel = np.array([[0,-1,0],
+                               [-1,5,-1],
+                               [0,-1,0]])
+            B = signal.convolve2d (B,kernel, 'same')
+            B = ReLU(B)
+            B = np.uint8(B)
+            
+            G = signal.convolve2d (G,kernel, 'same')
+            G = ReLU(G)
+            G = np.uint8(G)
+            
+            R = signal.convolve2d (R,kernel, 'same')
+            R = ReLU(R)
+            R = np.uint8(R)
+            
+            B = np.reshape(B,(size[0],size[1],-1))
+            G = np.reshape(G,(size[0],size[1],-1))
+            R = np.reshape(R,(size[0],size[1],-1))
+            
+            img2 = B
+            img2 = np.append(img2,G,axis=2)
+            img2 = np.append(img2,R,axis=2)
+        #==============================================================================
+    
+        
+        if(show):#se show for verdadeiro, ele printa o resultado das convolucoes
+            cv.imshow("preview2",img2)
+            cv.waitKey()
+            cv.destroyAllWindows()
+            
+        img2 = np.reshape(img2,(-1,size[0],size[1],3))#Aumentamos uma dimensao para que esta seja o numero de imagens
+        data = np.append(data,img2, axis=0)#Somamos a nova imagem ao train_1
+              
+    return data
+
+
+#train_1 = capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)
+#train_1_after = data_augment(train_1,"sharpen")
