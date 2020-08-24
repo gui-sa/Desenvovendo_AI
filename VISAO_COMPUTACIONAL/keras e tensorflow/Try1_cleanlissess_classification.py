@@ -35,7 +35,7 @@ val_data,label_val = extracting_data_from_video.shufle_balance(val_1,val_0)
 ## Parametros de treinamentos =======================================================================================
     
 batch_size = 5 #Este parametro define o paralelismo que a sua rede é treinada... Quanto maior, mais rapido
-epochs = 3
+epochs = 1
 
 
 # Modelo ===========================================================================================================

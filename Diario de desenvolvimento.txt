@@ -1327,3 +1327,26 @@ Ontem li um artigo muito top que basicamente ensinava a fazer um yolo simpletão
 
 
 
+
+####################################################################################
+Apos um periodo de ineficiencia no diario:
+####################################################################################
+
+
+
+
+#### 24/08/2020:
+
+	Uma função para criar fazer data augmentation foi criada. Essa função nao é igual as existentes no mercado e guia o aprendizado colocando caracteristicas extras na imagem!
+	Preciso somente, fazer com que a funcao retorne apenas o dataset augmentato, deve ser rapido, coisa de 30 min
+	
+	O proximo papel será organizar no código a ideia para o produto final:
+
+		Imagem -> Varias redes que definem se é ou não aquele tipo de isolador
+		Dentro do tipo de isolador-> Passar por varias redes especializadas em detectar tipos de sujeira e uma dela, tera o output entre limpo/sujo.
+		A ideia deste tipo de classificação é facilitar a manutenção e promover um mecanismo de VALIDAÇÃO!!!
+
+		O que devo aprender/fazer para chegar nesse nível?
+			->Aprender metodos de callback para early stopping
+
+

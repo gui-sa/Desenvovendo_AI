@@ -540,5 +540,5 @@ def data_augment(data, command,size = (500,500), show=True):
     return data
 
 
-#train_1 = capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)
-#train_1_after = data_augment(train_1,"sharpen")
+# train_1 = capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)
+# train_1_after = data_augment(train_1,"sharpen")
