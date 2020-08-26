@@ -362,6 +362,7 @@ def invert_pixel(x):
 
 def data_augment(data, command,size = (500,500), show=True): 
     stop = "y"#Essa variavel controla o criterio de parada para os prints das imagens
+    iterable = 0
     for img in tqdm(data):#Ele anda por todas as imagens do train_1
         if show:  #Se as imagens Estiverem sendo mostradas, ele vai perguntar se deseja continuar
             stop = input("continue?(continuar sem mostrar: n/fechar programa x:  ")
@@ -535,9 +536,12 @@ def data_augment(data, command,size = (500,500), show=True):
             cv.destroyAllWindows()
             
         img2 = np.reshape(img2,(-1,size[0],size[1],3))#Aumentamos uma dimensao para que esta seja o numero de imagens
-        data = np.append(data,img2, axis=0)#Somamos a nova imagem ao train_1
-              
-    return data
+        if iterable==0:
+            data_new = img2
+        else:
+            data_new = np.append(data_new,img2, axis=0)#Somamos a nova imagem ao train_1
+        iterable = iterable + 1      
+    return data_new
 
 
 # train_1 = capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)

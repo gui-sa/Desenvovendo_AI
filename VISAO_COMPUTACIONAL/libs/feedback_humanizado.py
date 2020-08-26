@@ -14,13 +14,16 @@ import keras
 import pickle
 import numpy as np
 
-def feedback_splitted_by_video( model , video_cap, limiar):
+def feedback_splitted_by_video( model , video_cap, limiar, reescaler=False):
     cap = cv.VideoCapture(video_cap)#Settando diretorio para o flow de video
     while(cap.isOpened()):
         ret, frame = cap.read()#ret avalia se o video terminou ou não, retornando um booleano. frame é a imagem
         if ret == False:#Quando o video acaba o ret é falso e a janela quebra
             break
         frame_split= extracting_data_from_video.spliting_image(frame)
+        if reescaler:
+            for ind in frame_split:
+                ind = ind/255
         frame = cv.resize(frame, (500,500), interpolation = cv.INTER_AREA)
         pred = model.predict(frame_split)#faço a prediçao com base no modelo 
         for j in range(3):
