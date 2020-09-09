@@ -1350,3 +1350,83 @@ Apos um periodo de ineficiencia no diario:
 			->Aprender metodos de callback para early stopping
 
 
+
+
+
+#### 25/08/2020:
+
+	Primeiro topico: Alterei a funcao data augmentation para retornar somente o conteudo adicionado. Segundo topico: alterei a try1_cleanlisses para receber data augmentation do keras. Terceiro topico: alterei a funcao feedbackhumanizado para poder tolerar imagens de 0-1. Fiz testes e nenhuma diferenca foi localizada. Fiz testes e a rede melhorou substancialmente ao usar a minha ferramenta de data augmentation junto com a ferramenta de data augmentation do keras... acuracia de 89% Porém, algo estranho aconteceu... quando eu tento treinar essa rede para 20 epocas ela eventualmente trava e spyder reinicia o kernell dando um erro.
+
+
+
+
+
+
+
+####################################################################################
+Iniciando os testes para o primeiro produto final:
+####################################################################################
+
+
+
+#### 09/09/2020:
+	Depois de coletar videos com pratos limpos e sujos, vem a hora do teste de rede:
+
+		Metodologia:
+
+			Mesmo cenario, mesmos pratos, mesmas sujeiras, diferentes horarios do dia
+			Videos gravando em torno e andando.
+
+
+		Rede neural:
+
+			layer_in = keras.layers.Input(shape= (500,500,3))
+
+			     
+
+			conv1 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(layer_in)
+			pool1  = keras.layers.MaxPool2D(pool_size=(3,3))(conv1)
+
+			conv4 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(pool1)
+			pool5  = keras.layers.MaxPool2D(pool_size=(3,3))(conv4)
+			conv5 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(pool5)
+			pool5  = keras.layers.MaxPool2D(pool_size=(3,3))(conv5)
+
+			flat2 = keras.layers.Flatten()(pool5)
+
+
+			dense1 = keras.layers.Dense(200,activation='relu',kernel_regularizer=keras.regularizers.l2(0.01))(flat2)
+			layer_out = keras.layers.Dense(1,activation='sigmoid')(dense1)
+
+
+			model = keras.models.Model(inputs=layer_in,outputs=layer_out)   
+		
+		Data augmentation:
+
+			datagen = keras.preprocessing.image.ImageDataGenerator(
+				rotation_range=45,
+				zoom_range=0.5,
+				horizontal_flip=True)
+
+			datagen.fit(train_data)
+
+					    
+
+
+	Objetivo: encontrar o prato branco em meio ao cenario.
+
+	Ao treinar obtemos:
+
+	Acuracia de validaçao maxima de 56%
+	Acuracia de treinamento maxima de 60%
+	Erro minimo de entropia de treinamento minimo de 0.6
+	Erro minimo de entropia de validacao minima de 0.9
+
+	Suspeita: "UNDERFITTING"
+
+
+	Teste para o dia 10/09/2020:
+	
+	-Aumentar a complexidade e nao linearidade da rede neural.
+	-Enquanto treina, consultar a literatura.
+

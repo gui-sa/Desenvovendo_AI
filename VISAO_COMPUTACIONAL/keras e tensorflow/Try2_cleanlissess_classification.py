@@ -15,21 +15,28 @@ from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import feedback_humanizado
 
 
 
-#%% ==============================================Preparando o dataset
+#%% ==============================================Criando o dataset
 
-video_cap = '/home/salomao/Desktop/Validacao.mp4'   #video usado no feedback humanizado
+video_cap = 0   #video usado no feedback humanizado
 
 
-train_1 = extracting_data_from_video.capturing_frames_appended([('/home/salomao/Desktop/Object_background_contant.mp4', 1),('/home/salomao/Desktop/Objeto1.mp4', 20),('/home/salomao/Desktop/Objeto2.mp4', 20)],DEBUG=0)
-train_0 = extracting_data_from_video.capturing_frames_appended([('/home/salomao/Desktop/Ambient_background_contant.mp4', 1),('/home/salomao/Desktop/Ambient1.mp4', 1 ),('/home/salomao/Desktop/Ambient2.mp4', 1)],DEBUG=0)
+# train_1 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/branco/branco-limpo-manha-cenario1.mp4", 20),("/home/salomao/Desktop/pratos/branco/branco-limpo-tarde-cenario1.mp4", 20),("/home/salomao/Desktop/pratos/branco/branco-limpo-noite-cenario1.mp4", 20),("/home/salomao/Desktop/pratos/branco/branco-sujo1-noite-cenario1.mp4", 20),("/home/salomao/Desktop/pratos/branco/branco-sujo1-manha-cenario1.mp4", 20),("/home/salomao/Desktop/pratos/branco/branco-sujo1-tarde-cenario1.mp4", 20)],DEBUG=0)
+# train_0 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/cenario/cenario1-manha-maos.mp4", 20),("/home/salomao/Desktop/pratos/cenario/cenario1-manha.mp4", 20 ),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos.mp4", 20),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos2.mp4", 20),("/home/salomao/Desktop/pratos/cenario/cenario1-tarde.mp4", 20)],DEBUG=0)
+# extracting_data_from_video.Save_data("/home/salomao/Desktop/pratos/train1", train_1)
+# extracting_data_from_video.Save_data("/home/salomao/Desktop/pratos/train0", train_0)
 
+train_1 = extracting_data_from_video.Load_data("/home/salomao/Desktop/pratos/train1")
+train_0 = extracting_data_from_video.Load_data("/home/salomao/Desktop/pratos/train0")
+
+#%%============== Splitando o dataset:
+    
 val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validação
 val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validação
 train_1 = train_1[0:int(0.8*len(train_1))]#80% do dataset do train_1 vai para treinamento
 train_0 = train_0[0:int(0.8*len(train_0))]#80% do dataset do train_1 vai para treinamento
-temp= extracting_data_from_video.data_augment(train_1, command = "constant_color_scaler_shufle", show=False)
-train_1 = np.append(train_1,temp[0:int(len(temp)/2)], axis=0)
-
+# temp= extracting_data_from_video.data_augment(train_1, command = "constant_color_scaler_shufle", show=False)
+# train_1 = np.append(train_1,temp[0:int(len(temp)/2)], axis=0)
+#%%============  Usando o dataset
 train_data,label_array_train  = extracting_data_from_video.shufle_balance(train_1,train_0)#Trecho relacionado ao balanceamento do dataset
 val_data,label_val = extracting_data_from_video.shufle_balance(val_1,val_0)
 
@@ -40,10 +47,11 @@ datagen = keras.preprocessing.image.ImageDataGenerator(
         horizontal_flip=True)
 
 datagen.fit(train_data)
+
 #%% Parametros de treinamentos =======================================================================================
     
 batch_size = 5 #Este parametro define o paralelismo que a sua rede é treinada... Quanto maior, mais rapido
-epochs = 20
+epochs = 50
 val_acc = 0
 
 #%% Modelo ===========================================================================================================
@@ -87,7 +95,7 @@ model_checkpoint_callback = [
 
 
 
-#Daqui pra frente ja é o treinamento
+#%% ================    Daqui pra frente ja é o treinamento
 
 #history = model.fit(train_data, label_array_train, validation_data = (val_data,label_val), batch_size=batch_size, epochs=1, verbose=1)
 history = model.fit(datagen.flow(train_data, label_array_train, batch_size=batch_size), validation_data = (val_data,label_val), epochs=epochs, verbose=1, callbacks=model_checkpoint_callback )
@@ -113,11 +121,13 @@ plt.xlabel("Epocas")
 plt.ylabel("Erro da funcao crossentropy")
 plt.grid(True)
 plt.show()
+
 #%%===============================================================================================================
-model = keras.models.load_model("/home/salomao/Desktop/CNN_try1_cleanlisses.h5")
+
 ask='\0'
 ask = input('feedback? (y/n)')
 
 if ask=='y'  :
-    feedback_humanizado.feedback_splitted_by_video( model , video_cap, 0.5)
+    model2 = keras.models.load_model("/home/salomao/Desktop/CNN_try1_cleanlisses.h5")
+    feedback_humanizado.feedback_splitted_by_video( model2 , video_cap, 0.5)
     
