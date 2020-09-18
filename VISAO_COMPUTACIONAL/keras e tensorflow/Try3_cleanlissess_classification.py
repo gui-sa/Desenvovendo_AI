@@ -8,6 +8,7 @@ import numpy as np
 import cv2 as cv
 import sklearn#Lib para misturar as paradinhas
 import matplotlib.pyplot as plt
+import os
 from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import extracting_data_from_video #Lib para mexer com videos 
 from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import feedback_humanizado   #Feedback humanizado testa o modelo para um splitted video
 
@@ -19,26 +20,43 @@ from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import feedback_humanizado
 
 video_cap = 0   #video usado no feedback humanizado
 
+diretorios_1 = ["/home/salomao/Desktop/pratos/branco/Cropped-limpo"]#Lista de pastas, onde as fotos de etiqueta 1 estarão
+diretorios_0 = ["/home/salomao/Desktop/pratos/cenario/void"]#Lista de pastas onde as fotos de etiqueta zero estarão
 
-train_1 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/branco/branco-limpo-manha-cenario1.mp4",30),("/home/salomao/Desktop/pratos/branco/branco-limpo-tarde-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-limpo-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-manha-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-tarde-cenario1.mp4", 30)],DEBUG=0)
-train_0 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/cenario/cenario1-manha-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-manha.mp4", 30 ),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos2.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-tarde.mp4", 30)],DEBUG=0)
-#extracting_data_from_video.Save_data("/home/salomao/Desktop/pratos/train1", train_1)
-#extracting_data_from_video.Save_data("/home/salomao/Desktop/pratos/train0", train_0)
+train_1 = []
+for pastas in diretorios_1:
+    conteudo = os.listdir(pastas)
+    for datas in conteudo:
+        datas = os.path.join(pastas, datas)
+        train_1.append(cv.resize(cv.imread(datas),(500,500)))     
+train_1 = np.array(train_1)
 
-# train_1 = extracting_data_from_video.Load_data("/home/salomao/Desktop/pratos/train1")
-# train_0 = extracting_data_from_video.Load_data("/home/salomao/Desktop/pratos/train0")
+
+
+train_0 = []
+for pastas in diretorios_0:
+    conteudo = os.listdir(pastas)
+    for datas in conteudo:
+        datas = os.path.join(pastas, datas)
+        train_0.append(cv.resize(cv.imread(datas),(500,500)))      
+train_0 = np.array(train_0)
+
+
+
+temp = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/branco/branco-limpo-manha-cenario1.mp4",30),("/home/salomao/Desktop/pratos/branco/branco-limpo-tarde-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-limpo-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-manha-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-tarde-cenario1.mp4", 30)],DEBUG=0)
+train_1 = np.append(train_1,temp,axis=0)
+
+temp = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/cenario/cenario1-manha-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-manha.mp4", 30 ),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos2.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-tarde.mp4", 30)],DEBUG=0)
+train_0 = np.append(train_0,temp,axis=0)
+
 
 #%%============== Splitando o dataset:
 
-val_1 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/branco/Branco-limpo-manha-cenario2.mp4",60)],DEBUG=0)
-val_0 = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/cenario/Cenario2-manha.mp4",60)],DEBUG=0)
+val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validação
+val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validação
+train_1 = train_1[0:int(0.8*len(train_1))]#80% do dataset do train_1 vai para treinamento
+train_0 = train_0[0:int(0.8*len(train_0))]#80% do dataset do train_1 vai para treinamento
 
-# val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validação
-# val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validação
-# train_1 = train_1[0:int(0.8*len(train_1))]#80% do dataset do train_1 vai para treinamento
-# train_0 = train_0[0:int(0.8*len(train_0))]#80% do dataset do train_1 vai para treinamento
-# temp= extracting_data_from_video.data_augment(train_1, command = "constant_color_scaler_shufle", show=False)
-# train_1 = np.append(train_1,temp[0:int(len(temp)/2)], axis=0)
 #%%============  Usando o dataset
 train_data,label_array_train  = extracting_data_from_video.shufle_balance(train_1,train_0)#Trecho relacionado ao balanceamento do dataset
 val_data,label_val = extracting_data_from_video.shufle_balance(val_1,val_0)
@@ -75,10 +93,7 @@ flat2 = keras.layers.Flatten()(pool5)
 
 dense1 = keras.layers.Dense(50,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(flat2)
 dense2 = keras.layers.Dense(40,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense1)
-dense3 = keras.layers.Dense(30,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense2)
-dense4 = keras.layers.Dense(20,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense3)
-dense5 = keras.layers.Dense(10,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense4)
-layer_out = keras.layers.Dense(1,activation='sigmoid')(dense5)
+layer_out = keras.layers.Dense(1,activation='sigmoid')(dense2)
 
 
 model = keras.models.Model(inputs=layer_in,outputs=layer_out)   
