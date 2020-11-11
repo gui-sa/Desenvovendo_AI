@@ -61,28 +61,25 @@ layer_in = keras.layers.Input(shape= (500,500,3))
 
      
 
-conv1 = keras.layers.Conv2D(8, kernel_size=3, padding='valid', activation= 'relu')(layer_in)
+conv1 = keras.layers.Conv2D(128, kernel_size=3, padding='valid', activation= 'relu')(layer_in)
 pool1  = keras.layers.MaxPool2D(pool_size=(3,3))(conv1)
 
-conv4 = keras.layers.Conv2D(16, kernel_size=3, padding='valid', activation= 'relu')(pool1)
+conv4 = keras.layers.Conv2D(128, kernel_size=3, padding='valid', activation= 'relu')(pool1)
 pool5  = keras.layers.MaxPool2D(pool_size=(3,3))(conv4)
-conv5 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(pool5)
+conv5 = keras.layers.Conv2D(128, kernel_size=3, padding='valid', activation= 'relu')(pool5)
 
-pool5  = keras.layers.MaxPool2D(pool_size=(10,10))(conv5)
+pool5  = keras.layers.MaxPool2D(pool_size=(5,5))(conv5)
 
 flat2 = keras.layers.Flatten()(pool5)
 
 
 dense1 = keras.layers.Dense(50,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(flat2)
 dense2 = keras.layers.Dense(40,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense1)
-dense3 = keras.layers.Dense(30,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense2)
-dense4 = keras.layers.Dense(20,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense3)
-dense5 = keras.layers.Dense(10,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(dense4)
-layer_out = keras.layers.Dense(1,activation='sigmoid')(dense5)
+layer_out = keras.layers.Dense(1,activation='sigmoid')(dense2)
 
 
 model = keras.models.Model(inputs=layer_in,outputs=layer_out)   
-                         
+          
 model.summary()
 
 model.compile(optimizer= 'adam',  loss='binary_crossentropy', metrics= ['accuracy'])

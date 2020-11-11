@@ -1,4 +1,4 @@
-#
+#O objetivo desta rede é simplesmente dizer: esta sujo ou nao?
 
 
 
@@ -20,8 +20,8 @@ from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import feedback_humanizado
 
 video_cap = 0   #video usado no feedback humanizado
 
-diretorios_1 = ["/home/salomao/Desktop/pratos/branco/Cropped-limpo"]#Lista de pastas, onde as fotos de etiqueta 1 estarão
-diretorios_0 = ["/home/salomao/Desktop/pratos/cenario/void"]#Lista de pastas onde as fotos de etiqueta zero estarão
+diretorios_1 = ["/home/salomao/Desktop/Cadeias_sujas"]#Lista de pastas, onde as fotos de etiqueta 1 estarão
+diretorios_0 = ["/home/salomao/Desktop/Cadeia_limpa"]#Lista de pastas onde as fotos de etiqueta zero estarão
 
 train_1 = []
 for pastas in diretorios_1:
@@ -41,13 +41,6 @@ for pastas in diretorios_0:
         train_0.append(cv.resize(cv.imread(datas),(500,500)))      
 train_0 = np.array(train_0)
 
-
-
-temp = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/branco/branco-limpo-manha-cenario1.mp4",30),("/home/salomao/Desktop/pratos/branco/branco-limpo-tarde-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-limpo-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-noite-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-manha-cenario1.mp4", 30),("/home/salomao/Desktop/pratos/branco/branco-sujo1-tarde-cenario1.mp4", 30)],DEBUG=0)
-train_1 = np.append(train_1,temp,axis=0)
-
-temp = extracting_data_from_video.capturing_frames_appended([("/home/salomao/Desktop/pratos/cenario/cenario1-manha-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-manha.mp4", 30 ),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-noite-maos2.mp4", 30),("/home/salomao/Desktop/pratos/cenario/cenario1-tarde.mp4", 30)],DEBUG=0)
-train_0 = np.append(train_0,temp,axis=0)
 
 
 #%%============== Splitando o dataset:
@@ -82,11 +75,11 @@ layer_in = keras.layers.Input(shape= (500,500,3))
 conv1 = keras.layers.Conv2D(8, kernel_size=3, padding='valid', activation= 'relu')(layer_in)
 pool1  = keras.layers.MaxPool2D(pool_size=(3,3))(conv1)
 
-conv4 = keras.layers.Conv2D(16, kernel_size=3, padding='valid', activation= 'relu')(pool1)
+conv4 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(pool1)
 pool5  = keras.layers.MaxPool2D(pool_size=(3,3))(conv4)
-conv5 = keras.layers.Conv2D(32, kernel_size=3, padding='valid', activation= 'relu')(pool5)
+conv5 = keras.layers.Conv2D(128, kernel_size=3, padding='valid', activation= 'relu')(pool5)
 
-pool5  = keras.layers.MaxPool2D(pool_size=(10,10))(conv5)
+pool5  = keras.layers.MaxPool2D(pool_size=(5,5))(conv5)
 
 flat2 = keras.layers.Flatten()(pool5)
 
