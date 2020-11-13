@@ -2,6 +2,10 @@
 #Email: guime.sa9@gmail.com
 #Referecias importantes:
     #https://keras.io/examples/vision/oxford_pets_image_segmentation/
+    #https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215
+    #https://keras.io/api/layers/reshaping_layers/up_sampling2d/
+    #
+
 
 #%% Prepare paths of input images and target segmentation masks
 import os
@@ -38,6 +42,7 @@ for input_path, target_path in zip(input_img_paths[:10], target_img_paths[:10]):
 from IPython.display import Image, display
 from tensorflow.keras.preprocessing.image import load_img
 import PIL #pillow
+from PIL import ImageOps #Se nao tiver, ele fala que nao existe!!! BIZARRO
 
 # Display input image #7
 display(Image(filename=input_img_paths[9])) #printa a foto de um bexano -> imagem original dada um path
@@ -106,7 +111,8 @@ val_gen = OxfordPets(batch_size, img_size, val_input_img_paths, val_target_img_p
 #%% Perpare U-Net Xception-style model
 
 from tensorflow.keras import layers
-
+img_size = (160, 160)
+num_classes = 4
 
 def get_model(img_size, num_classes):
     inputs = keras.Input(shape=img_size + (3,)) #(img_size + (3,)) = (160, 160, 3)
