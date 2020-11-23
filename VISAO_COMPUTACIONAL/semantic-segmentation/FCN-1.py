@@ -51,7 +51,7 @@ display(Image(filename=input_img_paths[9])) #printa a foto de um bexano -> image
 img = PIL.ImageOps.autocontrast(load_img(target_img_paths[9]))#load_img gera um objeto reconhecido pelo computador como "imagem"(interessante), loada a matriz imagem, em suma. O autocontrast, gera o maximo de contraste possivel, na imagem.
 display(img)#display method, usado diretamente com a matriz, plota a imagem
 
-
+#Os mapas de anotacao tambem tem dimensao RGB, porem, com a anotacao atravessa todos os canais... Literalmente, disperdicando tamanho.
 
 #%% Prepare Sequence class to load & vectorize batches of data
 
@@ -111,6 +111,8 @@ val_gen = OxfordPets(batch_size, img_size, val_input_img_paths, val_target_img_p
 #%% Perpare U-Net Xception-style model
 
 from tensorflow.keras import layers
+from tensorflow import keras
+
 img_size = (160, 160)
 num_classes = 4
 

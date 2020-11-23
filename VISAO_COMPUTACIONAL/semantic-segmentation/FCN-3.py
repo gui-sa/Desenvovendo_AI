@@ -15,7 +15,7 @@ input_dir = "/home/salomao/Desktop/semantic_segmentation-dogs-cats/images/"
 target_dir = "/home/salomao/Desktop/semantic_segmentation-dogs-cats/annotations/trimaps/"
 img_size = (448, 448)
 num_classes = 4
-batch_size = 32
+batch_size = 5
 
 input_img_paths = sorted( #Se o final for .png, ele pega e salva em uma lista, o endereÃ§o das imagens
     [
@@ -125,7 +125,7 @@ x = layers.Conv2D(32, kernel_size=3, padding='same', strides=(2, 2))(layer_in)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
-x = layers.SeparableConv2D(32, kernel_size=3, padding="same",strides=(1, 1))(x)
+x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(1, 1))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
@@ -133,7 +133,7 @@ x = layers.Conv2D(64, kernel_size=1, padding='same', strides=(1, 1))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
-x = layers.SeparableConv2D(64, kernel_size=3, padding="same",strides=(2, 2))(x)
+x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(2, 2))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
@@ -142,7 +142,7 @@ for filters in [128,256]:
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
     
-    x = layers.SeparableConv2D(filters, kernel_size=3, padding="same",strides=(1, 1))(x)
+    x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(1, 1))(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
     
@@ -150,7 +150,7 @@ for filters in [128,256]:
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
     
-    x = layers.SeparableConv2D(filters, kernel_size=3, padding="same",strides=(2, 2))(x)
+    x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(2, 2))(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
     
@@ -159,24 +159,24 @@ x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
 for i in range(5):
-    x = layers.SeparableConv2D(512, kernel_size=3, padding="same",strides=(1, 1))(x)
+    x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(1, 1))(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-
+    
     x = layers.Conv2D(512, kernel_size=1, padding='same', strides=(1, 1))(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x) 
-    
-x = layers.SeparableConv2D(512, kernel_size=3, padding="same",strides=(2, 2))(x)
-x = layers.BatchNormalization()(x)
-x = layers.Activation("relu")(x)    
+        
+    x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(2, 2))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)    
 
 
 x = layers.Conv2D(1024, kernel_size=1, padding='same', strides=(1, 1))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
-x = layers.SeparableConv2D(1024, kernel_size=3, padding="same",strides=(2, 2))(x)
+x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(2, 2))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)  
 
@@ -184,11 +184,73 @@ x = layers.Conv2D(1024, kernel_size=1, padding='same', strides=(1, 1))(x)
 x = layers.BatchNormalization()(x)
 x = layers.Activation("relu")(x)
 
-layer_out = layers.SeparableConv2D(1, kernel_size=3, padding="same",strides=(1, 1),activation= 'relu')(x)
-#Retirar essa layer_out....
+
 
 ##################################  Decoding:
+x = layers.Conv2D(1024, kernel_size=1, padding='same', strides=(1, 1))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
     
+x = layers.Conv2DTranspose(1024, kernel_size=3, padding="same",strides=(2, 2))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)     
+
+x = layers.Conv2D(1024, kernel_size=1, padding='same', strides=(1, 1))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
+for i in range(5):
+    x = layers.Conv2DTranspose(512, kernel_size=3, padding="same",strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    
+    x = layers.Conv2D(512, kernel_size=1, padding='same', strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x) 
+    
+    x = layers.Conv2D(512, kernel_size=1, padding='same', strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+
+x = layers.Conv2D(512, kernel_size=1, padding='same', strides=(1, 1))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
+for filters in [256,128]:
+    x = layers.Conv2D(filters, kernel_size=1, padding='same', strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    
+    x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    
+    x = layers.Conv2D(filters, kernel_size=1, padding='same', strides=(1, 1))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    
+    x = layers.Conv2DTranspose(filters, kernel_size=3, padding="same",strides=(2, 2))(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+
+x = layers.Conv2DTranspose(64, kernel_size=3, padding="same",strides=(2, 2))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
+x = layers.Conv2D(64, kernel_size=1, padding='same', strides=(1, 1))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
+x = layers.DepthwiseConv2D(kernel_size=3, padding="same",strides=(1, 1))(x)
+x = layers.BatchNormalization()(x)
+x = layers.Activation("relu")(x)
+
+x = layers.Conv2DTranspose(32, kernel_size=3, padding='same', strides=(2, 2))(x)
+x = layers.BatchNormalization()(x)
+layer_out = layers.Activation("relu")(x)
+
+
 
 model = keras.models.Model(inputs=layer_in,outputs=layer_out)   
  
@@ -220,7 +282,7 @@ model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")
 epochs = 15
 model.fit(train_gen, epochs=epochs, validation_data=val_gen, verbose=1, callbacks=model_checkpoint_callback)
 
-
+#comentei pq o pc trava por alguma razao...
 #%% Visualize predictions
 
 # Generate predictions for all images in the validation set
