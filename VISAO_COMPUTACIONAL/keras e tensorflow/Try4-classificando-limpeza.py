@@ -43,13 +43,14 @@ for pastas in diretorios_0:
 train_0 = np.array(train_0)
 
 
-#%%                       Semantic segmentation
+#%%                       Semantic segmentation load model
 
 from tensorflow import keras
 import numpy as np
 
 model_seg = keras.models.load_model("/home/salomao/Desktop/insulators.h5")
 
+#%%                       Semantic segmentation label 1
 
 temp = []
 for img in tqdm.tqdm(train_1):
@@ -58,7 +59,7 @@ for img in tqdm.tqdm(train_1):
 temp = np.array(temp)
 
 pred = model_seg.predict(temp)
-
+masked =[]
 for i in tqdm.tqdm(range(len(train_1))):
     res = pred[i]
     res = np.argmax(res,-1)
@@ -67,15 +68,17 @@ for i in tqdm.tqdm(range(len(train_1))):
     res = cv.resize(res, size, interpolation = cv.INTER_AREA)
     res = np.round(res)
     res = np.expand_dims(res, axis=-1)
-    img = train_1[i]
-    train_1[i] = np.multiply(img/255.0,res)
-    cv.imshow("Segmented Controlled",train_1[i])
-    ask = cv.waitKey()
-    cv.destroyAllWindows()
-    if ask==113:
-        break
+    temp = np.multiply(train_1[i]/255.0,res)
+    masked.append(temp)
+    # cv.imshow("Segmented Controlled",masked[i])
+    # ask = cv.waitKey()
+    # cv.destroyAllWindows()
+    # if ask==113:
+    #     break
 
-
+masked = np.array(masked)
+train_1 = np.copy(masked)
+#%%                       Semantic segmentation label 0
 
 
 temp = []
@@ -85,7 +88,7 @@ for img in tqdm.tqdm(train_0):
 temp = np.array(temp)
 
 pred = model_seg.predict(temp)
-
+masked =[]
 for i in tqdm.tqdm(range(len(train_0))):
     res = pred[i]
     res = np.argmax(res,-1)
@@ -94,19 +97,23 @@ for i in tqdm.tqdm(range(len(train_0))):
     res = cv.resize(res, size, interpolation = cv.INTER_AREA)
     res = np.round(res)
     res = np.expand_dims(res, axis=-1)
-    img = train_0[i]
-    train_0[i] = np.multiply(img/255.0,res)
-    cv.imshow("Segmented Controlled",train_0[i])
-    ask = cv.waitKey()
-    cv.destroyAllWindows()
-    if ask==113:
-        break
+    temp = np.multiply(train_0[i]/255.0,res)
+    masked.append(temp)
+    # cv.imshow("Segmented Controlled",masked[i])
+    # ask = cv.waitKey()
+    # cv.destroyAllWindows()
+    # if ask==113:
+    #     break
 
+masked = np.array(masked)
+train_0 = np.copy(masked)
+
+masked = None
 model_seg = None
 #%%============== Splitando o dataset:
 
-val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validação
-val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validação
+val_1 = train_1[int(0.8*len(train_1)):len(train_1)]#20% do dataset do train_1 vai para validacao
+val_0 = train_0[int(0.8*len(train_0)):len(train_0)]#20% do dataset do train_1 vai para validacao
 train_1 = train_1[0:int(0.8*len(train_1))]#80% do dataset do train_1 vai para treinamento
 train_0 = train_0[0:int(0.8*len(train_0))]#80% do dataset do train_1 vai para treinamento
 
@@ -132,7 +139,7 @@ from tensorflow.keras import layers
 from tensorflow import keras
 from keras_unet.models import custom_unet
 
-num_classes = 2
+num_classes = 1
 
 def get_model(img_size, num_classes):
     inputs = keras.Input(shape=img_size + (3,)) #(img_size + (3,)) = (160, 160, 3)
@@ -147,7 +154,7 @@ def get_model(img_size, num_classes):
     previous_block_activation = x  # Set aside residual
 
     # Blocks 1, 2, 3 are identical apart from the feature depth.
-    for filters in [64, 128]:
+    for filters in [64, 128, 256, 512]:
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(filters, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
@@ -165,9 +172,9 @@ def get_model(img_size, num_classes):
         x = layers.add([x, residual])  # Add back residual
         previous_block_activation = x  # Set aside next residual
     x = keras.layers.GlobalAveragePooling2D()(x)
-    x = keras.layers.Dropout(0.1)(x)
+    x = keras.layers.Dropout(0.5)(x)
     # x = keras.layers.Dense(1000,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(x)
-    outputs = keras.layers.Dense(1, activation='sigmoid',kernel_regularizer=keras.regularizers.l2(0.001))(x)
+    outputs = keras.layers.Dense(num_classes, activation='sigmoid',kernel_regularizer=keras.regularizers.l2(0.001))(x)
     # Define the model
     model = keras.Model(inputs, outputs)
     return model

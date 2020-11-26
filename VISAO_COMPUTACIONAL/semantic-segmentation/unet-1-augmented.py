@@ -3,7 +3,8 @@
 #Referecias importantes:
 #    https://pypi.org/project/keras-unet/#Customizable-U-Net
 #    https://digitalslidearchive.github.io/HistomicsTK/examples/annotations_to_semantic_segmentation_masks.html
-
+#    https://keras.io/api/preprocessing/image/
+#    https://github.com/tensorflow/tensorflow/issues/32357
 #%% dataset
 
 #%% Prepare paths of input images and target segmentation masks
@@ -37,13 +38,10 @@ for img_idx,ann_idx in zip(list_img,list_ann):
     images.append(img)
     annotation.append(ann)
     
-    # ann = np.expand_dims(ann, axis=-1)
     # img = np.multiply(img,ann) 
     # cv.imshow("preview",img)
-    # ask = cv.waitKey()
+    # cv.waitKey()
     # cv.destroyAllWindows()
-    # if ask==113:
-    #     break
     
 images = np.array(images)
 annotation = np.array(annotation)
@@ -59,12 +57,66 @@ val_data = images[int(len(images)*0.8):]
 label_data = annotation[0:int(len(annotation)*0.8)]
 val_label_data = annotation[int(len(annotation)*0.8):]
 
+images = None
+annotation = None
+
+
+#%% Inicio augmentation
+import numpy as np
+import keras
+
+datagen_args = dict(    
+    rotation_range=180,
+    width_shift_range=0.3,
+    height_shift_range=0.3,
+    zoom_range=0.5,
+    horizontal_flip=True,
+    vertical_flip=True
+    )
+
+img_datagen = keras.preprocessing.image.ImageDataGenerator(**datagen_args)
+mask_datagen = keras.preprocessing.image.ImageDataGenerator(**datagen_args)
+
+seed = 1
+
+
+# img_datagen.fit(train_data, augment=True,seed = seed)
+# mask_datagen.fit(label_data, augment=True, seed = seed )
+
+
+batch_size = 5
+img_generator = img_datagen.flow(train_data , batch_size=batch_size, seed=seed)
+mask_generator = mask_datagen.flow(label_data , batch_size=batch_size, seed=seed)
+
+#%% Augmentation
+#O objetivo é augmentar o data até aproximadamente o dobro do tamanho... Nao coloquei o datagen junto com o fit, pq por algum motivo ele nao esta aceitando.
+import tqdm
+
+teste_num = int ((len(train_data)/batch_size))
+for i in tqdm.tqdm(range(teste_num)):
+    img_batch = img_generator[i]
+    ann_batch = mask_generator[i]
+    train_data = np.append(train_data,img_batch,axis=0)
+    label_data = np.append(label_data,ann_batch,axis=0)
+    # for idx in range(batch_size):
+    #     img = img_batch[idx]
+    #     ann = ann_batch[idx]
+    #     teste = np.multiply(img,ann)
+    #     cv.imshow("Imagem Original",img)
+    #     cv.waitKey()
+    #     cv.destroyAllWindows()
+    #     cv.imshow("preview",teste)
+    #     cv.waitKey()
+    #     cv.destroyAllWindows()       
+        
+train_data,label_data = sklearn.utils.shuffle(train_data,label_data )#misturo o data de label 1
+train_data,label_data = sklearn.utils.shuffle(train_data,label_data )#misturo o data de label 1
 #%% model
-from tensorflow.keras import layers
-from tensorflow import keras
+from keras import layers
+num_classes = 2
 from keras_unet.models import custom_unet
 
-num_classes = 2
+keras.backend.clear_session()
 
 def get_model(img_size, num_classes):
     inputs = keras.Input(shape=img_size + (3,)) #(img_size + (3,)) = (160, 160, 3)
@@ -123,19 +175,18 @@ def get_model(img_size, num_classes):
     model = keras.Model(inputs, outputs)
     return model
 
-# model = custom_unet(
-#     input_shape=(160, 160, 3),
-#     use_batch_norm=False,
-#     num_classes=2,
-#     filters=32,
-#     dropout=0.2,
-#     output_activation='sigmoid')
 
 # Free up RAM in case the model definition cells were run multiple times
-keras.backend.clear_session()
-
+#keras.backend.clear_session()
+model = custom_unet(
+    input_shape=img_size +  (3,),
+    use_batch_norm=True,
+    num_classes=2,
+    filters=32,
+    dropout=0.2,
+    output_activation='softmax')
 # Build model
-model = get_model(img_size, num_classes)
+# model = get_model(img_size, num_classes)
 model.summary()
 
 
@@ -147,13 +198,13 @@ model.summary()
 model.compile(optimizer="adam", loss="sparse_categorical_crossentropy")
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint("insulators.h5", save_best_only=True)
+    keras.callbacks.ModelCheckpoint("insulators-augmented.h5", save_best_only=True)
 ]
 
 # Train the model, doing validation at the end of each epoch.
-epochs = 100
-batch_size = 5
-history = model.fit(train_data,label_data,batch_size=batch_size, epochs=epochs, validation_data= (val_data,val_label_data), callbacks=callbacks)
+epochs = 50
+
+history = model.fit(train_data, label_data ,batch_size= batch_size , epochs=epochs, validation_data= (val_data,val_label_data), callbacks=callbacks)
 
 
 #%%plots
@@ -174,7 +225,7 @@ plt.show()
 
 
 #%%teste
-from tensorflow import keras
+import keras
 import numpy as np
 
 #model = keras.models.load_model("/home/salomao/Desktop/Desenvovendo_AI/VISAO_COMPUTACIONAL/semantic-segmentation/insulators.h5")

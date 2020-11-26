@@ -10,6 +10,7 @@ import numpy as np
 
 img_size = (160, 160)
 
+#path_img = "/home/salomao/Desktop/Teste"
 path_img = "/home/salomao/Desktop/insulators-dataset/jpg"
 
 list_img = os.listdir(path_img)
@@ -30,7 +31,7 @@ images = np.array(images)
 from tensorflow import keras
 import numpy as np
 
-model = keras.models.load_model("/home/salomao/Desktop/insulators.h5")
+model = keras.models.load_model("/home/salomao/Desktop/insulators-augmented.h5")
 pred = model.predict(images)
 
 #%% Checando a segmentação de todas as imagens do dataset
