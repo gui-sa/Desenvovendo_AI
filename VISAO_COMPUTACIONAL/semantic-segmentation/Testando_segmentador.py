@@ -10,7 +10,7 @@ import numpy as np
 
 img_size = (160, 160)
 
-#path_img = "/home/salomao/Desktop/Teste"
+#path_img = "/home/salomao/Desktop/insulators-dataset/Teste"
 path_img = "/home/salomao/Desktop/insulators-dataset/jpg"
 
 list_img = os.listdir(path_img)

@@ -37,8 +37,8 @@ for img_idx,ann_idx in zip(list_img,list_ann):
     images.append(img)
     annotation.append(ann)
     
-    # ann = np.expand_dims(ann, axis=-1)
-    # img = np.multiply(img,ann) 
+    ann = np.expand_dims(ann, axis=-1)
+    img = np.multiply(img,ann) 
     # cv.imshow("preview",img)
     # ask = cv.waitKey()
     # cv.destroyAllWindows()
