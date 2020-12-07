@@ -1,3 +1,4 @@
+# coding: iso-8859-1 -*-
 #Autor: Guilherme Salomão Agostini 
 #Email: guime.sa9@gmail.com
 #Referecias importantes:
@@ -10,14 +11,23 @@ import cv2 as cv
 import numpy as np
 import tqdm
 from tensorflow import keras
+import tensorflow as tf
 import numpy as np
 from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import extracting_data_from_video #Lib para mexer com videos 
 import sklearn
 
+#%%
+# jobs = 2 # it means number of cores
+
+# config = tf.ConfigProto(intra_op_parallelism_threads=jobs,
+#                           inter_op_parallelism_threads=jobs,
+#                           allow_soft_placement=True,
+#                           device_count={'CPU': jobs})
+# session = tf.Session(config=config)
 
 #%% ==============================================Criando o dataset
 
-img_size = (800, 800)
+img_size = (1000, 1000)
 
 path_img = "/home/salomao/Desktop/insulators-dataset/jpg"
 path_ann = "/home/salomao/Desktop/insulators-dataset/tiff"
@@ -99,57 +109,33 @@ batch_size = 5
 img_generator = img_datagen.flow(train_data ,label_array_train,  batch_size=batch_size)
 
 #%% model
-from tensorflow.keras import layers
 from tensorflow import keras
+from tensorflow.keras.applications.nasnet import NASNetMobile,NASNetLarge
+
+import tensorflow as tf
 
 
-num_classes = 1
+# model  = keras.applications.NASNetMobile(
+#     input_shape=img_size + (3,),
+#     include_top=True,
+#     weights=None, #randomize de weights
+#     input_tensor=None,
+#     pooling=None,
+#     classes=1,
+# )
 
-def get_model(img_size, num_classes):
-    inputs = keras.Input(shape=img_size + (3,)) #(img_size + (3,)) = (160, 160, 3)
 
-    ### [First half of the network: downsampling inputs] ###
-
-    # Entry block
-    x = layers.Conv2D(32, 3, strides=2, padding="same")(inputs)
-    x = layers.BatchNormalization()(x)
-    x = layers.Activation("relu")(x)
-
-    previous_block_activation = x  # Set aside residual
-
-    # Blocks 1, 2, 3 are identical apart from the feature depth.
-    for filters in [64, 128, 256, 512]:
-        x = layers.Activation("relu")(x)
-        x = layers.SeparableConv2D(filters, 3, padding="same")(x)
-        x = layers.BatchNormalization()(x)
-
-        x = layers.Activation("relu")(x)
-        x = layers.SeparableConv2D(filters, 3, padding="same")(x)
-        x = layers.BatchNormalization()(x)
-
-        x = layers.MaxPooling2D(3, strides=2, padding="same")(x)
-        x = keras.layers.Dropout(0.3)(x)
-        # Project residual
-        residual = layers.Conv2D(filters, 1, strides=2, padding="same")(
-            previous_block_activation
-        )
-        x = layers.add([x, residual])  # Add back residual
-        previous_block_activation = x  # Set aside next residual
-    x = keras.layers.GlobalAveragePooling2D()(x)
-    
-    # x = keras.layers.Dense(1000,activation='relu',kernel_regularizer=keras.regularizers.l2(0.001))(x)
-    outputs = keras.layers.Dense(num_classes, activation='sigmoid',kernel_regularizer=keras.regularizers.l2(0.001))(x)
-    # Define the model
-    model = keras.Model(inputs, outputs)
-    return model
+model = NASNetLarge(
+    input_shape=img_size + (3,),
+    include_top=None,
+    weights=None, #randomize de weights
+    input_tensor=None,
+    pooling=None,
+    classes=1,
+)
 
 
 
-# Free up RAM in case the model definition cells were run multiple times
-keras.backend.clear_session()
-
-# Build model
-model = get_model(img_size, num_classes)
 model.summary()
 
 
@@ -162,7 +148,7 @@ model.compile(optimizer= 'adam',  loss='binary_crossentropy', metrics= ['accurac
 
 model_checkpoint_callback = [
     tf.keras.callbacks.ModelCheckpoint(
-    filepath="/home/salomao/Desktop/CNN_try1_cleanlisses.h5",
+    filepath="/home/salomao/Desktop/CNN_try6_cleanlisses.h5",
     save_weights_only=False,
     monitor= "val_accuracy",
     mode='max',
