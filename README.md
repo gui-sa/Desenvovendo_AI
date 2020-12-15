@@ -2,8 +2,7 @@
 
 
 
-Este repositorio trata-se de experimentações na area de Inteligencia Artificial no quesito de visao computacional, evolução genética e aprendizado de maquina em diversas técnicas.
+Este repositório é voltado a guardar os códigos tentativa da pesquisa de "Identificação da Necessidade da Limpeza de Cadeias de Isoladores Utilizando-se de Deep Learning" - iniciada nos meados de 2019-2 PIVIC e indo até 2021-2 PIBIC.
 
-No arquivo **DIARIO DE DESENVOLVIMENTO** encontra-se todas as dificuldades e fontes de pesquisas!
 
-Aproveite para contribuir! Boa sorte!
+
