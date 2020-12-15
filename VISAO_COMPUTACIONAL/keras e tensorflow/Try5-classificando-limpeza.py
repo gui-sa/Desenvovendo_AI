@@ -11,7 +11,7 @@ import numpy as np
 import tqdm
 from tensorflow import keras
 import numpy as np
-#from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import extracting_data_from_video #Lib para mexer com videos 
+from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import extracting_data_from_video #Lib para mexer com videos 
 import sklearn
 
 

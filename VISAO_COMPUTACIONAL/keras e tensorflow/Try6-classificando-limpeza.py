@@ -4,6 +4,8 @@
 #Referecias importantes:
 
 #O objetivo é tentar classificar a limpeza com o modelo Xception ja implementado, em um dataset preprocessado por mascaras.
+#codigo falhou... a rede NasNet simplesmente nao roda EHUEHEUEHUEHEUEHUEHUEH fazer o que...
+
 
 #%% Prepare paths of input images and target segmentation masks
 import os
@@ -17,7 +19,11 @@ from Desktop.Desenvovendo_AI.VISAO_COMPUTACIONAL.libs import extracting_data_fro
 import sklearn
 
 #%%
-# jobs = 2 # it means number of cores
+jobs = 1 # it means number of cores
+
+tf.config.threading.set_inter_op_parallelism_threads(jobs)
+tf.config.threading.set_intra_op_parallelism_threads(jobs)
+
 
 # config = tf.ConfigProto(intra_op_parallelism_threads=jobs,
 #                           inter_op_parallelism_threads=jobs,
@@ -27,7 +33,7 @@ import sklearn
 
 #%% ==============================================Criando o dataset
 
-img_size = (1000, 1000)
+img_size = (800, 800)
 
 path_img = "/home/salomao/Desktop/insulators-dataset/jpg"
 path_ann = "/home/salomao/Desktop/insulators-dataset/tiff"
@@ -88,7 +94,7 @@ train_data,label_array_train = sklearn.utils.shuffle(train_data,label_array_trai
 #%% Parametros de treinamentos =======================================================================================
     
 batch_size = 5 #Este parametro define o paralelismo que a sua rede Ã© treinada... Quanto maior, mais rapido
-epochs = 100
+epochs = 10
 
 
 #%% Data augmentation
@@ -127,7 +133,7 @@ import tensorflow as tf
 
 model = NASNetLarge(
     input_shape=img_size + (3,),
-    include_top=None,
+    include_top=True,
     weights=None, #randomize de weights
     input_tensor=None,
     pooling=None,
