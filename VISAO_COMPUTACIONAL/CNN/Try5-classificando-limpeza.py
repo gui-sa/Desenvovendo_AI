@@ -2,7 +2,7 @@
 #Email: guime.sa9@gmail.com
 #Referecias importantes:
 
-#O objetivo é tentar classificar a limpeza com o modelo Xception ja implementado, em um dataset preprocessado por mascaras.
+#O objetivo é tentar classificar a limpeza com o modelo Xception ja implementado, em um dataset preprocessado por mascaras feitas à mão.
 
 #%% Prepare paths of input images and target segmentation masks
 import os
